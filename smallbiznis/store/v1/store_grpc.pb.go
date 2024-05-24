@@ -20,16 +20,17 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Service_ListStore_FullMethodName      = "/smallbiznis.store.v1.Service/ListStore"
-	Service_GetStore_FullMethodName       = "/smallbiznis.store.v1.Service/GetStore"
-	Service_CreateStore_FullMethodName    = "/smallbiznis.store.v1.Service/CreateStore"
-	Service_UpdateStore_FullMethodName    = "/smallbiznis.store.v1.Service/UpdateStore"
-	Service_DeleteStore_FullMethodName    = "/smallbiznis.store.v1.Service/DeleteStore"
-	Service_ListInvitation_FullMethodName = "/smallbiznis.store.v1.Service/ListInvitation"
-	Service_SendInvitation_FullMethodName = "/smallbiznis.store.v1.Service/SendInvitation"
-	Service_ListMember_FullMethodName     = "/smallbiznis.store.v1.Service/ListMember"
-	Service_UpdateMember_FullMethodName   = "/smallbiznis.store.v1.Service/UpdateMember"
-	Service_DeleteMember_FullMethodName   = "/smallbiznis.store.v1.Service/DeleteMember"
+	Service_ListStore_FullMethodName        = "/smallbiznis.store.v1.Service/ListStore"
+	Service_GetStore_FullMethodName         = "/smallbiznis.store.v1.Service/GetStore"
+	Service_CreateStore_FullMethodName      = "/smallbiznis.store.v1.Service/CreateStore"
+	Service_UpdateStore_FullMethodName      = "/smallbiznis.store.v1.Service/UpdateStore"
+	Service_DeleteStore_FullMethodName      = "/smallbiznis.store.v1.Service/DeleteStore"
+	Service_ListInvitation_FullMethodName   = "/smallbiznis.store.v1.Service/ListInvitation"
+	Service_SendInvitation_FullMethodName   = "/smallbiznis.store.v1.Service/SendInvitation"
+	Service_VerifyInvitation_FullMethodName = "/smallbiznis.store.v1.Service/VerifyInvitation"
+	Service_ListMember_FullMethodName       = "/smallbiznis.store.v1.Service/ListMember"
+	Service_UpdateMember_FullMethodName     = "/smallbiznis.store.v1.Service/UpdateMember"
+	Service_DeleteMember_FullMethodName     = "/smallbiznis.store.v1.Service/DeleteMember"
 )
 
 // ServiceClient is the client API for Service service.
@@ -43,6 +44,7 @@ type ServiceClient interface {
 	DeleteStore(ctx context.Context, in *DeleteStoreRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	ListInvitation(ctx context.Context, in *ListInvitationRequest, opts ...grpc.CallOption) (*ListInvitationResponse, error)
 	SendInvitation(ctx context.Context, in *SendInvitationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	VerifyInvitation(ctx context.Context, in *VerifyInvitationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	ListMember(ctx context.Context, in *ListMemberRequest, opts ...grpc.CallOption) (*ListMemberResponse, error)
 	UpdateMember(ctx context.Context, in *UpdateMemberRequest, opts ...grpc.CallOption) (*Member, error)
 	DeleteMember(ctx context.Context, in *DeleteMemberRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
@@ -119,6 +121,15 @@ func (c *serviceClient) SendInvitation(ctx context.Context, in *SendInvitationRe
 	return out, nil
 }
 
+func (c *serviceClient) VerifyInvitation(ctx context.Context, in *VerifyInvitationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+	out := new(protobuf.Empty)
+	err := c.cc.Invoke(ctx, Service_VerifyInvitation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *serviceClient) ListMember(ctx context.Context, in *ListMemberRequest, opts ...grpc.CallOption) (*ListMemberResponse, error) {
 	out := new(ListMemberResponse)
 	err := c.cc.Invoke(ctx, Service_ListMember_FullMethodName, in, out, opts...)
@@ -157,6 +168,7 @@ type ServiceServer interface {
 	DeleteStore(context.Context, *DeleteStoreRequest) (*protobuf.Empty, error)
 	ListInvitation(context.Context, *ListInvitationRequest) (*ListInvitationResponse, error)
 	SendInvitation(context.Context, *SendInvitationRequest) (*protobuf.Empty, error)
+	VerifyInvitation(context.Context, *VerifyInvitationRequest) (*protobuf.Empty, error)
 	ListMember(context.Context, *ListMemberRequest) (*ListMemberResponse, error)
 	UpdateMember(context.Context, *UpdateMemberRequest) (*Member, error)
 	DeleteMember(context.Context, *DeleteMemberRequest) (*protobuf.Empty, error)
@@ -187,6 +199,9 @@ func (UnimplementedServiceServer) ListInvitation(context.Context, *ListInvitatio
 }
 func (UnimplementedServiceServer) SendInvitation(context.Context, *SendInvitationRequest) (*protobuf.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendInvitation not implemented")
+}
+func (UnimplementedServiceServer) VerifyInvitation(context.Context, *VerifyInvitationRequest) (*protobuf.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyInvitation not implemented")
 }
 func (UnimplementedServiceServer) ListMember(context.Context, *ListMemberRequest) (*ListMemberResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListMember not implemented")
@@ -336,6 +351,24 @@ func _Service_SendInvitation_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_VerifyInvitation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyInvitationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).VerifyInvitation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_VerifyInvitation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).VerifyInvitation(ctx, req.(*VerifyInvitationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Service_ListMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListMemberRequest)
 	if err := dec(in); err != nil {
@@ -424,6 +457,10 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendInvitation",
 			Handler:    _Service_SendInvitation_Handler,
+		},
+		{
+			MethodName: "VerifyInvitation",
+			Handler:    _Service_VerifyInvitation_Handler,
 		},
 		{
 			MethodName: "ListMember",
