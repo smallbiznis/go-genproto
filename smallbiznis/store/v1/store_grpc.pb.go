@@ -20,15 +20,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Service_ListStore_FullMethodName    = "/smallbiznis.store.v1.Service/ListStore"
-	Service_GetStore_FullMethodName     = "/smallbiznis.store.v1.Service/GetStore"
-	Service_CreateStore_FullMethodName  = "/smallbiznis.store.v1.Service/CreateStore"
-	Service_UpdateStore_FullMethodName  = "/smallbiznis.store.v1.Service/UpdateStore"
-	Service_DeleteStore_FullMethodName  = "/smallbiznis.store.v1.Service/DeleteStore"
-	Service_ListMember_FullMethodName   = "/smallbiznis.store.v1.Service/ListMember"
-	Service_AddMember_FullMethodName    = "/smallbiznis.store.v1.Service/AddMember"
-	Service_UpdateMember_FullMethodName = "/smallbiznis.store.v1.Service/UpdateMember"
-	Service_DeleteMember_FullMethodName = "/smallbiznis.store.v1.Service/DeleteMember"
+	Service_ListStore_FullMethodName      = "/smallbiznis.store.v1.Service/ListStore"
+	Service_GetStore_FullMethodName       = "/smallbiznis.store.v1.Service/GetStore"
+	Service_CreateStore_FullMethodName    = "/smallbiznis.store.v1.Service/CreateStore"
+	Service_UpdateStore_FullMethodName    = "/smallbiznis.store.v1.Service/UpdateStore"
+	Service_DeleteStore_FullMethodName    = "/smallbiznis.store.v1.Service/DeleteStore"
+	Service_ListInvitation_FullMethodName = "/smallbiznis.store.v1.Service/ListInvitation"
+	Service_SendInvitation_FullMethodName = "/smallbiznis.store.v1.Service/SendInvitation"
+	Service_ListMember_FullMethodName     = "/smallbiznis.store.v1.Service/ListMember"
+	Service_UpdateMember_FullMethodName   = "/smallbiznis.store.v1.Service/UpdateMember"
+	Service_DeleteMember_FullMethodName   = "/smallbiznis.store.v1.Service/DeleteMember"
 )
 
 // ServiceClient is the client API for Service service.
@@ -37,11 +38,12 @@ const (
 type ServiceClient interface {
 	ListStore(ctx context.Context, in *ListStoreRequest, opts ...grpc.CallOption) (*ListStoreResponse, error)
 	GetStore(ctx context.Context, in *GetStoreRequest, opts ...grpc.CallOption) (*Store, error)
-	CreateStore(ctx context.Context, in *Store, opts ...grpc.CallOption) (*Store, error)
+	CreateStore(ctx context.Context, in *CreateStoreRequest, opts ...grpc.CallOption) (*Store, error)
 	UpdateStore(ctx context.Context, in *UpdateStoreRequest, opts ...grpc.CallOption) (*Store, error)
 	DeleteStore(ctx context.Context, in *DeleteStoreRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	ListInvitation(ctx context.Context, in *ListInvitationRequest, opts ...grpc.CallOption) (*ListInvitationResponse, error)
+	SendInvitation(ctx context.Context, in *SendInvitationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	ListMember(ctx context.Context, in *ListMemberRequest, opts ...grpc.CallOption) (*ListMemberResponse, error)
-	AddMember(ctx context.Context, in *AddMemberRequest, opts ...grpc.CallOption) (*Member, error)
 	UpdateMember(ctx context.Context, in *UpdateMemberRequest, opts ...grpc.CallOption) (*Member, error)
 	DeleteMember(ctx context.Context, in *DeleteMemberRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 }
@@ -72,7 +74,7 @@ func (c *serviceClient) GetStore(ctx context.Context, in *GetStoreRequest, opts 
 	return out, nil
 }
 
-func (c *serviceClient) CreateStore(ctx context.Context, in *Store, opts ...grpc.CallOption) (*Store, error) {
+func (c *serviceClient) CreateStore(ctx context.Context, in *CreateStoreRequest, opts ...grpc.CallOption) (*Store, error) {
 	out := new(Store)
 	err := c.cc.Invoke(ctx, Service_CreateStore_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -99,18 +101,27 @@ func (c *serviceClient) DeleteStore(ctx context.Context, in *DeleteStoreRequest,
 	return out, nil
 }
 
-func (c *serviceClient) ListMember(ctx context.Context, in *ListMemberRequest, opts ...grpc.CallOption) (*ListMemberResponse, error) {
-	out := new(ListMemberResponse)
-	err := c.cc.Invoke(ctx, Service_ListMember_FullMethodName, in, out, opts...)
+func (c *serviceClient) ListInvitation(ctx context.Context, in *ListInvitationRequest, opts ...grpc.CallOption) (*ListInvitationResponse, error) {
+	out := new(ListInvitationResponse)
+	err := c.cc.Invoke(ctx, Service_ListInvitation_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serviceClient) AddMember(ctx context.Context, in *AddMemberRequest, opts ...grpc.CallOption) (*Member, error) {
-	out := new(Member)
-	err := c.cc.Invoke(ctx, Service_AddMember_FullMethodName, in, out, opts...)
+func (c *serviceClient) SendInvitation(ctx context.Context, in *SendInvitationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+	out := new(protobuf.Empty)
+	err := c.cc.Invoke(ctx, Service_SendInvitation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) ListMember(ctx context.Context, in *ListMemberRequest, opts ...grpc.CallOption) (*ListMemberResponse, error) {
+	out := new(ListMemberResponse)
+	err := c.cc.Invoke(ctx, Service_ListMember_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -141,11 +152,12 @@ func (c *serviceClient) DeleteMember(ctx context.Context, in *DeleteMemberReques
 type ServiceServer interface {
 	ListStore(context.Context, *ListStoreRequest) (*ListStoreResponse, error)
 	GetStore(context.Context, *GetStoreRequest) (*Store, error)
-	CreateStore(context.Context, *Store) (*Store, error)
+	CreateStore(context.Context, *CreateStoreRequest) (*Store, error)
 	UpdateStore(context.Context, *UpdateStoreRequest) (*Store, error)
 	DeleteStore(context.Context, *DeleteStoreRequest) (*protobuf.Empty, error)
+	ListInvitation(context.Context, *ListInvitationRequest) (*ListInvitationResponse, error)
+	SendInvitation(context.Context, *SendInvitationRequest) (*protobuf.Empty, error)
 	ListMember(context.Context, *ListMemberRequest) (*ListMemberResponse, error)
-	AddMember(context.Context, *AddMemberRequest) (*Member, error)
 	UpdateMember(context.Context, *UpdateMemberRequest) (*Member, error)
 	DeleteMember(context.Context, *DeleteMemberRequest) (*protobuf.Empty, error)
 	mustEmbedUnimplementedServiceServer()
@@ -161,7 +173,7 @@ func (UnimplementedServiceServer) ListStore(context.Context, *ListStoreRequest) 
 func (UnimplementedServiceServer) GetStore(context.Context, *GetStoreRequest) (*Store, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStore not implemented")
 }
-func (UnimplementedServiceServer) CreateStore(context.Context, *Store) (*Store, error) {
+func (UnimplementedServiceServer) CreateStore(context.Context, *CreateStoreRequest) (*Store, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateStore not implemented")
 }
 func (UnimplementedServiceServer) UpdateStore(context.Context, *UpdateStoreRequest) (*Store, error) {
@@ -170,11 +182,14 @@ func (UnimplementedServiceServer) UpdateStore(context.Context, *UpdateStoreReque
 func (UnimplementedServiceServer) DeleteStore(context.Context, *DeleteStoreRequest) (*protobuf.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteStore not implemented")
 }
+func (UnimplementedServiceServer) ListInvitation(context.Context, *ListInvitationRequest) (*ListInvitationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInvitation not implemented")
+}
+func (UnimplementedServiceServer) SendInvitation(context.Context, *SendInvitationRequest) (*protobuf.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendInvitation not implemented")
+}
 func (UnimplementedServiceServer) ListMember(context.Context, *ListMemberRequest) (*ListMemberResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListMember not implemented")
-}
-func (UnimplementedServiceServer) AddMember(context.Context, *AddMemberRequest) (*Member, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddMember not implemented")
 }
 func (UnimplementedServiceServer) UpdateMember(context.Context, *UpdateMemberRequest) (*Member, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMember not implemented")
@@ -232,7 +247,7 @@ func _Service_GetStore_Handler(srv interface{}, ctx context.Context, dec func(in
 }
 
 func _Service_CreateStore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Store)
+	in := new(CreateStoreRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -244,7 +259,7 @@ func _Service_CreateStore_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: Service_CreateStore_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).CreateStore(ctx, req.(*Store))
+		return srv.(ServiceServer).CreateStore(ctx, req.(*CreateStoreRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -285,6 +300,42 @@ func _Service_DeleteStore_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_ListInvitation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListInvitationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).ListInvitation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_ListInvitation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).ListInvitation(ctx, req.(*ListInvitationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_SendInvitation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendInvitationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).SendInvitation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_SendInvitation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).SendInvitation(ctx, req.(*SendInvitationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Service_ListMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListMemberRequest)
 	if err := dec(in); err != nil {
@@ -299,24 +350,6 @@ func _Service_ListMember_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ServiceServer).ListMember(ctx, req.(*ListMemberRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_AddMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddMemberRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).AddMember(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_AddMember_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).AddMember(ctx, req.(*AddMemberRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -385,12 +418,16 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Service_DeleteStore_Handler,
 		},
 		{
-			MethodName: "ListMember",
-			Handler:    _Service_ListMember_Handler,
+			MethodName: "ListInvitation",
+			Handler:    _Service_ListInvitation_Handler,
 		},
 		{
-			MethodName: "AddMember",
-			Handler:    _Service_AddMember_Handler,
+			MethodName: "SendInvitation",
+			Handler:    _Service_SendInvitation_Handler,
+		},
+		{
+			MethodName: "ListMember",
+			Handler:    _Service_ListMember_Handler,
 		},
 		{
 			MethodName: "UpdateMember",
