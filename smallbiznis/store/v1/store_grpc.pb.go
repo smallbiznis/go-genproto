@@ -30,6 +30,7 @@ const (
 	Service_ResendInvitation_FullMethodName = "/smallbiznis.store.v1.Service/ResendInvitation"
 	Service_DeleteInvitation_FullMethodName = "/smallbiznis.store.v1.Service/DeleteInvitation"
 	Service_VerifyInvitation_FullMethodName = "/smallbiznis.store.v1.Service/VerifyInvitation"
+	Service_AddMember_FullMethodName        = "/smallbiznis.store.v1.Service/AddMember"
 	Service_ListMember_FullMethodName       = "/smallbiznis.store.v1.Service/ListMember"
 	Service_UpdateMember_FullMethodName     = "/smallbiznis.store.v1.Service/UpdateMember"
 	Service_DeleteMember_FullMethodName     = "/smallbiznis.store.v1.Service/DeleteMember"
@@ -49,6 +50,7 @@ type ServiceClient interface {
 	ResendInvitation(ctx context.Context, in *ResendInvitationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	DeleteInvitation(ctx context.Context, in *DeleteInvitationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	VerifyInvitation(ctx context.Context, in *VerifyInvitationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	AddMember(ctx context.Context, in *AddMemberRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	ListMember(ctx context.Context, in *ListMemberRequest, opts ...grpc.CallOption) (*ListMemberResponse, error)
 	UpdateMember(ctx context.Context, in *UpdateMemberRequest, opts ...grpc.CallOption) (*Member, error)
 	DeleteMember(ctx context.Context, in *DeleteMemberRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
@@ -152,6 +154,15 @@ func (c *serviceClient) VerifyInvitation(ctx context.Context, in *VerifyInvitati
 	return out, nil
 }
 
+func (c *serviceClient) AddMember(ctx context.Context, in *AddMemberRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+	out := new(protobuf.Empty)
+	err := c.cc.Invoke(ctx, Service_AddMember_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *serviceClient) ListMember(ctx context.Context, in *ListMemberRequest, opts ...grpc.CallOption) (*ListMemberResponse, error) {
 	out := new(ListMemberResponse)
 	err := c.cc.Invoke(ctx, Service_ListMember_FullMethodName, in, out, opts...)
@@ -193,6 +204,7 @@ type ServiceServer interface {
 	ResendInvitation(context.Context, *ResendInvitationRequest) (*protobuf.Empty, error)
 	DeleteInvitation(context.Context, *DeleteInvitationRequest) (*protobuf.Empty, error)
 	VerifyInvitation(context.Context, *VerifyInvitationRequest) (*protobuf.Empty, error)
+	AddMember(context.Context, *AddMemberRequest) (*protobuf.Empty, error)
 	ListMember(context.Context, *ListMemberRequest) (*ListMemberResponse, error)
 	UpdateMember(context.Context, *UpdateMemberRequest) (*Member, error)
 	DeleteMember(context.Context, *DeleteMemberRequest) (*protobuf.Empty, error)
@@ -232,6 +244,9 @@ func (UnimplementedServiceServer) DeleteInvitation(context.Context, *DeleteInvit
 }
 func (UnimplementedServiceServer) VerifyInvitation(context.Context, *VerifyInvitationRequest) (*protobuf.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyInvitation not implemented")
+}
+func (UnimplementedServiceServer) AddMember(context.Context, *AddMemberRequest) (*protobuf.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddMember not implemented")
 }
 func (UnimplementedServiceServer) ListMember(context.Context, *ListMemberRequest) (*ListMemberResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListMember not implemented")
@@ -435,6 +450,24 @@ func _Service_VerifyInvitation_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_AddMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddMemberRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).AddMember(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_AddMember_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).AddMember(ctx, req.(*AddMemberRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Service_ListMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListMemberRequest)
 	if err := dec(in); err != nil {
@@ -535,6 +568,10 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "VerifyInvitation",
 			Handler:    _Service_VerifyInvitation_Handler,
+		},
+		{
+			MethodName: "AddMember",
+			Handler:    _Service_AddMember_Handler,
 		},
 		{
 			MethodName: "ListMember",
