@@ -47,7 +47,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
 	// Category
-	ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListBrandResponse, error)
+	ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryResponse, error)
 	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*Category, error)
 	AddCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*Category, error)
 	UpdateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*Category, error)
@@ -80,8 +80,8 @@ func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
 	return &serviceClient{cc}
 }
 
-func (c *serviceClient) ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListBrandResponse, error) {
-	out := new(ListBrandResponse)
+func (c *serviceClient) ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryResponse, error) {
+	out := new(ListCategoryResponse)
 	err := c.cc.Invoke(ctx, Service_ListCategory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -265,7 +265,7 @@ func (c *serviceClient) DeleteProduct(ctx context.Context, in *DeleteProductrequ
 // for forward compatibility
 type ServiceServer interface {
 	// Category
-	ListCategory(context.Context, *ListCategoryRequest) (*ListBrandResponse, error)
+	ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryResponse, error)
 	GetCategory(context.Context, *GetCategoryRequest) (*Category, error)
 	AddCategory(context.Context, *Category) (*Category, error)
 	UpdateCategory(context.Context, *Category) (*Category, error)
@@ -295,7 +295,7 @@ type ServiceServer interface {
 type UnimplementedServiceServer struct {
 }
 
-func (UnimplementedServiceServer) ListCategory(context.Context, *ListCategoryRequest) (*ListBrandResponse, error) {
+func (UnimplementedServiceServer) ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCategory not implemented")
 }
 func (UnimplementedServiceServer) GetCategory(context.Context, *GetCategoryRequest) (*Category, error) {
