@@ -556,7 +556,7 @@ func local_request_Service_GetOption_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func request_Service_AddOption_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Option
+	var protoReq AddOptionRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -569,7 +569,7 @@ func request_Service_AddOption_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_Service_AddOption_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Option
+	var protoReq AddOptionRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {

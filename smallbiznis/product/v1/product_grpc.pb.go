@@ -61,7 +61,7 @@ type ServiceClient interface {
 	// Option
 	ListOption(ctx context.Context, in *ListOptionRequest, opts ...grpc.CallOption) (*ListOptionResponse, error)
 	GetOption(ctx context.Context, in *GetOptionRequest, opts ...grpc.CallOption) (*Option, error)
-	AddOption(ctx context.Context, in *Option, opts ...grpc.CallOption) (*Option, error)
+	AddOption(ctx context.Context, in *AddOptionRequest, opts ...grpc.CallOption) (*Option, error)
 	UpdateOption(ctx context.Context, in *Option, opts ...grpc.CallOption) (*Option, error)
 	DeleteOption(ctx context.Context, in *DeleteOptionRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	// Product
@@ -188,7 +188,7 @@ func (c *serviceClient) GetOption(ctx context.Context, in *GetOptionRequest, opt
 	return out, nil
 }
 
-func (c *serviceClient) AddOption(ctx context.Context, in *Option, opts ...grpc.CallOption) (*Option, error) {
+func (c *serviceClient) AddOption(ctx context.Context, in *AddOptionRequest, opts ...grpc.CallOption) (*Option, error) {
 	out := new(Option)
 	err := c.cc.Invoke(ctx, Service_AddOption_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -279,7 +279,7 @@ type ServiceServer interface {
 	// Option
 	ListOption(context.Context, *ListOptionRequest) (*ListOptionResponse, error)
 	GetOption(context.Context, *GetOptionRequest) (*Option, error)
-	AddOption(context.Context, *Option) (*Option, error)
+	AddOption(context.Context, *AddOptionRequest) (*Option, error)
 	UpdateOption(context.Context, *Option) (*Option, error)
 	DeleteOption(context.Context, *DeleteOptionRequest) (*protobuf.Empty, error)
 	// Product
@@ -331,7 +331,7 @@ func (UnimplementedServiceServer) ListOption(context.Context, *ListOptionRequest
 func (UnimplementedServiceServer) GetOption(context.Context, *GetOptionRequest) (*Option, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOption not implemented")
 }
-func (UnimplementedServiceServer) AddOption(context.Context, *Option) (*Option, error) {
+func (UnimplementedServiceServer) AddOption(context.Context, *AddOptionRequest) (*Option, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddOption not implemented")
 }
 func (UnimplementedServiceServer) UpdateOption(context.Context, *Option) (*Option, error) {
@@ -585,7 +585,7 @@ func _Service_GetOption_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _Service_AddOption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Option)
+	in := new(AddOptionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -597,7 +597,7 @@ func _Service_AddOption_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: Service_AddOption_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).AddOption(ctx, req.(*Option))
+		return srv.(ServiceServer).AddOption(ctx, req.(*AddOptionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
