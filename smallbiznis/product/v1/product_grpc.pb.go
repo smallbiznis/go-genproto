@@ -20,32 +20,39 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Service_ListCategory_FullMethodName   = "/smallbiznis.product.v1.Service/ListCategory"
-	Service_GetCategory_FullMethodName    = "/smallbiznis.product.v1.Service/GetCategory"
-	Service_AddCategory_FullMethodName    = "/smallbiznis.product.v1.Service/AddCategory"
-	Service_UpdateCategory_FullMethodName = "/smallbiznis.product.v1.Service/UpdateCategory"
-	Service_DeleteCategory_FullMethodName = "/smallbiznis.product.v1.Service/DeleteCategory"
-	Service_ListBrand_FullMethodName      = "/smallbiznis.product.v1.Service/ListBrand"
-	Service_GetBrand_FullMethodName       = "/smallbiznis.product.v1.Service/GetBrand"
-	Service_AddBrand_FullMethodName       = "/smallbiznis.product.v1.Service/AddBrand"
-	Service_UpdateBrand_FullMethodName    = "/smallbiznis.product.v1.Service/UpdateBrand"
-	Service_DeleteBrand_FullMethodName    = "/smallbiznis.product.v1.Service/DeleteBrand"
-	Service_ListOption_FullMethodName     = "/smallbiznis.product.v1.Service/ListOption"
-	Service_GetOption_FullMethodName      = "/smallbiznis.product.v1.Service/GetOption"
-	Service_AddOption_FullMethodName      = "/smallbiznis.product.v1.Service/AddOption"
-	Service_UpdateOption_FullMethodName   = "/smallbiznis.product.v1.Service/UpdateOption"
-	Service_DeleteOption_FullMethodName   = "/smallbiznis.product.v1.Service/DeleteOption"
-	Service_ListProduct_FullMethodName    = "/smallbiznis.product.v1.Service/ListProduct"
-	Service_GetProduct_FullMethodName     = "/smallbiznis.product.v1.Service/GetProduct"
-	Service_AddProduct_FullMethodName     = "/smallbiznis.product.v1.Service/AddProduct"
-	Service_UpdateProduct_FullMethodName  = "/smallbiznis.product.v1.Service/UpdateProduct"
-	Service_DeleteProduct_FullMethodName  = "/smallbiznis.product.v1.Service/DeleteProduct"
+	Service_ListCollection_FullMethodName   = "/smallbiznis.product.v1.Service/ListCollection"
+	Service_AddCollection_FullMethodName    = "/smallbiznis.product.v1.Service/AddCollection"
+	Service_UpdateCollection_FullMethodName = "/smallbiznis.product.v1.Service/UpdateCollection"
+	Service_ListCategory_FullMethodName     = "/smallbiznis.product.v1.Service/ListCategory"
+	Service_GetCategory_FullMethodName      = "/smallbiznis.product.v1.Service/GetCategory"
+	Service_AddCategory_FullMethodName      = "/smallbiznis.product.v1.Service/AddCategory"
+	Service_UpdateCategory_FullMethodName   = "/smallbiznis.product.v1.Service/UpdateCategory"
+	Service_DeleteCategory_FullMethodName   = "/smallbiznis.product.v1.Service/DeleteCategory"
+	Service_ListBrand_FullMethodName        = "/smallbiznis.product.v1.Service/ListBrand"
+	Service_GetBrand_FullMethodName         = "/smallbiznis.product.v1.Service/GetBrand"
+	Service_AddBrand_FullMethodName         = "/smallbiznis.product.v1.Service/AddBrand"
+	Service_UpdateBrand_FullMethodName      = "/smallbiznis.product.v1.Service/UpdateBrand"
+	Service_DeleteBrand_FullMethodName      = "/smallbiznis.product.v1.Service/DeleteBrand"
+	Service_ListOption_FullMethodName       = "/smallbiznis.product.v1.Service/ListOption"
+	Service_GetOption_FullMethodName        = "/smallbiznis.product.v1.Service/GetOption"
+	Service_AddOption_FullMethodName        = "/smallbiznis.product.v1.Service/AddOption"
+	Service_UpdateOption_FullMethodName     = "/smallbiznis.product.v1.Service/UpdateOption"
+	Service_DeleteOption_FullMethodName     = "/smallbiznis.product.v1.Service/DeleteOption"
+	Service_ListProduct_FullMethodName      = "/smallbiznis.product.v1.Service/ListProduct"
+	Service_GetProduct_FullMethodName       = "/smallbiznis.product.v1.Service/GetProduct"
+	Service_AddProduct_FullMethodName       = "/smallbiznis.product.v1.Service/AddProduct"
+	Service_UpdateProduct_FullMethodName    = "/smallbiznis.product.v1.Service/UpdateProduct"
+	Service_DeleteProduct_FullMethodName    = "/smallbiznis.product.v1.Service/DeleteProduct"
 )
 
 // ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
+	// Collection
+	ListCollection(ctx context.Context, in *ListCollectionRequest, opts ...grpc.CallOption) (*ListCollectionResponse, error)
+	AddCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Collection, error)
+	UpdateCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Collection, error)
 	// Category
 	ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryResponse, error)
 	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*Category, error)
@@ -78,6 +85,33 @@ type serviceClient struct {
 
 func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
 	return &serviceClient{cc}
+}
+
+func (c *serviceClient) ListCollection(ctx context.Context, in *ListCollectionRequest, opts ...grpc.CallOption) (*ListCollectionResponse, error) {
+	out := new(ListCollectionResponse)
+	err := c.cc.Invoke(ctx, Service_ListCollection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) AddCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Collection, error) {
+	out := new(Collection)
+	err := c.cc.Invoke(ctx, Service_AddCollection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) UpdateCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Collection, error) {
+	out := new(Collection)
+	err := c.cc.Invoke(ctx, Service_UpdateCollection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *serviceClient) ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryResponse, error) {
@@ -264,6 +298,10 @@ func (c *serviceClient) DeleteProduct(ctx context.Context, in *DeleteProductrequ
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility
 type ServiceServer interface {
+	// Collection
+	ListCollection(context.Context, *ListCollectionRequest) (*ListCollectionResponse, error)
+	AddCollection(context.Context, *Collection) (*Collection, error)
+	UpdateCollection(context.Context, *Collection) (*Collection, error)
 	// Category
 	ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryResponse, error)
 	GetCategory(context.Context, *GetCategoryRequest) (*Category, error)
@@ -295,6 +333,15 @@ type ServiceServer interface {
 type UnimplementedServiceServer struct {
 }
 
+func (UnimplementedServiceServer) ListCollection(context.Context, *ListCollectionRequest) (*ListCollectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCollection not implemented")
+}
+func (UnimplementedServiceServer) AddCollection(context.Context, *Collection) (*Collection, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddCollection not implemented")
+}
+func (UnimplementedServiceServer) UpdateCollection(context.Context, *Collection) (*Collection, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCollection not implemented")
+}
 func (UnimplementedServiceServer) ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCategory not implemented")
 }
@@ -366,6 +413,60 @@ type UnsafeServiceServer interface {
 
 func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
 	s.RegisterService(&Service_ServiceDesc, srv)
+}
+
+func _Service_ListCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCollectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).ListCollection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_ListCollection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).ListCollection(ctx, req.(*ListCollectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_AddCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Collection)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).AddCollection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_AddCollection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).AddCollection(ctx, req.(*Collection))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_UpdateCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Collection)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).UpdateCollection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_UpdateCollection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).UpdateCollection(ctx, req.(*Collection))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Service_ListCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -735,6 +836,18 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.product.v1.Service",
 	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListCollection",
+			Handler:    _Service_ListCollection_Handler,
+		},
+		{
+			MethodName: "AddCollection",
+			Handler:    _Service_AddCollection_Handler,
+		},
+		{
+			MethodName: "UpdateCollection",
+			Handler:    _Service_UpdateCollection_Handler,
+		},
 		{
 			MethodName: "ListCategory",
 			Handler:    _Service_ListCategory_Handler,
