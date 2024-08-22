@@ -242,6 +242,61 @@ func (x *GetMemberRequest) GetMemberId() string {
 	return ""
 }
 
+type AddMemberRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId string `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Roles  []Role `protobuf:"varint,2,rep,packed,name=roles,proto3,enum=smallbiznis.member.v1.Role" json:"roles,omitempty"`
+}
+
+func (x *AddMemberRequest) Reset() {
+	*x = AddMemberRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_member_v1_member_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AddMemberRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddMemberRequest) ProtoMessage() {}
+
+func (x *AddMemberRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_member_v1_member_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddMemberRequest.ProtoReflect.Descriptor instead.
+func (*AddMemberRequest) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_member_v1_member_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *AddMemberRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *AddMemberRequest) GetRoles() []Role {
+	if x != nil {
+		return x.Roles
+	}
+	return nil
+}
+
 type UpdateMemberRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -254,7 +309,7 @@ type UpdateMemberRequest struct {
 func (x *UpdateMemberRequest) Reset() {
 	*x = UpdateMemberRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_member_v1_member_proto_msgTypes[3]
+		mi := &file_smallbiznis_member_v1_member_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -267,7 +322,7 @@ func (x *UpdateMemberRequest) String() string {
 func (*UpdateMemberRequest) ProtoMessage() {}
 
 func (x *UpdateMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_member_v1_member_proto_msgTypes[3]
+	mi := &file_smallbiznis_member_v1_member_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -280,7 +335,7 @@ func (x *UpdateMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateMemberRequest.ProtoReflect.Descriptor instead.
 func (*UpdateMemberRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_member_v1_member_proto_rawDescGZIP(), []int{3}
+	return file_smallbiznis_member_v1_member_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *UpdateMemberRequest) GetMemberId() string {
@@ -308,7 +363,7 @@ type DeleteMemberRequest struct {
 func (x *DeleteMemberRequest) Reset() {
 	*x = DeleteMemberRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_member_v1_member_proto_msgTypes[4]
+		mi := &file_smallbiznis_member_v1_member_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -321,7 +376,7 @@ func (x *DeleteMemberRequest) String() string {
 func (*DeleteMemberRequest) ProtoMessage() {}
 
 func (x *DeleteMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_member_v1_member_proto_msgTypes[4]
+	mi := &file_smallbiznis_member_v1_member_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -334,7 +389,7 @@ func (x *DeleteMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteMemberRequest.ProtoReflect.Descriptor instead.
 func (*DeleteMemberRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_member_v1_member_proto_rawDescGZIP(), []int{4}
+	return file_smallbiznis_member_v1_member_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *DeleteMemberRequest) GetMemberId() string {
@@ -383,7 +438,13 @@ var file_smallbiznis_member_v1_member_proto_rawDesc = []byte{
 	0x44, 0x61, 0x74, 0x61, 0x22, 0x2f, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x6d, 0x62, 0x65,
 	0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x6d, 0x65, 0x6d, 0x62,
 	0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6d, 0x65, 0x6d,
-	0x62, 0x65, 0x72, 0x49, 0x64, 0x22, 0x65, 0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4d,
+	0x62, 0x65, 0x72, 0x49, 0x64, 0x22, 0x5e, 0x0a, 0x10, 0x41, 0x64, 0x64, 0x4d, 0x65, 0x6d, 0x62,
+	0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65,
+	0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72,
+	0x49, 0x64, 0x12, 0x31, 0x0a, 0x05, 0x72, 0x6f, 0x6c, 0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28,
+	0x0e, 0x32, 0x1b, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e,
+	0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x6f, 0x6c, 0x65, 0x52, 0x05,
+	0x72, 0x6f, 0x6c, 0x65, 0x73, 0x22, 0x65, 0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4d,
 	0x65, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09,
 	0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x08, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x49, 0x64, 0x12, 0x31, 0x0a, 0x05, 0x72, 0x6f, 0x6c,
@@ -393,7 +454,7 @@ var file_smallbiznis_member_v1_member_proto_rawDesc = []byte{
 	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75,
 	0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x5f, 0x69, 0x64,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x49, 0x64,
-	0x32, 0xf3, 0x03, 0x0a, 0x0d, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69,
+	0x32, 0xe3, 0x04, 0x0a, 0x0d, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69,
 	0x63, 0x65, 0x12, 0x76, 0x0a, 0x0a, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72,
 	0x12, 0x28, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6d,
 	0x65, 0x6d, 0x62, 0x65, 0x72, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x6d,
@@ -409,7 +470,14 @@ var file_smallbiznis_member_v1_member_proto_rawDesc = []byte{
 	0x65, 0x6d, 0x62, 0x65, 0x72, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x22,
 	0x1f, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x19, 0x12, 0x17, 0x2f, 0x76, 0x31, 0x2f, 0x6d, 0x65, 0x6d,
 	0x62, 0x65, 0x72, 0x73, 0x2f, 0x7b, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x7d,
-	0x12, 0x7a, 0x0a, 0x09, 0x41, 0x64, 0x64, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x2a, 0x2e,
+	0x12, 0x6b, 0x0a, 0x09, 0x41, 0x64, 0x64, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x27, 0x2e,
+	0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6d, 0x65, 0x6d, 0x62,
+	0x65, 0x72, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x64, 0x64, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69,
+	0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
+	0x65, 0x6d, 0x62, 0x65, 0x72, 0x22, 0x16, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x10, 0x3a, 0x01, 0x2a,
+	0x22, 0x0b, 0x2f, 0x76, 0x31, 0x2f, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x12, 0x7d, 0x0a,
+	0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x2a, 0x2e,
 	0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6d, 0x65, 0x6d, 0x62,
 	0x65, 0x72, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4d, 0x65, 0x6d, 0x62,
 	0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x73, 0x6d, 0x61, 0x6c,
@@ -445,35 +513,39 @@ func file_smallbiznis_member_v1_member_proto_rawDescGZIP() []byte {
 }
 
 var file_smallbiznis_member_v1_member_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_smallbiznis_member_v1_member_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_smallbiznis_member_v1_member_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_smallbiznis_member_v1_member_proto_goTypes = []interface{}{
 	(ListMemberRequest_OrderBy)(0), // 0: smallbiznis.member.v1.ListMemberRequest.OrderBy
 	(*ListMemberRequest)(nil),      // 1: smallbiznis.member.v1.ListMemberRequest
 	(*ListMemberResponse)(nil),     // 2: smallbiznis.member.v1.ListMemberResponse
 	(*GetMemberRequest)(nil),       // 3: smallbiznis.member.v1.GetMemberRequest
-	(*UpdateMemberRequest)(nil),    // 4: smallbiznis.member.v1.UpdateMemberRequest
-	(*DeleteMemberRequest)(nil),    // 5: smallbiznis.member.v1.DeleteMemberRequest
-	(*Member)(nil),                 // 6: smallbiznis.member.v1.Member
-	(Role)(0),                      // 7: smallbiznis.member.v1.Role
-	(*protobuf.Empty)(nil),         // 8: smallbiznis.protobuf.Empty
+	(*AddMemberRequest)(nil),       // 4: smallbiznis.member.v1.AddMemberRequest
+	(*UpdateMemberRequest)(nil),    // 5: smallbiznis.member.v1.UpdateMemberRequest
+	(*DeleteMemberRequest)(nil),    // 6: smallbiznis.member.v1.DeleteMemberRequest
+	(*Member)(nil),                 // 7: smallbiznis.member.v1.Member
+	(Role)(0),                      // 8: smallbiznis.member.v1.Role
+	(*protobuf.Empty)(nil),         // 9: smallbiznis.protobuf.Empty
 }
 var file_smallbiznis_member_v1_member_proto_depIdxs = []int32{
 	0, // 0: smallbiznis.member.v1.ListMemberRequest.order_by:type_name -> smallbiznis.member.v1.ListMemberRequest.OrderBy
-	6, // 1: smallbiznis.member.v1.ListMemberResponse.data:type_name -> smallbiznis.member.v1.Member
-	7, // 2: smallbiznis.member.v1.UpdateMemberRequest.roles:type_name -> smallbiznis.member.v1.Role
-	1, // 3: smallbiznis.member.v1.MemberService.ListMember:input_type -> smallbiznis.member.v1.ListMemberRequest
-	3, // 4: smallbiznis.member.v1.MemberService.GetMember:input_type -> smallbiznis.member.v1.GetMemberRequest
-	4, // 5: smallbiznis.member.v1.MemberService.AddMember:input_type -> smallbiznis.member.v1.UpdateMemberRequest
-	5, // 6: smallbiznis.member.v1.MemberService.DeleteMember:input_type -> smallbiznis.member.v1.DeleteMemberRequest
-	2, // 7: smallbiznis.member.v1.MemberService.ListMember:output_type -> smallbiznis.member.v1.ListMemberResponse
-	6, // 8: smallbiznis.member.v1.MemberService.GetMember:output_type -> smallbiznis.member.v1.Member
-	6, // 9: smallbiznis.member.v1.MemberService.AddMember:output_type -> smallbiznis.member.v1.Member
-	8, // 10: smallbiznis.member.v1.MemberService.DeleteMember:output_type -> smallbiznis.protobuf.Empty
-	7, // [7:11] is the sub-list for method output_type
-	3, // [3:7] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	7, // 1: smallbiznis.member.v1.ListMemberResponse.data:type_name -> smallbiznis.member.v1.Member
+	8, // 2: smallbiznis.member.v1.AddMemberRequest.roles:type_name -> smallbiznis.member.v1.Role
+	8, // 3: smallbiznis.member.v1.UpdateMemberRequest.roles:type_name -> smallbiznis.member.v1.Role
+	1, // 4: smallbiznis.member.v1.MemberService.ListMember:input_type -> smallbiznis.member.v1.ListMemberRequest
+	3, // 5: smallbiznis.member.v1.MemberService.GetMember:input_type -> smallbiznis.member.v1.GetMemberRequest
+	4, // 6: smallbiznis.member.v1.MemberService.AddMember:input_type -> smallbiznis.member.v1.AddMemberRequest
+	5, // 7: smallbiznis.member.v1.MemberService.UpdateMember:input_type -> smallbiznis.member.v1.UpdateMemberRequest
+	6, // 8: smallbiznis.member.v1.MemberService.DeleteMember:input_type -> smallbiznis.member.v1.DeleteMemberRequest
+	2, // 9: smallbiznis.member.v1.MemberService.ListMember:output_type -> smallbiznis.member.v1.ListMemberResponse
+	7, // 10: smallbiznis.member.v1.MemberService.GetMember:output_type -> smallbiznis.member.v1.Member
+	7, // 11: smallbiznis.member.v1.MemberService.AddMember:output_type -> smallbiznis.member.v1.Member
+	7, // 12: smallbiznis.member.v1.MemberService.UpdateMember:output_type -> smallbiznis.member.v1.Member
+	9, // 13: smallbiznis.member.v1.MemberService.DeleteMember:output_type -> smallbiznis.protobuf.Empty
+	9, // [9:14] is the sub-list for method output_type
+	4, // [4:9] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_smallbiznis_member_v1_member_proto_init() }
@@ -520,7 +592,7 @@ func file_smallbiznis_member_v1_member_proto_init() {
 			}
 		}
 		file_smallbiznis_member_v1_member_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateMemberRequest); i {
+			switch v := v.(*AddMemberRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -532,6 +604,18 @@ func file_smallbiznis_member_v1_member_proto_init() {
 			}
 		}
 		file_smallbiznis_member_v1_member_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateMemberRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_smallbiznis_member_v1_member_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteMemberRequest); i {
 			case 0:
 				return &v.state
@@ -550,7 +634,7 @@ func file_smallbiznis_member_v1_member_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_smallbiznis_member_v1_member_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
