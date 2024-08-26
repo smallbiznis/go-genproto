@@ -43,7 +43,7 @@ type ServiceClient interface {
 	DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	// Inventory
 	ListInventoryItem(ctx context.Context, in *ListInventoryItemRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error)
-	GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error)
+	GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
 	CreateInventoryItem(ctx context.Context, in *CreateInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
 	UpdateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
 }
@@ -110,8 +110,8 @@ func (c *serviceClient) ListInventoryItem(ctx context.Context, in *ListInventory
 	return out, nil
 }
 
-func (c *serviceClient) GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error) {
-	out := new(ListInventoryItemResponse)
+func (c *serviceClient) GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error) {
+	out := new(InventoryItem)
 	err := c.cc.Invoke(ctx, Service_GetInventoryItem_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -149,7 +149,7 @@ type ServiceServer interface {
 	DeleteProduct(context.Context, *DeleteProductrequest) (*protobuf.Empty, error)
 	// Inventory
 	ListInventoryItem(context.Context, *ListInventoryItemRequest) (*ListInventoryItemResponse, error)
-	GetInventoryItem(context.Context, *GetInventoryRequest) (*ListInventoryItemResponse, error)
+	GetInventoryItem(context.Context, *GetInventoryRequest) (*InventoryItem, error)
 	CreateInventoryItem(context.Context, *CreateInventoryRequest) (*InventoryItem, error)
 	UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error)
 	mustEmbedUnimplementedServiceServer()
@@ -177,7 +177,7 @@ func (UnimplementedServiceServer) DeleteProduct(context.Context, *DeleteProductr
 func (UnimplementedServiceServer) ListInventoryItem(context.Context, *ListInventoryItemRequest) (*ListInventoryItemResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListInventoryItem not implemented")
 }
-func (UnimplementedServiceServer) GetInventoryItem(context.Context, *GetInventoryRequest) (*ListInventoryItemResponse, error) {
+func (UnimplementedServiceServer) GetInventoryItem(context.Context, *GetInventoryRequest) (*InventoryItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInventoryItem not implemented")
 }
 func (UnimplementedServiceServer) CreateInventoryItem(context.Context, *CreateInventoryRequest) (*InventoryItem, error) {
