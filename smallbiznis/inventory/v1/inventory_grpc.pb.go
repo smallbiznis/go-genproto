@@ -20,58 +20,21 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Service_ListCollection_FullMethodName    = "/smallbiznis.inventory.v1.Service/ListCollection"
-	Service_AddCollection_FullMethodName     = "/smallbiznis.inventory.v1.Service/AddCollection"
-	Service_UpdateCollection_FullMethodName  = "/smallbiznis.inventory.v1.Service/UpdateCollection"
-	Service_ListCategory_FullMethodName      = "/smallbiznis.inventory.v1.Service/ListCategory"
-	Service_GetCategory_FullMethodName       = "/smallbiznis.inventory.v1.Service/GetCategory"
-	Service_AddCategory_FullMethodName       = "/smallbiznis.inventory.v1.Service/AddCategory"
-	Service_UpdateCategory_FullMethodName    = "/smallbiznis.inventory.v1.Service/UpdateCategory"
-	Service_DeleteCategory_FullMethodName    = "/smallbiznis.inventory.v1.Service/DeleteCategory"
-	Service_ListBrand_FullMethodName         = "/smallbiznis.inventory.v1.Service/ListBrand"
-	Service_GetBrand_FullMethodName          = "/smallbiznis.inventory.v1.Service/GetBrand"
-	Service_AddBrand_FullMethodName          = "/smallbiznis.inventory.v1.Service/AddBrand"
-	Service_UpdateBrand_FullMethodName       = "/smallbiznis.inventory.v1.Service/UpdateBrand"
-	Service_DeleteBrand_FullMethodName       = "/smallbiznis.inventory.v1.Service/DeleteBrand"
-	Service_ListOption_FullMethodName        = "/smallbiznis.inventory.v1.Service/ListOption"
-	Service_GetOption_FullMethodName         = "/smallbiznis.inventory.v1.Service/GetOption"
-	Service_AddOption_FullMethodName         = "/smallbiznis.inventory.v1.Service/AddOption"
-	Service_UpdateOption_FullMethodName      = "/smallbiznis.inventory.v1.Service/UpdateOption"
-	Service_DeleteOption_FullMethodName      = "/smallbiznis.inventory.v1.Service/DeleteOption"
-	Service_ListProduct_FullMethodName       = "/smallbiznis.inventory.v1.Service/ListProduct"
-	Service_GetProduct_FullMethodName        = "/smallbiznis.inventory.v1.Service/GetProduct"
-	Service_AddProduct_FullMethodName        = "/smallbiznis.inventory.v1.Service/AddProduct"
-	Service_UpdateProduct_FullMethodName     = "/smallbiznis.inventory.v1.Service/UpdateProduct"
-	Service_DeleteProduct_FullMethodName     = "/smallbiznis.inventory.v1.Service/DeleteProduct"
-	Service_ListInventoryItem_FullMethodName = "/smallbiznis.inventory.v1.Service/ListInventoryItem"
+	Service_ListProduct_FullMethodName         = "/smallbiznis.inventory.v1.Service/ListProduct"
+	Service_GetProduct_FullMethodName          = "/smallbiznis.inventory.v1.Service/GetProduct"
+	Service_AddProduct_FullMethodName          = "/smallbiznis.inventory.v1.Service/AddProduct"
+	Service_UpdateProduct_FullMethodName       = "/smallbiznis.inventory.v1.Service/UpdateProduct"
+	Service_DeleteProduct_FullMethodName       = "/smallbiznis.inventory.v1.Service/DeleteProduct"
+	Service_ListInventoryItem_FullMethodName   = "/smallbiznis.inventory.v1.Service/ListInventoryItem"
+	Service_GetInventoryItem_FullMethodName    = "/smallbiznis.inventory.v1.Service/GetInventoryItem"
+	Service_CreateInventoryItem_FullMethodName = "/smallbiznis.inventory.v1.Service/CreateInventoryItem"
+	Service_UpdateInventoryItem_FullMethodName = "/smallbiznis.inventory.v1.Service/UpdateInventoryItem"
 )
 
 // ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
-	// Collection
-	ListCollection(ctx context.Context, in *ListCollectionRequest, opts ...grpc.CallOption) (*ListCollectionResponse, error)
-	AddCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Collection, error)
-	UpdateCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Collection, error)
-	// Category
-	ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryResponse, error)
-	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*Category, error)
-	AddCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*Category, error)
-	UpdateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*Category, error)
-	DeleteCategory(ctx context.Context, in *DeleteCategoryRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
-	// Brand
-	ListBrand(ctx context.Context, in *ListBrandRequest, opts ...grpc.CallOption) (*ListBrandResponse, error)
-	GetBrand(ctx context.Context, in *GetBrandRequest, opts ...grpc.CallOption) (*Brand, error)
-	AddBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Brand, error)
-	UpdateBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Brand, error)
-	DeleteBrand(ctx context.Context, in *DeleteBrandRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
-	// Option
-	ListOption(ctx context.Context, in *ListOptionRequest, opts ...grpc.CallOption) (*ListOptionResponse, error)
-	GetOption(ctx context.Context, in *GetOptionRequest, opts ...grpc.CallOption) (*Option, error)
-	AddOption(ctx context.Context, in *AddOptionRequest, opts ...grpc.CallOption) (*Option, error)
-	UpdateOption(ctx context.Context, in *Option, opts ...grpc.CallOption) (*Option, error)
-	DeleteOption(ctx context.Context, in *DeleteOptionRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	// Product
 	ListProduct(ctx context.Context, in *ListProductRequest, opts ...grpc.CallOption) (*ListProductResponse, error)
 	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error)
@@ -80,6 +43,9 @@ type ServiceClient interface {
 	DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	// Inventory
 	ListInventoryItem(ctx context.Context, in *ListInventoryItemRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error)
+	GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error)
+	CreateInventoryItem(ctx context.Context, in *CreateInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
+	UpdateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
 }
 
 type serviceClient struct {
@@ -88,168 +54,6 @@ type serviceClient struct {
 
 func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
 	return &serviceClient{cc}
-}
-
-func (c *serviceClient) ListCollection(ctx context.Context, in *ListCollectionRequest, opts ...grpc.CallOption) (*ListCollectionResponse, error) {
-	out := new(ListCollectionResponse)
-	err := c.cc.Invoke(ctx, Service_ListCollection_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) AddCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Collection, error) {
-	out := new(Collection)
-	err := c.cc.Invoke(ctx, Service_AddCollection_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) UpdateCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Collection, error) {
-	out := new(Collection)
-	err := c.cc.Invoke(ctx, Service_UpdateCollection_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryResponse, error) {
-	out := new(ListCategoryResponse)
-	err := c.cc.Invoke(ctx, Service_ListCategory_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*Category, error) {
-	out := new(Category)
-	err := c.cc.Invoke(ctx, Service_GetCategory_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) AddCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*Category, error) {
-	out := new(Category)
-	err := c.cc.Invoke(ctx, Service_AddCategory_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) UpdateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*Category, error) {
-	out := new(Category)
-	err := c.cc.Invoke(ctx, Service_UpdateCategory_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) DeleteCategory(ctx context.Context, in *DeleteCategoryRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
-	out := new(protobuf.Empty)
-	err := c.cc.Invoke(ctx, Service_DeleteCategory_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) ListBrand(ctx context.Context, in *ListBrandRequest, opts ...grpc.CallOption) (*ListBrandResponse, error) {
-	out := new(ListBrandResponse)
-	err := c.cc.Invoke(ctx, Service_ListBrand_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) GetBrand(ctx context.Context, in *GetBrandRequest, opts ...grpc.CallOption) (*Brand, error) {
-	out := new(Brand)
-	err := c.cc.Invoke(ctx, Service_GetBrand_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) AddBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Brand, error) {
-	out := new(Brand)
-	err := c.cc.Invoke(ctx, Service_AddBrand_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) UpdateBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Brand, error) {
-	out := new(Brand)
-	err := c.cc.Invoke(ctx, Service_UpdateBrand_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) DeleteBrand(ctx context.Context, in *DeleteBrandRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
-	out := new(protobuf.Empty)
-	err := c.cc.Invoke(ctx, Service_DeleteBrand_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) ListOption(ctx context.Context, in *ListOptionRequest, opts ...grpc.CallOption) (*ListOptionResponse, error) {
-	out := new(ListOptionResponse)
-	err := c.cc.Invoke(ctx, Service_ListOption_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) GetOption(ctx context.Context, in *GetOptionRequest, opts ...grpc.CallOption) (*Option, error) {
-	out := new(Option)
-	err := c.cc.Invoke(ctx, Service_GetOption_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) AddOption(ctx context.Context, in *AddOptionRequest, opts ...grpc.CallOption) (*Option, error) {
-	out := new(Option)
-	err := c.cc.Invoke(ctx, Service_AddOption_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) UpdateOption(ctx context.Context, in *Option, opts ...grpc.CallOption) (*Option, error) {
-	out := new(Option)
-	err := c.cc.Invoke(ctx, Service_UpdateOption_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) DeleteOption(ctx context.Context, in *DeleteOptionRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
-	out := new(protobuf.Empty)
-	err := c.cc.Invoke(ctx, Service_DeleteOption_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *serviceClient) ListProduct(ctx context.Context, in *ListProductRequest, opts ...grpc.CallOption) (*ListProductResponse, error) {
@@ -306,32 +110,37 @@ func (c *serviceClient) ListInventoryItem(ctx context.Context, in *ListInventory
 	return out, nil
 }
 
+func (c *serviceClient) GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error) {
+	out := new(ListInventoryItemResponse)
+	err := c.cc.Invoke(ctx, Service_GetInventoryItem_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) CreateInventoryItem(ctx context.Context, in *CreateInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error) {
+	out := new(InventoryItem)
+	err := c.cc.Invoke(ctx, Service_CreateInventoryItem_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) UpdateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error) {
+	out := new(InventoryItem)
+	err := c.cc.Invoke(ctx, Service_UpdateInventoryItem_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceServer is the server API for Service service.
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility
 type ServiceServer interface {
-	// Collection
-	ListCollection(context.Context, *ListCollectionRequest) (*ListCollectionResponse, error)
-	AddCollection(context.Context, *Collection) (*Collection, error)
-	UpdateCollection(context.Context, *Collection) (*Collection, error)
-	// Category
-	ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryResponse, error)
-	GetCategory(context.Context, *GetCategoryRequest) (*Category, error)
-	AddCategory(context.Context, *Category) (*Category, error)
-	UpdateCategory(context.Context, *Category) (*Category, error)
-	DeleteCategory(context.Context, *DeleteCategoryRequest) (*protobuf.Empty, error)
-	// Brand
-	ListBrand(context.Context, *ListBrandRequest) (*ListBrandResponse, error)
-	GetBrand(context.Context, *GetBrandRequest) (*Brand, error)
-	AddBrand(context.Context, *Brand) (*Brand, error)
-	UpdateBrand(context.Context, *Brand) (*Brand, error)
-	DeleteBrand(context.Context, *DeleteBrandRequest) (*protobuf.Empty, error)
-	// Option
-	ListOption(context.Context, *ListOptionRequest) (*ListOptionResponse, error)
-	GetOption(context.Context, *GetOptionRequest) (*Option, error)
-	AddOption(context.Context, *AddOptionRequest) (*Option, error)
-	UpdateOption(context.Context, *Option) (*Option, error)
-	DeleteOption(context.Context, *DeleteOptionRequest) (*protobuf.Empty, error)
 	// Product
 	ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error)
 	GetProduct(context.Context, *GetProductRequest) (*Product, error)
@@ -340,6 +149,9 @@ type ServiceServer interface {
 	DeleteProduct(context.Context, *DeleteProductrequest) (*protobuf.Empty, error)
 	// Inventory
 	ListInventoryItem(context.Context, *ListInventoryItemRequest) (*ListInventoryItemResponse, error)
+	GetInventoryItem(context.Context, *GetInventoryRequest) (*ListInventoryItemResponse, error)
+	CreateInventoryItem(context.Context, *CreateInventoryRequest) (*InventoryItem, error)
+	UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -347,60 +159,6 @@ type ServiceServer interface {
 type UnimplementedServiceServer struct {
 }
 
-func (UnimplementedServiceServer) ListCollection(context.Context, *ListCollectionRequest) (*ListCollectionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListCollection not implemented")
-}
-func (UnimplementedServiceServer) AddCollection(context.Context, *Collection) (*Collection, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddCollection not implemented")
-}
-func (UnimplementedServiceServer) UpdateCollection(context.Context, *Collection) (*Collection, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateCollection not implemented")
-}
-func (UnimplementedServiceServer) ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListCategory not implemented")
-}
-func (UnimplementedServiceServer) GetCategory(context.Context, *GetCategoryRequest) (*Category, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCategory not implemented")
-}
-func (UnimplementedServiceServer) AddCategory(context.Context, *Category) (*Category, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddCategory not implemented")
-}
-func (UnimplementedServiceServer) UpdateCategory(context.Context, *Category) (*Category, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateCategory not implemented")
-}
-func (UnimplementedServiceServer) DeleteCategory(context.Context, *DeleteCategoryRequest) (*protobuf.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteCategory not implemented")
-}
-func (UnimplementedServiceServer) ListBrand(context.Context, *ListBrandRequest) (*ListBrandResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListBrand not implemented")
-}
-func (UnimplementedServiceServer) GetBrand(context.Context, *GetBrandRequest) (*Brand, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBrand not implemented")
-}
-func (UnimplementedServiceServer) AddBrand(context.Context, *Brand) (*Brand, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddBrand not implemented")
-}
-func (UnimplementedServiceServer) UpdateBrand(context.Context, *Brand) (*Brand, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateBrand not implemented")
-}
-func (UnimplementedServiceServer) DeleteBrand(context.Context, *DeleteBrandRequest) (*protobuf.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteBrand not implemented")
-}
-func (UnimplementedServiceServer) ListOption(context.Context, *ListOptionRequest) (*ListOptionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListOption not implemented")
-}
-func (UnimplementedServiceServer) GetOption(context.Context, *GetOptionRequest) (*Option, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOption not implemented")
-}
-func (UnimplementedServiceServer) AddOption(context.Context, *AddOptionRequest) (*Option, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddOption not implemented")
-}
-func (UnimplementedServiceServer) UpdateOption(context.Context, *Option) (*Option, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateOption not implemented")
-}
-func (UnimplementedServiceServer) DeleteOption(context.Context, *DeleteOptionRequest) (*protobuf.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteOption not implemented")
-}
 func (UnimplementedServiceServer) ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProduct not implemented")
 }
@@ -419,6 +177,15 @@ func (UnimplementedServiceServer) DeleteProduct(context.Context, *DeleteProductr
 func (UnimplementedServiceServer) ListInventoryItem(context.Context, *ListInventoryItemRequest) (*ListInventoryItemResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListInventoryItem not implemented")
 }
+func (UnimplementedServiceServer) GetInventoryItem(context.Context, *GetInventoryRequest) (*ListInventoryItemResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetInventoryItem not implemented")
+}
+func (UnimplementedServiceServer) CreateInventoryItem(context.Context, *CreateInventoryRequest) (*InventoryItem, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateInventoryItem not implemented")
+}
+func (UnimplementedServiceServer) UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateInventoryItem not implemented")
+}
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 
 // UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -430,330 +197,6 @@ type UnsafeServiceServer interface {
 
 func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
 	s.RegisterService(&Service_ServiceDesc, srv)
-}
-
-func _Service_ListCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListCollectionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).ListCollection(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_ListCollection_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).ListCollection(ctx, req.(*ListCollectionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_AddCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Collection)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).AddCollection(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_AddCollection_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).AddCollection(ctx, req.(*Collection))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_UpdateCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Collection)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).UpdateCollection(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_UpdateCollection_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).UpdateCollection(ctx, req.(*Collection))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_ListCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListCategoryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).ListCategory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_ListCategory_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).ListCategory(ctx, req.(*ListCategoryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_GetCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCategoryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).GetCategory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_GetCategory_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetCategory(ctx, req.(*GetCategoryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_AddCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Category)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).AddCategory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_AddCategory_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).AddCategory(ctx, req.(*Category))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_UpdateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Category)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).UpdateCategory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_UpdateCategory_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).UpdateCategory(ctx, req.(*Category))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_DeleteCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteCategoryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).DeleteCategory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_DeleteCategory_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).DeleteCategory(ctx, req.(*DeleteCategoryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_ListBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListBrandRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).ListBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_ListBrand_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).ListBrand(ctx, req.(*ListBrandRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_GetBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetBrandRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).GetBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_GetBrand_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetBrand(ctx, req.(*GetBrandRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_AddBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Brand)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).AddBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_AddBrand_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).AddBrand(ctx, req.(*Brand))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_UpdateBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Brand)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).UpdateBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_UpdateBrand_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).UpdateBrand(ctx, req.(*Brand))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_DeleteBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteBrandRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).DeleteBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_DeleteBrand_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).DeleteBrand(ctx, req.(*DeleteBrandRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_ListOption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListOptionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).ListOption(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_ListOption_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).ListOption(ctx, req.(*ListOptionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_GetOption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOptionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).GetOption(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_GetOption_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetOption(ctx, req.(*GetOptionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_AddOption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddOptionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).AddOption(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_AddOption_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).AddOption(ctx, req.(*AddOptionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_UpdateOption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Option)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).UpdateOption(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_UpdateOption_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).UpdateOption(ctx, req.(*Option))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_DeleteOption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteOptionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).DeleteOption(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_DeleteOption_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).DeleteOption(ctx, req.(*DeleteOptionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Service_ListProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -864,6 +307,60 @@ func _Service_ListInventoryItem_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_GetInventoryItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetInventoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).GetInventoryItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_GetInventoryItem_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).GetInventoryItem(ctx, req.(*GetInventoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_CreateInventoryItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateInventoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).CreateInventoryItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_CreateInventoryItem_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).CreateInventoryItem(ctx, req.(*CreateInventoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_UpdateInventoryItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InventoryItem)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).UpdateInventoryItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_UpdateInventoryItem_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).UpdateInventoryItem(ctx, req.(*InventoryItem))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -871,78 +368,6 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.inventory.v1.Service",
 	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "ListCollection",
-			Handler:    _Service_ListCollection_Handler,
-		},
-		{
-			MethodName: "AddCollection",
-			Handler:    _Service_AddCollection_Handler,
-		},
-		{
-			MethodName: "UpdateCollection",
-			Handler:    _Service_UpdateCollection_Handler,
-		},
-		{
-			MethodName: "ListCategory",
-			Handler:    _Service_ListCategory_Handler,
-		},
-		{
-			MethodName: "GetCategory",
-			Handler:    _Service_GetCategory_Handler,
-		},
-		{
-			MethodName: "AddCategory",
-			Handler:    _Service_AddCategory_Handler,
-		},
-		{
-			MethodName: "UpdateCategory",
-			Handler:    _Service_UpdateCategory_Handler,
-		},
-		{
-			MethodName: "DeleteCategory",
-			Handler:    _Service_DeleteCategory_Handler,
-		},
-		{
-			MethodName: "ListBrand",
-			Handler:    _Service_ListBrand_Handler,
-		},
-		{
-			MethodName: "GetBrand",
-			Handler:    _Service_GetBrand_Handler,
-		},
-		{
-			MethodName: "AddBrand",
-			Handler:    _Service_AddBrand_Handler,
-		},
-		{
-			MethodName: "UpdateBrand",
-			Handler:    _Service_UpdateBrand_Handler,
-		},
-		{
-			MethodName: "DeleteBrand",
-			Handler:    _Service_DeleteBrand_Handler,
-		},
-		{
-			MethodName: "ListOption",
-			Handler:    _Service_ListOption_Handler,
-		},
-		{
-			MethodName: "GetOption",
-			Handler:    _Service_GetOption_Handler,
-		},
-		{
-			MethodName: "AddOption",
-			Handler:    _Service_AddOption_Handler,
-		},
-		{
-			MethodName: "UpdateOption",
-			Handler:    _Service_UpdateOption_Handler,
-		},
-		{
-			MethodName: "DeleteOption",
-			Handler:    _Service_DeleteOption_Handler,
-		},
 		{
 			MethodName: "ListProduct",
 			Handler:    _Service_ListProduct_Handler,
@@ -966,6 +391,18 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListInventoryItem",
 			Handler:    _Service_ListInventoryItem_Handler,
+		},
+		{
+			MethodName: "GetInventoryItem",
+			Handler:    _Service_GetInventoryItem_Handler,
+		},
+		{
+			MethodName: "CreateInventoryItem",
+			Handler:    _Service_CreateInventoryItem_Handler,
+		},
+		{
+			MethodName: "UpdateInventoryItem",
+			Handler:    _Service_UpdateInventoryItem_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
