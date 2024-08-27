@@ -29,6 +29,8 @@ const (
 	Service_GetInventoryItem_FullMethodName    = "/smallbiznis.inventory.v1.Service/GetInventoryItem"
 	Service_CreateInventoryItem_FullMethodName = "/smallbiznis.inventory.v1.Service/CreateInventoryItem"
 	Service_UpdateInventoryItem_FullMethodName = "/smallbiznis.inventory.v1.Service/UpdateInventoryItem"
+	Service_ReservedStock_FullMethodName       = "/smallbiznis.inventory.v1.Service/ReservedStock"
+	Service_ReleaseStock_FullMethodName        = "/smallbiznis.inventory.v1.Service/ReleaseStock"
 )
 
 // ServiceClient is the client API for Service service.
@@ -46,6 +48,8 @@ type ServiceClient interface {
 	GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
 	CreateInventoryItem(ctx context.Context, in *CreateInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
 	UpdateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
+	ReservedStock(ctx context.Context, in *ReservedStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	ReleaseStock(ctx context.Context, in *ReleaseStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 }
 
 type serviceClient struct {
@@ -137,6 +141,24 @@ func (c *serviceClient) UpdateInventoryItem(ctx context.Context, in *InventoryIt
 	return out, nil
 }
 
+func (c *serviceClient) ReservedStock(ctx context.Context, in *ReservedStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+	out := new(protobuf.Empty)
+	err := c.cc.Invoke(ctx, Service_ReservedStock_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) ReleaseStock(ctx context.Context, in *ReleaseStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+	out := new(protobuf.Empty)
+	err := c.cc.Invoke(ctx, Service_ReleaseStock_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceServer is the server API for Service service.
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility
@@ -152,6 +174,8 @@ type ServiceServer interface {
 	GetInventoryItem(context.Context, *GetInventoryRequest) (*InventoryItem, error)
 	CreateInventoryItem(context.Context, *CreateInventoryRequest) (*InventoryItem, error)
 	UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error)
+	ReservedStock(context.Context, *ReservedStockRequest) (*protobuf.Empty, error)
+	ReleaseStock(context.Context, *ReleaseStockRequest) (*protobuf.Empty, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -185,6 +209,12 @@ func (UnimplementedServiceServer) CreateInventoryItem(context.Context, *CreateIn
 }
 func (UnimplementedServiceServer) UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateInventoryItem not implemented")
+}
+func (UnimplementedServiceServer) ReservedStock(context.Context, *ReservedStockRequest) (*protobuf.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReservedStock not implemented")
+}
+func (UnimplementedServiceServer) ReleaseStock(context.Context, *ReleaseStockRequest) (*protobuf.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReleaseStock not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 
@@ -361,6 +391,42 @@ func _Service_UpdateInventoryItem_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_ReservedStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReservedStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).ReservedStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_ReservedStock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).ReservedStock(ctx, req.(*ReservedStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_ReleaseStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReleaseStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).ReleaseStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_ReleaseStock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).ReleaseStock(ctx, req.(*ReleaseStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -403,6 +469,14 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateInventoryItem",
 			Handler:    _Service_UpdateInventoryItem_Handler,
+		},
+		{
+			MethodName: "ReservedStock",
+			Handler:    _Service_ReservedStock_Handler,
+		},
+		{
+			MethodName: "ReleaseStock",
+			Handler:    _Service_ReleaseStock_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
