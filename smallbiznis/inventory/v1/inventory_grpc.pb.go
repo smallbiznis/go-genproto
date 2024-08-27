@@ -46,7 +46,7 @@ type ServiceClient interface {
 	// Inventory
 	ListInventoryItem(ctx context.Context, in *ListInventoryItemRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error)
 	GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
-	CreateInventoryItem(ctx context.Context, in *CreateInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
+	CreateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
 	UpdateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
 	ReservedStock(ctx context.Context, in *ReservedStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	ReleaseStock(ctx context.Context, in *ReleaseStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
@@ -123,7 +123,7 @@ func (c *serviceClient) GetInventoryItem(ctx context.Context, in *GetInventoryRe
 	return out, nil
 }
 
-func (c *serviceClient) CreateInventoryItem(ctx context.Context, in *CreateInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error) {
+func (c *serviceClient) CreateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error) {
 	out := new(InventoryItem)
 	err := c.cc.Invoke(ctx, Service_CreateInventoryItem_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -172,7 +172,7 @@ type ServiceServer interface {
 	// Inventory
 	ListInventoryItem(context.Context, *ListInventoryItemRequest) (*ListInventoryItemResponse, error)
 	GetInventoryItem(context.Context, *GetInventoryRequest) (*InventoryItem, error)
-	CreateInventoryItem(context.Context, *CreateInventoryRequest) (*InventoryItem, error)
+	CreateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error)
 	UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error)
 	ReservedStock(context.Context, *ReservedStockRequest) (*protobuf.Empty, error)
 	ReleaseStock(context.Context, *ReleaseStockRequest) (*protobuf.Empty, error)
@@ -204,7 +204,7 @@ func (UnimplementedServiceServer) ListInventoryItem(context.Context, *ListInvent
 func (UnimplementedServiceServer) GetInventoryItem(context.Context, *GetInventoryRequest) (*InventoryItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInventoryItem not implemented")
 }
-func (UnimplementedServiceServer) CreateInventoryItem(context.Context, *CreateInventoryRequest) (*InventoryItem, error) {
+func (UnimplementedServiceServer) CreateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateInventoryItem not implemented")
 }
 func (UnimplementedServiceServer) UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error) {
@@ -356,7 +356,7 @@ func _Service_GetInventoryItem_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _Service_CreateInventoryItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateInventoryRequest)
+	in := new(InventoryItem)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -368,7 +368,7 @@ func _Service_CreateInventoryItem_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: Service_CreateInventoryItem_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).CreateInventoryItem(ctx, req.(*CreateInventoryRequest))
+		return srv.(ServiceServer).CreateInventoryItem(ctx, req.(*InventoryItem))
 	}
 	return interceptor(ctx, in, info, handler)
 }

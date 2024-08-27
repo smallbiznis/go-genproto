@@ -346,7 +346,7 @@ func local_request_Service_GetInventoryItem_0(ctx context.Context, marshaler run
 }
 
 func request_Service_CreateInventoryItem_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateInventoryRequest
+	var protoReq InventoryItem
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -359,7 +359,7 @@ func request_Service_CreateInventoryItem_0(ctx context.Context, marshaler runtim
 }
 
 func local_request_Service_CreateInventoryItem_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateInventoryRequest
+	var protoReq InventoryItem
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
