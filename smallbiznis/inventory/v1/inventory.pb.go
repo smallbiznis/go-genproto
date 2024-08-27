@@ -341,7 +341,7 @@ func (x *AddProductRequest) GetStatus() Status {
 	if x != nil {
 		return x.Status
 	}
-	return Status_ACTIVE
+	return Status_active
 }
 
 type GetProductRequest struct {
