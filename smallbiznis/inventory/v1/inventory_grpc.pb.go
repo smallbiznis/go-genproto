@@ -40,7 +40,7 @@ type ServiceClient interface {
 	// Product
 	ListProduct(ctx context.Context, in *ListProductRequest, opts ...grpc.CallOption) (*ListProductResponse, error)
 	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error)
-	AddProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
+	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*Product, error)
 	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
 	// Inventory
@@ -78,7 +78,7 @@ func (c *serviceClient) GetProduct(ctx context.Context, in *GetProductRequest, o
 	return out, nil
 }
 
-func (c *serviceClient) AddProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error) {
+func (c *serviceClient) AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*Product, error) {
 	out := new(Product)
 	err := c.cc.Invoke(ctx, Service_AddProduct_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -166,7 +166,7 @@ type ServiceServer interface {
 	// Product
 	ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error)
 	GetProduct(context.Context, *GetProductRequest) (*Product, error)
-	AddProduct(context.Context, *Product) (*Product, error)
+	AddProduct(context.Context, *AddProductRequest) (*Product, error)
 	UpdateProduct(context.Context, *Product) (*Product, error)
 	DeleteProduct(context.Context, *DeleteProductrequest) (*protobuf.Empty, error)
 	// Inventory
@@ -189,7 +189,7 @@ func (UnimplementedServiceServer) ListProduct(context.Context, *ListProductReque
 func (UnimplementedServiceServer) GetProduct(context.Context, *GetProductRequest) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
 }
-func (UnimplementedServiceServer) AddProduct(context.Context, *Product) (*Product, error) {
+func (UnimplementedServiceServer) AddProduct(context.Context, *AddProductRequest) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
 }
 func (UnimplementedServiceServer) UpdateProduct(context.Context, *Product) (*Product, error) {
@@ -266,7 +266,7 @@ func _Service_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _Service_AddProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Product)
+	in := new(AddProductRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -278,7 +278,7 @@ func _Service_AddProduct_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: Service_AddProduct_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).AddProduct(ctx, req.(*Product))
+		return srv.(ServiceServer).AddProduct(ctx, req.(*AddProductRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
