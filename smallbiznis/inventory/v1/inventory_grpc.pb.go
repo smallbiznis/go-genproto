@@ -25,6 +25,8 @@ const (
 	Service_AddProduct_FullMethodName          = "/smallbiznis.inventory.v1.Service/AddProduct"
 	Service_UpdateProduct_FullMethodName       = "/smallbiznis.inventory.v1.Service/UpdateProduct"
 	Service_DeleteProduct_FullMethodName       = "/smallbiznis.inventory.v1.Service/DeleteProduct"
+	Service_GetVariant_FullMethodName          = "/smallbiznis.inventory.v1.Service/GetVariant"
+	Service_UpdateVariant_FullMethodName       = "/smallbiznis.inventory.v1.Service/UpdateVariant"
 	Service_ListInventoryItem_FullMethodName   = "/smallbiznis.inventory.v1.Service/ListInventoryItem"
 	Service_GetInventoryItem_FullMethodName    = "/smallbiznis.inventory.v1.Service/GetInventoryItem"
 	Service_CreateInventoryItem_FullMethodName = "/smallbiznis.inventory.v1.Service/CreateInventoryItem"
@@ -43,6 +45,9 @@ type ServiceClient interface {
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*Product, error)
 	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	// Variant
+	GetVariant(ctx context.Context, in *GetVariantRequest, opts ...grpc.CallOption) (*Variant, error)
+	UpdateVariant(ctx context.Context, in *Variant, opts ...grpc.CallOption) (*Variant, error)
 	// Inventory
 	ListInventoryItem(ctx context.Context, in *ListInventoryItemRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error)
 	GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
@@ -99,6 +104,24 @@ func (c *serviceClient) UpdateProduct(ctx context.Context, in *Product, opts ...
 func (c *serviceClient) DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
 	out := new(protobuf.Empty)
 	err := c.cc.Invoke(ctx, Service_DeleteProduct_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) GetVariant(ctx context.Context, in *GetVariantRequest, opts ...grpc.CallOption) (*Variant, error) {
+	out := new(Variant)
+	err := c.cc.Invoke(ctx, Service_GetVariant_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) UpdateVariant(ctx context.Context, in *Variant, opts ...grpc.CallOption) (*Variant, error) {
+	out := new(Variant)
+	err := c.cc.Invoke(ctx, Service_UpdateVariant_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -169,6 +192,9 @@ type ServiceServer interface {
 	AddProduct(context.Context, *AddProductRequest) (*Product, error)
 	UpdateProduct(context.Context, *Product) (*Product, error)
 	DeleteProduct(context.Context, *DeleteProductrequest) (*protobuf.Empty, error)
+	// Variant
+	GetVariant(context.Context, *GetVariantRequest) (*Variant, error)
+	UpdateVariant(context.Context, *Variant) (*Variant, error)
 	// Inventory
 	ListInventoryItem(context.Context, *ListInventoryItemRequest) (*ListInventoryItemResponse, error)
 	GetInventoryItem(context.Context, *GetInventoryRequest) (*InventoryItem, error)
@@ -197,6 +223,12 @@ func (UnimplementedServiceServer) UpdateProduct(context.Context, *Product) (*Pro
 }
 func (UnimplementedServiceServer) DeleteProduct(context.Context, *DeleteProductrequest) (*protobuf.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
+}
+func (UnimplementedServiceServer) GetVariant(context.Context, *GetVariantRequest) (*Variant, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVariant not implemented")
+}
+func (UnimplementedServiceServer) UpdateVariant(context.Context, *Variant) (*Variant, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateVariant not implemented")
 }
 func (UnimplementedServiceServer) ListInventoryItem(context.Context, *ListInventoryItemRequest) (*ListInventoryItemResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListInventoryItem not implemented")
@@ -315,6 +347,42 @@ func _Service_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ServiceServer).DeleteProduct(ctx, req.(*DeleteProductrequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_GetVariant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVariantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).GetVariant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_GetVariant_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).GetVariant(ctx, req.(*GetVariantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_UpdateVariant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Variant)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).UpdateVariant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_UpdateVariant_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).UpdateVariant(ctx, req.(*Variant))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -453,6 +521,14 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteProduct",
 			Handler:    _Service_DeleteProduct_Handler,
+		},
+		{
+			MethodName: "GetVariant",
+			Handler:    _Service_GetVariant_Handler,
+		},
+		{
+			MethodName: "UpdateVariant",
+			Handler:    _Service_UpdateVariant_Handler,
 		},
 		{
 			MethodName: "ListInventoryItem",
