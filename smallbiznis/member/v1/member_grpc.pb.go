@@ -8,10 +8,10 @@ package member
 
 import (
 	context "context"
-	protobuf "github.com/smallbiznis/go-genproto/smallbiznis/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -35,7 +35,7 @@ type MemberServiceClient interface {
 	GetMember(ctx context.Context, in *GetMemberRequest, opts ...grpc.CallOption) (*Member, error)
 	AddMember(ctx context.Context, in *AddMemberRequest, opts ...grpc.CallOption) (*Member, error)
 	UpdateMember(ctx context.Context, in *UpdateMemberRequest, opts ...grpc.CallOption) (*Member, error)
-	DeleteMember(ctx context.Context, in *DeleteMemberRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteMember(ctx context.Context, in *DeleteMemberRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type memberServiceClient struct {
@@ -86,9 +86,9 @@ func (c *memberServiceClient) UpdateMember(ctx context.Context, in *UpdateMember
 	return out, nil
 }
 
-func (c *memberServiceClient) DeleteMember(ctx context.Context, in *DeleteMemberRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *memberServiceClient) DeleteMember(ctx context.Context, in *DeleteMemberRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, MemberService_DeleteMember_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -104,7 +104,7 @@ type MemberServiceServer interface {
 	GetMember(context.Context, *GetMemberRequest) (*Member, error)
 	AddMember(context.Context, *AddMemberRequest) (*Member, error)
 	UpdateMember(context.Context, *UpdateMemberRequest) (*Member, error)
-	DeleteMember(context.Context, *DeleteMemberRequest) (*protobuf.Empty, error)
+	DeleteMember(context.Context, *DeleteMemberRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedMemberServiceServer()
 }
 
@@ -127,7 +127,7 @@ func (UnimplementedMemberServiceServer) AddMember(context.Context, *AddMemberReq
 func (UnimplementedMemberServiceServer) UpdateMember(context.Context, *UpdateMemberRequest) (*Member, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMember not implemented")
 }
-func (UnimplementedMemberServiceServer) DeleteMember(context.Context, *DeleteMemberRequest) (*protobuf.Empty, error) {
+func (UnimplementedMemberServiceServer) DeleteMember(context.Context, *DeleteMemberRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteMember not implemented")
 }
 func (UnimplementedMemberServiceServer) mustEmbedUnimplementedMemberServiceServer() {}

@@ -8,10 +8,10 @@ package storage
 
 import (
 	context "context"
-	protobuf "github.com/smallbiznis/go-genproto/smallbiznis/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -31,7 +31,7 @@ const (
 type ServiceClient interface {
 	ListBucket(ctx context.Context, in *ListBucketRequest, opts ...grpc.CallOption) (*ListBucketResponse, error)
 	CreateBucket(ctx context.Context, in *CreateBucketRequest, opts ...grpc.CallOption) (*Bucket, error)
-	PutObject(ctx context.Context, in *PutObjectRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	PutObject(ctx context.Context, in *PutObjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type serviceClient struct {
@@ -62,9 +62,9 @@ func (c *serviceClient) CreateBucket(ctx context.Context, in *CreateBucketReques
 	return out, nil
 }
 
-func (c *serviceClient) PutObject(ctx context.Context, in *PutObjectRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *serviceClient) PutObject(ctx context.Context, in *PutObjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Service_PutObject_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -78,7 +78,7 @@ func (c *serviceClient) PutObject(ctx context.Context, in *PutObjectRequest, opt
 type ServiceServer interface {
 	ListBucket(context.Context, *ListBucketRequest) (*ListBucketResponse, error)
 	CreateBucket(context.Context, *CreateBucketRequest) (*Bucket, error)
-	PutObject(context.Context, *PutObjectRequest) (*protobuf.Empty, error)
+	PutObject(context.Context, *PutObjectRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -95,7 +95,7 @@ func (UnimplementedServiceServer) ListBucket(context.Context, *ListBucketRequest
 func (UnimplementedServiceServer) CreateBucket(context.Context, *CreateBucketRequest) (*Bucket, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBucket not implemented")
 }
-func (UnimplementedServiceServer) PutObject(context.Context, *PutObjectRequest) (*protobuf.Empty, error) {
+func (UnimplementedServiceServer) PutObject(context.Context, *PutObjectRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PutObject not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}

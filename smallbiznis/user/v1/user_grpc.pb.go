@@ -8,10 +8,10 @@ package user
 
 import (
 	context "context"
-	protobuf "github.com/smallbiznis/go-genproto/smallbiznis/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -35,7 +35,7 @@ type ServiceClient interface {
 	Get(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*User, error)
 	Create(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error)
 	Update(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*User, error)
-	Delete(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	Delete(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type serviceClient struct {
@@ -86,9 +86,9 @@ func (c *serviceClient) Update(ctx context.Context, in *UpdateUserRequest, opts 
 	return out, nil
 }
 
-func (c *serviceClient) Delete(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *serviceClient) Delete(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Service_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -104,7 +104,7 @@ type ServiceServer interface {
 	Get(context.Context, *GetUserRequest) (*User, error)
 	Create(context.Context, *User) (*User, error)
 	Update(context.Context, *UpdateUserRequest) (*User, error)
-	Delete(context.Context, *DeleteUserRequest) (*protobuf.Empty, error)
+	Delete(context.Context, *DeleteUserRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -127,7 +127,7 @@ func (UnimplementedServiceServer) Create(context.Context, *User) (*User, error) 
 func (UnimplementedServiceServer) Update(context.Context, *UpdateUserRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedServiceServer) Delete(context.Context, *DeleteUserRequest) (*protobuf.Empty, error) {
+func (UnimplementedServiceServer) Delete(context.Context, *DeleteUserRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}

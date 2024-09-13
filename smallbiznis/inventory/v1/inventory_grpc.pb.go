@@ -8,10 +8,10 @@ package inventory
 
 import (
 	context "context"
-	protobuf "github.com/smallbiznis/go-genproto/smallbiznis/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -45,7 +45,7 @@ type ServiceClient interface {
 	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error)
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*Product, error)
 	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
-	DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListVariant(ctx context.Context, in *ListVariantRequest, opts ...grpc.CallOption) (*ListVariantResponse, error)
 	// Variant
 	GetVariant(ctx context.Context, in *GetVariantRequest, opts ...grpc.CallOption) (*Variant, error)
@@ -55,8 +55,8 @@ type ServiceClient interface {
 	GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
 	CreateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
 	UpdateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
-	ReservedStock(ctx context.Context, in *ReservedStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
-	ReleaseStock(ctx context.Context, in *ReleaseStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	ReservedStock(ctx context.Context, in *ReservedStockRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ReleaseStock(ctx context.Context, in *ReleaseStockRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type serviceClient struct {
@@ -107,9 +107,9 @@ func (c *serviceClient) UpdateProduct(ctx context.Context, in *Product, opts ...
 	return out, nil
 }
 
-func (c *serviceClient) DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *serviceClient) DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Service_DeleteProduct_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -187,9 +187,9 @@ func (c *serviceClient) UpdateInventoryItem(ctx context.Context, in *InventoryIt
 	return out, nil
 }
 
-func (c *serviceClient) ReservedStock(ctx context.Context, in *ReservedStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *serviceClient) ReservedStock(ctx context.Context, in *ReservedStockRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Service_ReservedStock_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -197,9 +197,9 @@ func (c *serviceClient) ReservedStock(ctx context.Context, in *ReservedStockRequ
 	return out, nil
 }
 
-func (c *serviceClient) ReleaseStock(ctx context.Context, in *ReleaseStockRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *serviceClient) ReleaseStock(ctx context.Context, in *ReleaseStockRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Service_ReleaseStock_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -216,7 +216,7 @@ type ServiceServer interface {
 	GetProduct(context.Context, *GetProductRequest) (*Product, error)
 	AddProduct(context.Context, *AddProductRequest) (*Product, error)
 	UpdateProduct(context.Context, *Product) (*Product, error)
-	DeleteProduct(context.Context, *DeleteProductrequest) (*protobuf.Empty, error)
+	DeleteProduct(context.Context, *DeleteProductrequest) (*emptypb.Empty, error)
 	ListVariant(context.Context, *ListVariantRequest) (*ListVariantResponse, error)
 	// Variant
 	GetVariant(context.Context, *GetVariantRequest) (*Variant, error)
@@ -226,8 +226,8 @@ type ServiceServer interface {
 	GetInventoryItem(context.Context, *GetInventoryRequest) (*InventoryItem, error)
 	CreateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error)
 	UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error)
-	ReservedStock(context.Context, *ReservedStockRequest) (*protobuf.Empty, error)
-	ReleaseStock(context.Context, *ReleaseStockRequest) (*protobuf.Empty, error)
+	ReservedStock(context.Context, *ReservedStockRequest) (*emptypb.Empty, error)
+	ReleaseStock(context.Context, *ReleaseStockRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -250,7 +250,7 @@ func (UnimplementedServiceServer) AddProduct(context.Context, *AddProductRequest
 func (UnimplementedServiceServer) UpdateProduct(context.Context, *Product) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
 }
-func (UnimplementedServiceServer) DeleteProduct(context.Context, *DeleteProductrequest) (*protobuf.Empty, error) {
+func (UnimplementedServiceServer) DeleteProduct(context.Context, *DeleteProductrequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
 }
 func (UnimplementedServiceServer) ListVariant(context.Context, *ListVariantRequest) (*ListVariantResponse, error) {
@@ -274,10 +274,10 @@ func (UnimplementedServiceServer) CreateInventoryItem(context.Context, *Inventor
 func (UnimplementedServiceServer) UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateInventoryItem not implemented")
 }
-func (UnimplementedServiceServer) ReservedStock(context.Context, *ReservedStockRequest) (*protobuf.Empty, error) {
+func (UnimplementedServiceServer) ReservedStock(context.Context, *ReservedStockRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReservedStock not implemented")
 }
-func (UnimplementedServiceServer) ReleaseStock(context.Context, *ReleaseStockRequest) (*protobuf.Empty, error) {
+func (UnimplementedServiceServer) ReleaseStock(context.Context, *ReleaseStockRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReleaseStock not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}

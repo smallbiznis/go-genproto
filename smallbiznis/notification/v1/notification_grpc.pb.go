@@ -8,10 +8,10 @@ package notification
 
 import (
 	context "context"
-	protobuf "github.com/smallbiznis/go-genproto/smallbiznis/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -37,9 +37,9 @@ type ServiceClient interface {
 	GetNotification(ctx context.Context, in *GetNotificationRequest, opts ...grpc.CallOption) (*Notification, error)
 	CreateNotification(ctx context.Context, in *CreateNotificationRequest, opts ...grpc.CallOption) (*Notification, error)
 	UpdateNotification(ctx context.Context, in *Notification, opts ...grpc.CallOption) (*Notification, error)
-	DeleteNotification(ctx context.Context, in *DeleteNotificationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
-	BatchUpdateNotification(ctx context.Context, in *BatchNotificationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
-	BatchDeleteNotification(ctx context.Context, in *BatchNotificationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteNotification(ctx context.Context, in *DeleteNotificationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	BatchUpdateNotification(ctx context.Context, in *BatchNotificationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	BatchDeleteNotification(ctx context.Context, in *BatchNotificationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type serviceClient struct {
@@ -90,9 +90,9 @@ func (c *serviceClient) UpdateNotification(ctx context.Context, in *Notification
 	return out, nil
 }
 
-func (c *serviceClient) DeleteNotification(ctx context.Context, in *DeleteNotificationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *serviceClient) DeleteNotification(ctx context.Context, in *DeleteNotificationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Service_DeleteNotification_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -100,9 +100,9 @@ func (c *serviceClient) DeleteNotification(ctx context.Context, in *DeleteNotifi
 	return out, nil
 }
 
-func (c *serviceClient) BatchUpdateNotification(ctx context.Context, in *BatchNotificationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *serviceClient) BatchUpdateNotification(ctx context.Context, in *BatchNotificationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Service_BatchUpdateNotification_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -110,9 +110,9 @@ func (c *serviceClient) BatchUpdateNotification(ctx context.Context, in *BatchNo
 	return out, nil
 }
 
-func (c *serviceClient) BatchDeleteNotification(ctx context.Context, in *BatchNotificationRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *serviceClient) BatchDeleteNotification(ctx context.Context, in *BatchNotificationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Service_BatchDeleteNotification_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -128,9 +128,9 @@ type ServiceServer interface {
 	GetNotification(context.Context, *GetNotificationRequest) (*Notification, error)
 	CreateNotification(context.Context, *CreateNotificationRequest) (*Notification, error)
 	UpdateNotification(context.Context, *Notification) (*Notification, error)
-	DeleteNotification(context.Context, *DeleteNotificationRequest) (*protobuf.Empty, error)
-	BatchUpdateNotification(context.Context, *BatchNotificationRequest) (*protobuf.Empty, error)
-	BatchDeleteNotification(context.Context, *BatchNotificationRequest) (*protobuf.Empty, error)
+	DeleteNotification(context.Context, *DeleteNotificationRequest) (*emptypb.Empty, error)
+	BatchUpdateNotification(context.Context, *BatchNotificationRequest) (*emptypb.Empty, error)
+	BatchDeleteNotification(context.Context, *BatchNotificationRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -153,13 +153,13 @@ func (UnimplementedServiceServer) CreateNotification(context.Context, *CreateNot
 func (UnimplementedServiceServer) UpdateNotification(context.Context, *Notification) (*Notification, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateNotification not implemented")
 }
-func (UnimplementedServiceServer) DeleteNotification(context.Context, *DeleteNotificationRequest) (*protobuf.Empty, error) {
+func (UnimplementedServiceServer) DeleteNotification(context.Context, *DeleteNotificationRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteNotification not implemented")
 }
-func (UnimplementedServiceServer) BatchUpdateNotification(context.Context, *BatchNotificationRequest) (*protobuf.Empty, error) {
+func (UnimplementedServiceServer) BatchUpdateNotification(context.Context, *BatchNotificationRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchUpdateNotification not implemented")
 }
-func (UnimplementedServiceServer) BatchDeleteNotification(context.Context, *BatchNotificationRequest) (*protobuf.Empty, error) {
+func (UnimplementedServiceServer) BatchDeleteNotification(context.Context, *BatchNotificationRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchDeleteNotification not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}

@@ -8,10 +8,10 @@ package customer
 
 import (
 	context "context"
-	protobuf "github.com/smallbiznis/go-genproto/smallbiznis/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -40,12 +40,12 @@ type CustomerServiceClient interface {
 	GetCustomer(ctx context.Context, in *GetCustomerRequest, opts ...grpc.CallOption) (*Customer, error)
 	CreateCustomer(ctx context.Context, in *Customer, opts ...grpc.CallOption) (*Customer, error)
 	UpdateCustomer(ctx context.Context, in *Customer, opts ...grpc.CallOption) (*Customer, error)
-	DeleteCustomer(ctx context.Context, in *DeleteCustomerRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteCustomer(ctx context.Context, in *DeleteCustomerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListAddress(ctx context.Context, in *ListAddressRequest, opts ...grpc.CallOption) (*ListAddressResponse, error)
 	GetAddress(ctx context.Context, in *Address, opts ...grpc.CallOption) (*Address, error)
 	CreateAddress(ctx context.Context, in *Address, opts ...grpc.CallOption) (*Address, error)
 	UpdateAddress(ctx context.Context, in *Address, opts ...grpc.CallOption) (*Address, error)
-	DeleteAddress(ctx context.Context, in *Address, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteAddress(ctx context.Context, in *Address, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type customerServiceClient struct {
@@ -96,9 +96,9 @@ func (c *customerServiceClient) UpdateCustomer(ctx context.Context, in *Customer
 	return out, nil
 }
 
-func (c *customerServiceClient) DeleteCustomer(ctx context.Context, in *DeleteCustomerRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *customerServiceClient) DeleteCustomer(ctx context.Context, in *DeleteCustomerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, CustomerService_DeleteCustomer_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -146,9 +146,9 @@ func (c *customerServiceClient) UpdateAddress(ctx context.Context, in *Address, 
 	return out, nil
 }
 
-func (c *customerServiceClient) DeleteAddress(ctx context.Context, in *Address, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *customerServiceClient) DeleteAddress(ctx context.Context, in *Address, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, CustomerService_DeleteAddress_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -164,12 +164,12 @@ type CustomerServiceServer interface {
 	GetCustomer(context.Context, *GetCustomerRequest) (*Customer, error)
 	CreateCustomer(context.Context, *Customer) (*Customer, error)
 	UpdateCustomer(context.Context, *Customer) (*Customer, error)
-	DeleteCustomer(context.Context, *DeleteCustomerRequest) (*protobuf.Empty, error)
+	DeleteCustomer(context.Context, *DeleteCustomerRequest) (*emptypb.Empty, error)
 	ListAddress(context.Context, *ListAddressRequest) (*ListAddressResponse, error)
 	GetAddress(context.Context, *Address) (*Address, error)
 	CreateAddress(context.Context, *Address) (*Address, error)
 	UpdateAddress(context.Context, *Address) (*Address, error)
-	DeleteAddress(context.Context, *Address) (*protobuf.Empty, error)
+	DeleteAddress(context.Context, *Address) (*emptypb.Empty, error)
 	mustEmbedUnimplementedCustomerServiceServer()
 }
 
@@ -192,7 +192,7 @@ func (UnimplementedCustomerServiceServer) CreateCustomer(context.Context, *Custo
 func (UnimplementedCustomerServiceServer) UpdateCustomer(context.Context, *Customer) (*Customer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCustomer not implemented")
 }
-func (UnimplementedCustomerServiceServer) DeleteCustomer(context.Context, *DeleteCustomerRequest) (*protobuf.Empty, error) {
+func (UnimplementedCustomerServiceServer) DeleteCustomer(context.Context, *DeleteCustomerRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCustomer not implemented")
 }
 func (UnimplementedCustomerServiceServer) ListAddress(context.Context, *ListAddressRequest) (*ListAddressResponse, error) {
@@ -207,7 +207,7 @@ func (UnimplementedCustomerServiceServer) CreateAddress(context.Context, *Addres
 func (UnimplementedCustomerServiceServer) UpdateAddress(context.Context, *Address) (*Address, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAddress not implemented")
 }
-func (UnimplementedCustomerServiceServer) DeleteAddress(context.Context, *Address) (*protobuf.Empty, error) {
+func (UnimplementedCustomerServiceServer) DeleteAddress(context.Context, *Address) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAddress not implemented")
 }
 func (UnimplementedCustomerServiceServer) mustEmbedUnimplementedCustomerServiceServer() {}

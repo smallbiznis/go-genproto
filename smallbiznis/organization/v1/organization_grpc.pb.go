@@ -8,10 +8,10 @@ package organization
 
 import (
 	context "context"
-	protobuf "github.com/smallbiznis/go-genproto/smallbiznis/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -39,7 +39,7 @@ type ServiceClient interface {
 	GetOrg(ctx context.Context, in *GetOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
 	CreateOrg(ctx context.Context, in *CreateOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
 	UpdateOrg(ctx context.Context, in *Organization, opts ...grpc.CallOption) (*Organization, error)
-	DeleteOrg(ctx context.Context, in *Organization, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteOrg(ctx context.Context, in *Organization, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListLocation(ctx context.Context, in *ListLocationRequest, opts ...grpc.CallOption) (*ListLocationResponse, error)
 	GetLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error)
 	CrateLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error)
@@ -94,9 +94,9 @@ func (c *serviceClient) UpdateOrg(ctx context.Context, in *Organization, opts ..
 	return out, nil
 }
 
-func (c *serviceClient) DeleteOrg(ctx context.Context, in *Organization, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *serviceClient) DeleteOrg(ctx context.Context, in *Organization, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Service_DeleteOrg_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -152,7 +152,7 @@ type ServiceServer interface {
 	GetOrg(context.Context, *GetOrganizationRequest) (*Organization, error)
 	CreateOrg(context.Context, *CreateOrganizationRequest) (*Organization, error)
 	UpdateOrg(context.Context, *Organization) (*Organization, error)
-	DeleteOrg(context.Context, *Organization) (*protobuf.Empty, error)
+	DeleteOrg(context.Context, *Organization) (*emptypb.Empty, error)
 	ListLocation(context.Context, *ListLocationRequest) (*ListLocationResponse, error)
 	GetLocation(context.Context, *Location) (*Location, error)
 	CrateLocation(context.Context, *Location) (*Location, error)
@@ -179,7 +179,7 @@ func (UnimplementedServiceServer) CreateOrg(context.Context, *CreateOrganization
 func (UnimplementedServiceServer) UpdateOrg(context.Context, *Organization) (*Organization, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOrg not implemented")
 }
-func (UnimplementedServiceServer) DeleteOrg(context.Context, *Organization) (*protobuf.Empty, error) {
+func (UnimplementedServiceServer) DeleteOrg(context.Context, *Organization) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOrg not implemented")
 }
 func (UnimplementedServiceServer) ListLocation(context.Context, *ListLocationRequest) (*ListLocationResponse, error) {
