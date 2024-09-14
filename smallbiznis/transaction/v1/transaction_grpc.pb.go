@@ -31,7 +31,7 @@ const (
 type TransactionServiceClient interface {
 	ListOrder(ctx context.Context, in *ListOrderRequest, opts ...grpc.CallOption) (*ListOrderResponse, error)
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*Order, error)
-	CreateOrder(ctx context.Context, in *Order, opts ...grpc.CallOption) (*Order, error)
+	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*Order, error)
 	UpdateOrder(ctx context.Context, in *Order, opts ...grpc.CallOption) (*Order, error)
 }
 
@@ -63,7 +63,7 @@ func (c *transactionServiceClient) GetOrder(ctx context.Context, in *GetOrderReq
 	return out, nil
 }
 
-func (c *transactionServiceClient) CreateOrder(ctx context.Context, in *Order, opts ...grpc.CallOption) (*Order, error) {
+func (c *transactionServiceClient) CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*Order, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Order)
 	err := c.cc.Invoke(ctx, TransactionService_CreateOrder_FullMethodName, in, out, cOpts...)
@@ -89,7 +89,7 @@ func (c *transactionServiceClient) UpdateOrder(ctx context.Context, in *Order, o
 type TransactionServiceServer interface {
 	ListOrder(context.Context, *ListOrderRequest) (*ListOrderResponse, error)
 	GetOrder(context.Context, *GetOrderRequest) (*Order, error)
-	CreateOrder(context.Context, *Order) (*Order, error)
+	CreateOrder(context.Context, *CreateOrderRequest) (*Order, error)
 	UpdateOrder(context.Context, *Order) (*Order, error)
 	mustEmbedUnimplementedTransactionServiceServer()
 }
@@ -107,7 +107,7 @@ func (UnimplementedTransactionServiceServer) ListOrder(context.Context, *ListOrd
 func (UnimplementedTransactionServiceServer) GetOrder(context.Context, *GetOrderRequest) (*Order, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrder not implemented")
 }
-func (UnimplementedTransactionServiceServer) CreateOrder(context.Context, *Order) (*Order, error) {
+func (UnimplementedTransactionServiceServer) CreateOrder(context.Context, *CreateOrderRequest) (*Order, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrder not implemented")
 }
 func (UnimplementedTransactionServiceServer) UpdateOrder(context.Context, *Order) (*Order, error) {
@@ -171,7 +171,7 @@ func _TransactionService_GetOrder_Handler(srv interface{}, ctx context.Context, 
 }
 
 func _TransactionService_CreateOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Order)
+	in := new(CreateOrderRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -183,7 +183,7 @@ func _TransactionService_CreateOrder_Handler(srv interface{}, ctx context.Contex
 		FullMethod: TransactionService_CreateOrder_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TransactionServiceServer).CreateOrder(ctx, req.(*Order))
+		return srv.(TransactionServiceServer).CreateOrder(ctx, req.(*CreateOrderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

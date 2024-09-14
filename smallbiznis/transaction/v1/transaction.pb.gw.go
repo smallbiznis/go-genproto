@@ -120,7 +120,7 @@ func local_request_TransactionService_GetOrder_0(ctx context.Context, marshaler 
 }
 
 func request_TransactionService_CreateOrder_0(ctx context.Context, marshaler runtime.Marshaler, client TransactionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Order
+	var protoReq CreateOrderRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -133,7 +133,7 @@ func request_TransactionService_CreateOrder_0(ctx context.Context, marshaler run
 }
 
 func local_request_TransactionService_CreateOrder_0(ctx context.Context, marshaler runtime.Marshaler, server TransactionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Order
+	var protoReq CreateOrderRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
