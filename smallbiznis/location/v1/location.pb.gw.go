@@ -161,7 +161,7 @@ func RegisterLocationServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.location.v1.LocationService/ListCity", runtime.WithHTTPPathPattern("/v1/cities"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.location.v1.LocationService/ListCity", runtime.WithHTTPPathPattern("/v1/regencies"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -272,7 +272,7 @@ func RegisterLocationServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.location.v1.LocationService/ListCity", runtime.WithHTTPPathPattern("/v1/cities"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.location.v1.LocationService/ListCity", runtime.WithHTTPPathPattern("/v1/regencies"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -316,7 +316,7 @@ func RegisterLocationServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 var (
 	pattern_LocationService_ListProvince_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "provinces"}, ""))
 
-	pattern_LocationService_ListCity_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "cities"}, ""))
+	pattern_LocationService_ListCity_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "regencies"}, ""))
 
 	pattern_LocationService_ListDistrict_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "districts"}, ""))
 )
