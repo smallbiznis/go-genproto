@@ -31,7 +31,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BalanceServiceClient interface {
 	CreateBalance(ctx context.Context, in *CreateBalanceRequest, opts ...grpc.CallOption) (*Balance, error)
-	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error)
+	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*Balance, error)
 	CreateTransaction(ctx context.Context, in *CreateTransactionRequest, opts ...grpc.CallOption) (*Transaction, error)
 	ListTransaction(ctx context.Context, in *ListTransactionRequest, opts ...grpc.CallOption) (*ListTransactionResponse, error)
 	GetTransaction(ctx context.Context, in *GetTransactionRequest, opts ...grpc.CallOption) (*Transaction, error)
@@ -55,9 +55,9 @@ func (c *balanceServiceClient) CreateBalance(ctx context.Context, in *CreateBala
 	return out, nil
 }
 
-func (c *balanceServiceClient) GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error) {
+func (c *balanceServiceClient) GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*Balance, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetBalanceResponse)
+	out := new(Balance)
 	err := c.cc.Invoke(ctx, BalanceService_GetBalance_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ func (c *balanceServiceClient) GetTransaction(ctx context.Context, in *GetTransa
 // for forward compatibility.
 type BalanceServiceServer interface {
 	CreateBalance(context.Context, *CreateBalanceRequest) (*Balance, error)
-	GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error)
+	GetBalance(context.Context, *GetBalanceRequest) (*Balance, error)
 	CreateTransaction(context.Context, *CreateTransactionRequest) (*Transaction, error)
 	ListTransaction(context.Context, *ListTransactionRequest) (*ListTransactionResponse, error)
 	GetTransaction(context.Context, *GetTransactionRequest) (*Transaction, error)
@@ -117,7 +117,7 @@ type UnimplementedBalanceServiceServer struct{}
 func (UnimplementedBalanceServiceServer) CreateBalance(context.Context, *CreateBalanceRequest) (*Balance, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBalance not implemented")
 }
-func (UnimplementedBalanceServiceServer) GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error) {
+func (UnimplementedBalanceServiceServer) GetBalance(context.Context, *GetBalanceRequest) (*Balance, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBalance not implemented")
 }
 func (UnimplementedBalanceServiceServer) CreateTransaction(context.Context, *CreateTransactionRequest) (*Transaction, error) {
