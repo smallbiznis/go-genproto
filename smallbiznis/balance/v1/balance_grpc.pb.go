@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	BalanceService_CreateBalance_FullMethodName     = "/smallbiznis.balance.v1.BalanceService/CreateBalance"
 	BalanceService_GetBalance_FullMethodName        = "/smallbiznis.balance.v1.BalanceService/GetBalance"
 	BalanceService_CreateTransaction_FullMethodName = "/smallbiznis.balance.v1.BalanceService/CreateTransaction"
 	BalanceService_ListTransaction_FullMethodName   = "/smallbiznis.balance.v1.BalanceService/ListTransaction"
@@ -29,6 +30,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BalanceServiceClient interface {
+	CreateBalance(ctx context.Context, in *CreateBalanceRequest, opts ...grpc.CallOption) (*Balance, error)
 	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error)
 	CreateTransaction(ctx context.Context, in *CreateTransactionRequest, opts ...grpc.CallOption) (*Transaction, error)
 	ListTransaction(ctx context.Context, in *ListTransactionRequest, opts ...grpc.CallOption) (*ListTransactionResponse, error)
@@ -41,6 +43,16 @@ type balanceServiceClient struct {
 
 func NewBalanceServiceClient(cc grpc.ClientConnInterface) BalanceServiceClient {
 	return &balanceServiceClient{cc}
+}
+
+func (c *balanceServiceClient) CreateBalance(ctx context.Context, in *CreateBalanceRequest, opts ...grpc.CallOption) (*Balance, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Balance)
+	err := c.cc.Invoke(ctx, BalanceService_CreateBalance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *balanceServiceClient) GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error) {
@@ -87,6 +99,7 @@ func (c *balanceServiceClient) GetTransaction(ctx context.Context, in *GetTransa
 // All implementations must embed UnimplementedBalanceServiceServer
 // for forward compatibility.
 type BalanceServiceServer interface {
+	CreateBalance(context.Context, *CreateBalanceRequest) (*Balance, error)
 	GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error)
 	CreateTransaction(context.Context, *CreateTransactionRequest) (*Transaction, error)
 	ListTransaction(context.Context, *ListTransactionRequest) (*ListTransactionResponse, error)
@@ -101,6 +114,9 @@ type BalanceServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedBalanceServiceServer struct{}
 
+func (UnimplementedBalanceServiceServer) CreateBalance(context.Context, *CreateBalanceRequest) (*Balance, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateBalance not implemented")
+}
 func (UnimplementedBalanceServiceServer) GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBalance not implemented")
 }
@@ -132,6 +148,24 @@ func RegisterBalanceServiceServer(s grpc.ServiceRegistrar, srv BalanceServiceSer
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&BalanceService_ServiceDesc, srv)
+}
+
+func _BalanceService_CreateBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateBalanceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServiceServer).CreateBalance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BalanceService_CreateBalance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServiceServer).CreateBalance(ctx, req.(*CreateBalanceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _BalanceService_GetBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -213,6 +247,10 @@ var BalanceService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.balance.v1.BalanceService",
 	HandlerType: (*BalanceServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateBalance",
+			Handler:    _BalanceService_CreateBalance_Handler,
+		},
 		{
 			MethodName: "GetBalance",
 			Handler:    _BalanceService_GetBalance_Handler,
