@@ -195,7 +195,7 @@ func RegisterBalanceServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.balance.v1.BalanceService/ListTransaction", runtime.WithHTTPPathPattern("/v1/history"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.balance.v1.BalanceService/ListTransaction", runtime.WithHTTPPathPattern("/v1/balance-history"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -220,7 +220,7 @@ func RegisterBalanceServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.balance.v1.BalanceService/GetTransaction", runtime.WithHTTPPathPattern("/v1/history/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.balance.v1.BalanceService/GetTransaction", runtime.WithHTTPPathPattern("/v1/balance-history/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -306,7 +306,7 @@ func RegisterBalanceServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.balance.v1.BalanceService/ListTransaction", runtime.WithHTTPPathPattern("/v1/history"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.balance.v1.BalanceService/ListTransaction", runtime.WithHTTPPathPattern("/v1/balance-history"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -328,7 +328,7 @@ func RegisterBalanceServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.balance.v1.BalanceService/GetTransaction", runtime.WithHTTPPathPattern("/v1/history/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.balance.v1.BalanceService/GetTransaction", runtime.WithHTTPPathPattern("/v1/balance-history/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -350,9 +350,9 @@ func RegisterBalanceServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 var (
 	pattern_BalanceService_GetBalance_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "balances"}, ""))
 
-	pattern_BalanceService_ListTransaction_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "history"}, ""))
+	pattern_BalanceService_ListTransaction_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "balance-history"}, ""))
 
-	pattern_BalanceService_GetTransaction_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "history", "id"}, ""))
+	pattern_BalanceService_GetTransaction_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "balance-history", "id"}, ""))
 )
 
 var (

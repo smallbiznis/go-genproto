@@ -32,9 +32,9 @@ const (
 type BalanceServiceClient interface {
 	CreateBalance(ctx context.Context, in *CreateBalanceRequest, opts ...grpc.CallOption) (*Balance, error)
 	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*Balance, error)
-	CreateTransaction(ctx context.Context, in *CreateTransactionRequest, opts ...grpc.CallOption) (*Transaction, error)
+	CreateTransaction(ctx context.Context, in *CreateTransactionRequest, opts ...grpc.CallOption) (*BalanceHistory, error)
 	ListTransaction(ctx context.Context, in *ListTransactionRequest, opts ...grpc.CallOption) (*ListTransactionResponse, error)
-	GetTransaction(ctx context.Context, in *GetTransactionRequest, opts ...grpc.CallOption) (*Transaction, error)
+	GetTransaction(ctx context.Context, in *GetTransactionRequest, opts ...grpc.CallOption) (*BalanceHistory, error)
 }
 
 type balanceServiceClient struct {
@@ -65,9 +65,9 @@ func (c *balanceServiceClient) GetBalance(ctx context.Context, in *GetBalanceReq
 	return out, nil
 }
 
-func (c *balanceServiceClient) CreateTransaction(ctx context.Context, in *CreateTransactionRequest, opts ...grpc.CallOption) (*Transaction, error) {
+func (c *balanceServiceClient) CreateTransaction(ctx context.Context, in *CreateTransactionRequest, opts ...grpc.CallOption) (*BalanceHistory, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Transaction)
+	out := new(BalanceHistory)
 	err := c.cc.Invoke(ctx, BalanceService_CreateTransaction_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -85,9 +85,9 @@ func (c *balanceServiceClient) ListTransaction(ctx context.Context, in *ListTran
 	return out, nil
 }
 
-func (c *balanceServiceClient) GetTransaction(ctx context.Context, in *GetTransactionRequest, opts ...grpc.CallOption) (*Transaction, error) {
+func (c *balanceServiceClient) GetTransaction(ctx context.Context, in *GetTransactionRequest, opts ...grpc.CallOption) (*BalanceHistory, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Transaction)
+	out := new(BalanceHistory)
 	err := c.cc.Invoke(ctx, BalanceService_GetTransaction_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -101,9 +101,9 @@ func (c *balanceServiceClient) GetTransaction(ctx context.Context, in *GetTransa
 type BalanceServiceServer interface {
 	CreateBalance(context.Context, *CreateBalanceRequest) (*Balance, error)
 	GetBalance(context.Context, *GetBalanceRequest) (*Balance, error)
-	CreateTransaction(context.Context, *CreateTransactionRequest) (*Transaction, error)
+	CreateTransaction(context.Context, *CreateTransactionRequest) (*BalanceHistory, error)
 	ListTransaction(context.Context, *ListTransactionRequest) (*ListTransactionResponse, error)
-	GetTransaction(context.Context, *GetTransactionRequest) (*Transaction, error)
+	GetTransaction(context.Context, *GetTransactionRequest) (*BalanceHistory, error)
 	mustEmbedUnimplementedBalanceServiceServer()
 }
 
@@ -120,13 +120,13 @@ func (UnimplementedBalanceServiceServer) CreateBalance(context.Context, *CreateB
 func (UnimplementedBalanceServiceServer) GetBalance(context.Context, *GetBalanceRequest) (*Balance, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBalance not implemented")
 }
-func (UnimplementedBalanceServiceServer) CreateTransaction(context.Context, *CreateTransactionRequest) (*Transaction, error) {
+func (UnimplementedBalanceServiceServer) CreateTransaction(context.Context, *CreateTransactionRequest) (*BalanceHistory, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTransaction not implemented")
 }
 func (UnimplementedBalanceServiceServer) ListTransaction(context.Context, *ListTransactionRequest) (*ListTransactionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTransaction not implemented")
 }
-func (UnimplementedBalanceServiceServer) GetTransaction(context.Context, *GetTransactionRequest) (*Transaction, error) {
+func (UnimplementedBalanceServiceServer) GetTransaction(context.Context, *GetTransactionRequest) (*BalanceHistory, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTransaction not implemented")
 }
 func (UnimplementedBalanceServiceServer) mustEmbedUnimplementedBalanceServiceServer() {}
