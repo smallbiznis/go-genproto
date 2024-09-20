@@ -34,13 +34,13 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
 	ListTaxRule(ctx context.Context, in *LisTaxRequest, opts ...grpc.CallOption) (*ListTaxResponse, error)
-	GetTaxRule(ctx context.Context, in *TaxRules, opts ...grpc.CallOption) (*TaxRules, error)
-	CreateTaxRule(ctx context.Context, in *TaxRules, opts ...grpc.CallOption) (*TaxRules, error)
-	UpdateTaxRule(ctx context.Context, in *TaxRules, opts ...grpc.CallOption) (*TaxRules, error)
+	GetTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error)
+	CreateTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error)
+	UpdateTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error)
 	ListServiceFeeRule(ctx context.Context, in *ListServiceFeeRequest, opts ...grpc.CallOption) (*ListServiceFeeResponse, error)
-	GetServiceFeeRule(ctx context.Context, in *ServiceFeeRules, opts ...grpc.CallOption) (*ServiceFeeRules, error)
-	CreateServiceFeeRule(ctx context.Context, in *ServiceFeeRules, opts ...grpc.CallOption) (*ServiceFeeRules, error)
-	UpdateServiceFeeRule(ctx context.Context, in *ServiceFeeRules, opts ...grpc.CallOption) (*ServiceFeeRules, error)
+	GetServiceFeeRule(ctx context.Context, in *ServiceFeeRule, opts ...grpc.CallOption) (*ServiceFeeRule, error)
+	CreateServiceFeeRule(ctx context.Context, in *ServiceFeeRule, opts ...grpc.CallOption) (*ServiceFeeRule, error)
+	UpdateServiceFeeRule(ctx context.Context, in *ServiceFeeRule, opts ...grpc.CallOption) (*ServiceFeeRule, error)
 }
 
 type serviceClient struct {
@@ -61,9 +61,9 @@ func (c *serviceClient) ListTaxRule(ctx context.Context, in *LisTaxRequest, opts
 	return out, nil
 }
 
-func (c *serviceClient) GetTaxRule(ctx context.Context, in *TaxRules, opts ...grpc.CallOption) (*TaxRules, error) {
+func (c *serviceClient) GetTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TaxRules)
+	out := new(TaxRule)
 	err := c.cc.Invoke(ctx, Service_GetTaxRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -71,9 +71,9 @@ func (c *serviceClient) GetTaxRule(ctx context.Context, in *TaxRules, opts ...gr
 	return out, nil
 }
 
-func (c *serviceClient) CreateTaxRule(ctx context.Context, in *TaxRules, opts ...grpc.CallOption) (*TaxRules, error) {
+func (c *serviceClient) CreateTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TaxRules)
+	out := new(TaxRule)
 	err := c.cc.Invoke(ctx, Service_CreateTaxRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -81,9 +81,9 @@ func (c *serviceClient) CreateTaxRule(ctx context.Context, in *TaxRules, opts ..
 	return out, nil
 }
 
-func (c *serviceClient) UpdateTaxRule(ctx context.Context, in *TaxRules, opts ...grpc.CallOption) (*TaxRules, error) {
+func (c *serviceClient) UpdateTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TaxRules)
+	out := new(TaxRule)
 	err := c.cc.Invoke(ctx, Service_UpdateTaxRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -101,9 +101,9 @@ func (c *serviceClient) ListServiceFeeRule(ctx context.Context, in *ListServiceF
 	return out, nil
 }
 
-func (c *serviceClient) GetServiceFeeRule(ctx context.Context, in *ServiceFeeRules, opts ...grpc.CallOption) (*ServiceFeeRules, error) {
+func (c *serviceClient) GetServiceFeeRule(ctx context.Context, in *ServiceFeeRule, opts ...grpc.CallOption) (*ServiceFeeRule, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ServiceFeeRules)
+	out := new(ServiceFeeRule)
 	err := c.cc.Invoke(ctx, Service_GetServiceFeeRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -111,9 +111,9 @@ func (c *serviceClient) GetServiceFeeRule(ctx context.Context, in *ServiceFeeRul
 	return out, nil
 }
 
-func (c *serviceClient) CreateServiceFeeRule(ctx context.Context, in *ServiceFeeRules, opts ...grpc.CallOption) (*ServiceFeeRules, error) {
+func (c *serviceClient) CreateServiceFeeRule(ctx context.Context, in *ServiceFeeRule, opts ...grpc.CallOption) (*ServiceFeeRule, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ServiceFeeRules)
+	out := new(ServiceFeeRule)
 	err := c.cc.Invoke(ctx, Service_CreateServiceFeeRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -121,9 +121,9 @@ func (c *serviceClient) CreateServiceFeeRule(ctx context.Context, in *ServiceFee
 	return out, nil
 }
 
-func (c *serviceClient) UpdateServiceFeeRule(ctx context.Context, in *ServiceFeeRules, opts ...grpc.CallOption) (*ServiceFeeRules, error) {
+func (c *serviceClient) UpdateServiceFeeRule(ctx context.Context, in *ServiceFeeRule, opts ...grpc.CallOption) (*ServiceFeeRule, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ServiceFeeRules)
+	out := new(ServiceFeeRule)
 	err := c.cc.Invoke(ctx, Service_UpdateServiceFeeRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -136,13 +136,13 @@ func (c *serviceClient) UpdateServiceFeeRule(ctx context.Context, in *ServiceFee
 // for forward compatibility.
 type ServiceServer interface {
 	ListTaxRule(context.Context, *LisTaxRequest) (*ListTaxResponse, error)
-	GetTaxRule(context.Context, *TaxRules) (*TaxRules, error)
-	CreateTaxRule(context.Context, *TaxRules) (*TaxRules, error)
-	UpdateTaxRule(context.Context, *TaxRules) (*TaxRules, error)
+	GetTaxRule(context.Context, *TaxRule) (*TaxRule, error)
+	CreateTaxRule(context.Context, *TaxRule) (*TaxRule, error)
+	UpdateTaxRule(context.Context, *TaxRule) (*TaxRule, error)
 	ListServiceFeeRule(context.Context, *ListServiceFeeRequest) (*ListServiceFeeResponse, error)
-	GetServiceFeeRule(context.Context, *ServiceFeeRules) (*ServiceFeeRules, error)
-	CreateServiceFeeRule(context.Context, *ServiceFeeRules) (*ServiceFeeRules, error)
-	UpdateServiceFeeRule(context.Context, *ServiceFeeRules) (*ServiceFeeRules, error)
+	GetServiceFeeRule(context.Context, *ServiceFeeRule) (*ServiceFeeRule, error)
+	CreateServiceFeeRule(context.Context, *ServiceFeeRule) (*ServiceFeeRule, error)
+	UpdateServiceFeeRule(context.Context, *ServiceFeeRule) (*ServiceFeeRule, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -156,25 +156,25 @@ type UnimplementedServiceServer struct{}
 func (UnimplementedServiceServer) ListTaxRule(context.Context, *LisTaxRequest) (*ListTaxResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTaxRule not implemented")
 }
-func (UnimplementedServiceServer) GetTaxRule(context.Context, *TaxRules) (*TaxRules, error) {
+func (UnimplementedServiceServer) GetTaxRule(context.Context, *TaxRule) (*TaxRule, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTaxRule not implemented")
 }
-func (UnimplementedServiceServer) CreateTaxRule(context.Context, *TaxRules) (*TaxRules, error) {
+func (UnimplementedServiceServer) CreateTaxRule(context.Context, *TaxRule) (*TaxRule, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTaxRule not implemented")
 }
-func (UnimplementedServiceServer) UpdateTaxRule(context.Context, *TaxRules) (*TaxRules, error) {
+func (UnimplementedServiceServer) UpdateTaxRule(context.Context, *TaxRule) (*TaxRule, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTaxRule not implemented")
 }
 func (UnimplementedServiceServer) ListServiceFeeRule(context.Context, *ListServiceFeeRequest) (*ListServiceFeeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListServiceFeeRule not implemented")
 }
-func (UnimplementedServiceServer) GetServiceFeeRule(context.Context, *ServiceFeeRules) (*ServiceFeeRules, error) {
+func (UnimplementedServiceServer) GetServiceFeeRule(context.Context, *ServiceFeeRule) (*ServiceFeeRule, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetServiceFeeRule not implemented")
 }
-func (UnimplementedServiceServer) CreateServiceFeeRule(context.Context, *ServiceFeeRules) (*ServiceFeeRules, error) {
+func (UnimplementedServiceServer) CreateServiceFeeRule(context.Context, *ServiceFeeRule) (*ServiceFeeRule, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateServiceFeeRule not implemented")
 }
-func (UnimplementedServiceServer) UpdateServiceFeeRule(context.Context, *ServiceFeeRules) (*ServiceFeeRules, error) {
+func (UnimplementedServiceServer) UpdateServiceFeeRule(context.Context, *ServiceFeeRule) (*ServiceFeeRule, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateServiceFeeRule not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
@@ -217,7 +217,7 @@ func _Service_ListTaxRule_Handler(srv interface{}, ctx context.Context, dec func
 }
 
 func _Service_GetTaxRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TaxRules)
+	in := new(TaxRule)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -229,13 +229,13 @@ func _Service_GetTaxRule_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: Service_GetTaxRule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetTaxRule(ctx, req.(*TaxRules))
+		return srv.(ServiceServer).GetTaxRule(ctx, req.(*TaxRule))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Service_CreateTaxRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TaxRules)
+	in := new(TaxRule)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -247,13 +247,13 @@ func _Service_CreateTaxRule_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: Service_CreateTaxRule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).CreateTaxRule(ctx, req.(*TaxRules))
+		return srv.(ServiceServer).CreateTaxRule(ctx, req.(*TaxRule))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Service_UpdateTaxRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TaxRules)
+	in := new(TaxRule)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -265,7 +265,7 @@ func _Service_UpdateTaxRule_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: Service_UpdateTaxRule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).UpdateTaxRule(ctx, req.(*TaxRules))
+		return srv.(ServiceServer).UpdateTaxRule(ctx, req.(*TaxRule))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -289,7 +289,7 @@ func _Service_ListServiceFeeRule_Handler(srv interface{}, ctx context.Context, d
 }
 
 func _Service_GetServiceFeeRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ServiceFeeRules)
+	in := new(ServiceFeeRule)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -301,13 +301,13 @@ func _Service_GetServiceFeeRule_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: Service_GetServiceFeeRule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetServiceFeeRule(ctx, req.(*ServiceFeeRules))
+		return srv.(ServiceServer).GetServiceFeeRule(ctx, req.(*ServiceFeeRule))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Service_CreateServiceFeeRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ServiceFeeRules)
+	in := new(ServiceFeeRule)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -319,13 +319,13 @@ func _Service_CreateServiceFeeRule_Handler(srv interface{}, ctx context.Context,
 		FullMethod: Service_CreateServiceFeeRule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).CreateServiceFeeRule(ctx, req.(*ServiceFeeRules))
+		return srv.(ServiceServer).CreateServiceFeeRule(ctx, req.(*ServiceFeeRule))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Service_UpdateServiceFeeRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ServiceFeeRules)
+	in := new(ServiceFeeRule)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -337,7 +337,7 @@ func _Service_UpdateServiceFeeRule_Handler(srv interface{}, ctx context.Context,
 		FullMethod: Service_UpdateServiceFeeRule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).UpdateServiceFeeRule(ctx, req.(*ServiceFeeRules))
+		return srv.(ServiceServer).UpdateServiceFeeRule(ctx, req.(*ServiceFeeRule))
 	}
 	return interceptor(ctx, in, info, handler)
 }

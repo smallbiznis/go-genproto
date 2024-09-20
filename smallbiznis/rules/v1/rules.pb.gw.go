@@ -72,7 +72,7 @@ var (
 )
 
 func request_Service_GetTaxRule_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TaxRules
+	var protoReq TaxRule
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -105,7 +105,7 @@ func request_Service_GetTaxRule_0(ctx context.Context, marshaler runtime.Marshal
 }
 
 func local_request_Service_GetTaxRule_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TaxRules
+	var protoReq TaxRule
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -138,7 +138,7 @@ func local_request_Service_GetTaxRule_0(ctx context.Context, marshaler runtime.M
 }
 
 func request_Service_CreateTaxRule_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TaxRules
+	var protoReq TaxRule
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -168,7 +168,7 @@ func request_Service_CreateTaxRule_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_Service_CreateTaxRule_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TaxRules
+	var protoReq TaxRule
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -198,7 +198,7 @@ func local_request_Service_CreateTaxRule_0(ctx context.Context, marshaler runtim
 }
 
 func request_Service_UpdateTaxRule_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TaxRules
+	var protoReq TaxRule
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -228,7 +228,7 @@ func request_Service_UpdateTaxRule_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_Service_UpdateTaxRule_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TaxRules
+	var protoReq TaxRule
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -298,7 +298,7 @@ var (
 )
 
 func request_Service_GetServiceFeeRule_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ServiceFeeRules
+	var protoReq ServiceFeeRule
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -331,7 +331,7 @@ func request_Service_GetServiceFeeRule_0(ctx context.Context, marshaler runtime.
 }
 
 func local_request_Service_GetServiceFeeRule_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ServiceFeeRules
+	var protoReq ServiceFeeRule
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -364,7 +364,7 @@ func local_request_Service_GetServiceFeeRule_0(ctx context.Context, marshaler ru
 }
 
 func request_Service_CreateServiceFeeRule_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ServiceFeeRules
+	var protoReq ServiceFeeRule
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -394,7 +394,7 @@ func request_Service_CreateServiceFeeRule_0(ctx context.Context, marshaler runti
 }
 
 func local_request_Service_CreateServiceFeeRule_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ServiceFeeRules
+	var protoReq ServiceFeeRule
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -424,7 +424,7 @@ func local_request_Service_CreateServiceFeeRule_0(ctx context.Context, marshaler
 }
 
 func request_Service_UpdateServiceFeeRule_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ServiceFeeRules
+	var protoReq ServiceFeeRule
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -454,7 +454,7 @@ func request_Service_UpdateServiceFeeRule_0(ctx context.Context, marshaler runti
 }
 
 func local_request_Service_UpdateServiceFeeRule_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ServiceFeeRules
+	var protoReq ServiceFeeRule
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
