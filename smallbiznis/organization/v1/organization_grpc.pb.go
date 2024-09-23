@@ -42,7 +42,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
-	ListShippingRate(ctx context.Context, in *ListShippingRateRequest, opts ...grpc.CallOption) (*ListLocationResponse, error)
+	ListShippingRate(ctx context.Context, in *ListShippingRateRequest, opts ...grpc.CallOption) (*ListShippingRateResponse, error)
 	GetShippingRate(ctx context.Context, in *ShippingRate, opts ...grpc.CallOption) (*ShippingRate, error)
 	CreateShippingRate(ctx context.Context, in *ShippingRate, opts ...grpc.CallOption) (*ShippingRate, error)
 	ListTaxRule(ctx context.Context, in *LisTaxRequest, opts ...grpc.CallOption) (*ListTaxResponse, error)
@@ -68,9 +68,9 @@ func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
 	return &serviceClient{cc}
 }
 
-func (c *serviceClient) ListShippingRate(ctx context.Context, in *ListShippingRateRequest, opts ...grpc.CallOption) (*ListLocationResponse, error) {
+func (c *serviceClient) ListShippingRate(ctx context.Context, in *ListShippingRateRequest, opts ...grpc.CallOption) (*ListShippingRateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListLocationResponse)
+	out := new(ListShippingRateResponse)
 	err := c.cc.Invoke(ctx, Service_ListShippingRate_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -232,7 +232,7 @@ func (c *serviceClient) UpdateLocation(ctx context.Context, in *Location, opts .
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility.
 type ServiceServer interface {
-	ListShippingRate(context.Context, *ListShippingRateRequest) (*ListLocationResponse, error)
+	ListShippingRate(context.Context, *ListShippingRateRequest) (*ListShippingRateResponse, error)
 	GetShippingRate(context.Context, *ShippingRate) (*ShippingRate, error)
 	CreateShippingRate(context.Context, *ShippingRate) (*ShippingRate, error)
 	ListTaxRule(context.Context, *LisTaxRequest) (*ListTaxResponse, error)
@@ -258,7 +258,7 @@ type ServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedServiceServer struct{}
 
-func (UnimplementedServiceServer) ListShippingRate(context.Context, *ListShippingRateRequest) (*ListLocationResponse, error) {
+func (UnimplementedServiceServer) ListShippingRate(context.Context, *ListShippingRateRequest) (*ListShippingRateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListShippingRate not implemented")
 }
 func (UnimplementedServiceServer) GetShippingRate(context.Context, *ShippingRate) (*ShippingRate, error) {
