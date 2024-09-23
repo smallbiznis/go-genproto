@@ -20,21 +20,35 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Service_ListOrg_FullMethodName        = "/smallbiznis.organization.v1.Service/ListOrg"
-	Service_GetOrg_FullMethodName         = "/smallbiznis.organization.v1.Service/GetOrg"
-	Service_CreateOrg_FullMethodName      = "/smallbiznis.organization.v1.Service/CreateOrg"
-	Service_UpdateOrg_FullMethodName      = "/smallbiznis.organization.v1.Service/UpdateOrg"
-	Service_DeleteOrg_FullMethodName      = "/smallbiznis.organization.v1.Service/DeleteOrg"
-	Service_ListLocation_FullMethodName   = "/smallbiznis.organization.v1.Service/ListLocation"
-	Service_GetLocation_FullMethodName    = "/smallbiznis.organization.v1.Service/GetLocation"
-	Service_CrateLocation_FullMethodName  = "/smallbiznis.organization.v1.Service/CrateLocation"
-	Service_UpdateLocation_FullMethodName = "/smallbiznis.organization.v1.Service/UpdateLocation"
+	Service_ListShippingRate_FullMethodName   = "/smallbiznis.organization.v1.Service/ListShippingRate"
+	Service_GetShippingRate_FullMethodName    = "/smallbiznis.organization.v1.Service/GetShippingRate"
+	Service_CreateShippingRate_FullMethodName = "/smallbiznis.organization.v1.Service/CreateShippingRate"
+	Service_ListTaxRule_FullMethodName        = "/smallbiznis.organization.v1.Service/ListTaxRule"
+	Service_GetTaxRule_FullMethodName         = "/smallbiznis.organization.v1.Service/GetTaxRule"
+	Service_CreateTaxRule_FullMethodName      = "/smallbiznis.organization.v1.Service/CreateTaxRule"
+	Service_UpdateTaxRule_FullMethodName      = "/smallbiznis.organization.v1.Service/UpdateTaxRule"
+	Service_ListOrg_FullMethodName            = "/smallbiznis.organization.v1.Service/ListOrg"
+	Service_GetOrg_FullMethodName             = "/smallbiznis.organization.v1.Service/GetOrg"
+	Service_CreateOrg_FullMethodName          = "/smallbiznis.organization.v1.Service/CreateOrg"
+	Service_UpdateOrg_FullMethodName          = "/smallbiznis.organization.v1.Service/UpdateOrg"
+	Service_DeleteOrg_FullMethodName          = "/smallbiznis.organization.v1.Service/DeleteOrg"
+	Service_ListLocation_FullMethodName       = "/smallbiznis.organization.v1.Service/ListLocation"
+	Service_GetLocation_FullMethodName        = "/smallbiznis.organization.v1.Service/GetLocation"
+	Service_CrateLocation_FullMethodName      = "/smallbiznis.organization.v1.Service/CrateLocation"
+	Service_UpdateLocation_FullMethodName     = "/smallbiznis.organization.v1.Service/UpdateLocation"
 )
 
 // ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
+	ListShippingRate(ctx context.Context, in *ListShippingRateRequest, opts ...grpc.CallOption) (*ListLocationResponse, error)
+	GetShippingRate(ctx context.Context, in *ShippingRate, opts ...grpc.CallOption) (*ShippingRate, error)
+	CreateShippingRate(ctx context.Context, in *ShippingRate, opts ...grpc.CallOption) (*ShippingRate, error)
+	ListTaxRule(ctx context.Context, in *LisTaxRequest, opts ...grpc.CallOption) (*ListTaxResponse, error)
+	GetTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error)
+	CreateTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error)
+	UpdateTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error)
 	ListOrg(ctx context.Context, in *ListOrganizationRequest, opts ...grpc.CallOption) (*ListOrganizationResponse, error)
 	GetOrg(ctx context.Context, in *GetOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
 	CreateOrg(ctx context.Context, in *CreateOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
@@ -52,6 +66,76 @@ type serviceClient struct {
 
 func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
 	return &serviceClient{cc}
+}
+
+func (c *serviceClient) ListShippingRate(ctx context.Context, in *ListShippingRateRequest, opts ...grpc.CallOption) (*ListLocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListLocationResponse)
+	err := c.cc.Invoke(ctx, Service_ListShippingRate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) GetShippingRate(ctx context.Context, in *ShippingRate, opts ...grpc.CallOption) (*ShippingRate, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ShippingRate)
+	err := c.cc.Invoke(ctx, Service_GetShippingRate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) CreateShippingRate(ctx context.Context, in *ShippingRate, opts ...grpc.CallOption) (*ShippingRate, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ShippingRate)
+	err := c.cc.Invoke(ctx, Service_CreateShippingRate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) ListTaxRule(ctx context.Context, in *LisTaxRequest, opts ...grpc.CallOption) (*ListTaxResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListTaxResponse)
+	err := c.cc.Invoke(ctx, Service_ListTaxRule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) GetTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TaxRule)
+	err := c.cc.Invoke(ctx, Service_GetTaxRule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) CreateTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TaxRule)
+	err := c.cc.Invoke(ctx, Service_CreateTaxRule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) UpdateTaxRule(ctx context.Context, in *TaxRule, opts ...grpc.CallOption) (*TaxRule, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TaxRule)
+	err := c.cc.Invoke(ctx, Service_UpdateTaxRule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *serviceClient) ListOrg(ctx context.Context, in *ListOrganizationRequest, opts ...grpc.CallOption) (*ListOrganizationResponse, error) {
@@ -148,6 +232,13 @@ func (c *serviceClient) UpdateLocation(ctx context.Context, in *Location, opts .
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility.
 type ServiceServer interface {
+	ListShippingRate(context.Context, *ListShippingRateRequest) (*ListLocationResponse, error)
+	GetShippingRate(context.Context, *ShippingRate) (*ShippingRate, error)
+	CreateShippingRate(context.Context, *ShippingRate) (*ShippingRate, error)
+	ListTaxRule(context.Context, *LisTaxRequest) (*ListTaxResponse, error)
+	GetTaxRule(context.Context, *TaxRule) (*TaxRule, error)
+	CreateTaxRule(context.Context, *TaxRule) (*TaxRule, error)
+	UpdateTaxRule(context.Context, *TaxRule) (*TaxRule, error)
 	ListOrg(context.Context, *ListOrganizationRequest) (*ListOrganizationResponse, error)
 	GetOrg(context.Context, *GetOrganizationRequest) (*Organization, error)
 	CreateOrg(context.Context, *CreateOrganizationRequest) (*Organization, error)
@@ -167,6 +258,27 @@ type ServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedServiceServer struct{}
 
+func (UnimplementedServiceServer) ListShippingRate(context.Context, *ListShippingRateRequest) (*ListLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListShippingRate not implemented")
+}
+func (UnimplementedServiceServer) GetShippingRate(context.Context, *ShippingRate) (*ShippingRate, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShippingRate not implemented")
+}
+func (UnimplementedServiceServer) CreateShippingRate(context.Context, *ShippingRate) (*ShippingRate, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateShippingRate not implemented")
+}
+func (UnimplementedServiceServer) ListTaxRule(context.Context, *LisTaxRequest) (*ListTaxResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTaxRule not implemented")
+}
+func (UnimplementedServiceServer) GetTaxRule(context.Context, *TaxRule) (*TaxRule, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTaxRule not implemented")
+}
+func (UnimplementedServiceServer) CreateTaxRule(context.Context, *TaxRule) (*TaxRule, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTaxRule not implemented")
+}
+func (UnimplementedServiceServer) UpdateTaxRule(context.Context, *TaxRule) (*TaxRule, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTaxRule not implemented")
+}
 func (UnimplementedServiceServer) ListOrg(context.Context, *ListOrganizationRequest) (*ListOrganizationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrg not implemented")
 }
@@ -213,6 +325,132 @@ func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Service_ServiceDesc, srv)
+}
+
+func _Service_ListShippingRate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListShippingRateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).ListShippingRate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_ListShippingRate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).ListShippingRate(ctx, req.(*ListShippingRateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_GetShippingRate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShippingRate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).GetShippingRate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_GetShippingRate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).GetShippingRate(ctx, req.(*ShippingRate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_CreateShippingRate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShippingRate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).CreateShippingRate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_CreateShippingRate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).CreateShippingRate(ctx, req.(*ShippingRate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_ListTaxRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LisTaxRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).ListTaxRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_ListTaxRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).ListTaxRule(ctx, req.(*LisTaxRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_GetTaxRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaxRule)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).GetTaxRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_GetTaxRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).GetTaxRule(ctx, req.(*TaxRule))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_CreateTaxRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaxRule)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).CreateTaxRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_CreateTaxRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).CreateTaxRule(ctx, req.(*TaxRule))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_UpdateTaxRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaxRule)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).UpdateTaxRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_UpdateTaxRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).UpdateTaxRule(ctx, req.(*TaxRule))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Service_ListOrg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -384,6 +622,34 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.organization.v1.Service",
 	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListShippingRate",
+			Handler:    _Service_ListShippingRate_Handler,
+		},
+		{
+			MethodName: "GetShippingRate",
+			Handler:    _Service_GetShippingRate_Handler,
+		},
+		{
+			MethodName: "CreateShippingRate",
+			Handler:    _Service_CreateShippingRate_Handler,
+		},
+		{
+			MethodName: "ListTaxRule",
+			Handler:    _Service_ListTaxRule_Handler,
+		},
+		{
+			MethodName: "GetTaxRule",
+			Handler:    _Service_GetTaxRule_Handler,
+		},
+		{
+			MethodName: "CreateTaxRule",
+			Handler:    _Service_CreateTaxRule_Handler,
+		},
+		{
+			MethodName: "UpdateTaxRule",
+			Handler:    _Service_UpdateTaxRule_Handler,
+		},
 		{
 			MethodName: "ListOrg",
 			Handler:    _Service_ListOrg_Handler,
