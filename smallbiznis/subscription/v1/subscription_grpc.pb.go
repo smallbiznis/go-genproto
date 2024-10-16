@@ -19,26 +19,28 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SubscriptionService_CreateCustomer_FullMethodName     = "/smallbiznis.subscription.v1.SubscriptionService/CreateCustomer"
-	SubscriptionService_ListProduct_FullMethodName        = "/smallbiznis.subscription.v1.SubscriptionService/ListProduct"
-	SubscriptionService_CreateProduct_FullMethodName      = "/smallbiznis.subscription.v1.SubscriptionService/CreateProduct"
-	SubscriptionService_GetProduct_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/GetProduct"
-	SubscriptionService_UpdateProduct_FullMethodName      = "/smallbiznis.subscription.v1.SubscriptionService/UpdateProduct"
-	SubscriptionService_ListPlan_FullMethodName           = "/smallbiznis.subscription.v1.SubscriptionService/ListPlan"
-	SubscriptionService_CreatePlan_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/CreatePlan"
-	SubscriptionService_GetPlan_FullMethodName            = "/smallbiznis.subscription.v1.SubscriptionService/GetPlan"
-	SubscriptionService_UpdatePlan_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan"
-	SubscriptionService_ListSubscription_FullMethodName   = "/smallbiznis.subscription.v1.SubscriptionService/ListSubscription"
-	SubscriptionService_CreateSubscription_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/CreateSubscription"
-	SubscriptionService_GetSubscription_FullMethodName    = "/smallbiznis.subscription.v1.SubscriptionService/GetSubscription"
-	SubscriptionService_UpdateSubscription_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/UpdateSubscription"
-	SubscriptionService_DeleteSubscription_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/DeleteSubscription"
+	SubscriptionService_CreateCheckoutSession_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/CreateCheckoutSession"
+	SubscriptionService_CreateCustomer_FullMethodName        = "/smallbiznis.subscription.v1.SubscriptionService/CreateCustomer"
+	SubscriptionService_ListProduct_FullMethodName           = "/smallbiznis.subscription.v1.SubscriptionService/ListProduct"
+	SubscriptionService_CreateProduct_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/CreateProduct"
+	SubscriptionService_GetProduct_FullMethodName            = "/smallbiznis.subscription.v1.SubscriptionService/GetProduct"
+	SubscriptionService_UpdateProduct_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/UpdateProduct"
+	SubscriptionService_ListPlan_FullMethodName              = "/smallbiznis.subscription.v1.SubscriptionService/ListPlan"
+	SubscriptionService_CreatePlan_FullMethodName            = "/smallbiznis.subscription.v1.SubscriptionService/CreatePlan"
+	SubscriptionService_GetPlan_FullMethodName               = "/smallbiznis.subscription.v1.SubscriptionService/GetPlan"
+	SubscriptionService_UpdatePlan_FullMethodName            = "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan"
+	SubscriptionService_ListSubscription_FullMethodName      = "/smallbiznis.subscription.v1.SubscriptionService/ListSubscription"
+	SubscriptionService_CreateSubscription_FullMethodName    = "/smallbiznis.subscription.v1.SubscriptionService/CreateSubscription"
+	SubscriptionService_GetSubscription_FullMethodName       = "/smallbiznis.subscription.v1.SubscriptionService/GetSubscription"
+	SubscriptionService_UpdateSubscription_FullMethodName    = "/smallbiznis.subscription.v1.SubscriptionService/UpdateSubscription"
+	SubscriptionService_DeleteSubscription_FullMethodName    = "/smallbiznis.subscription.v1.SubscriptionService/DeleteSubscription"
 )
 
 // SubscriptionServiceClient is the client API for SubscriptionService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SubscriptionServiceClient interface {
+	CreateCheckoutSession(ctx context.Context, in *CheckoutSessionRequest, opts ...grpc.CallOption) (*CheckoutSession, error)
 	CreateCustomer(ctx context.Context, in *Customer, opts ...grpc.CallOption) (*Customer, error)
 	ListProduct(ctx context.Context, in *ListProductRequest, opts ...grpc.CallOption) (*ListProductResponse, error)
 	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
@@ -61,6 +63,16 @@ type subscriptionServiceClient struct {
 
 func NewSubscriptionServiceClient(cc grpc.ClientConnInterface) SubscriptionServiceClient {
 	return &subscriptionServiceClient{cc}
+}
+
+func (c *subscriptionServiceClient) CreateCheckoutSession(ctx context.Context, in *CheckoutSessionRequest, opts ...grpc.CallOption) (*CheckoutSession, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckoutSession)
+	err := c.cc.Invoke(ctx, SubscriptionService_CreateCheckoutSession_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *subscriptionServiceClient) CreateCustomer(ctx context.Context, in *Customer, opts ...grpc.CallOption) (*Customer, error) {
@@ -207,6 +219,7 @@ func (c *subscriptionServiceClient) DeleteSubscription(ctx context.Context, in *
 // All implementations must embed UnimplementedSubscriptionServiceServer
 // for forward compatibility.
 type SubscriptionServiceServer interface {
+	CreateCheckoutSession(context.Context, *CheckoutSessionRequest) (*CheckoutSession, error)
 	CreateCustomer(context.Context, *Customer) (*Customer, error)
 	ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error)
 	CreateProduct(context.Context, *Product) (*Product, error)
@@ -231,6 +244,9 @@ type SubscriptionServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSubscriptionServiceServer struct{}
 
+func (UnimplementedSubscriptionServiceServer) CreateCheckoutSession(context.Context, *CheckoutSessionRequest) (*CheckoutSession, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCheckoutSession not implemented")
+}
 func (UnimplementedSubscriptionServiceServer) CreateCustomer(context.Context, *Customer) (*Customer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCustomer not implemented")
 }
@@ -292,6 +308,24 @@ func RegisterSubscriptionServiceServer(s grpc.ServiceRegistrar, srv Subscription
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&SubscriptionService_ServiceDesc, srv)
+}
+
+func _SubscriptionService_CreateCheckoutSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckoutSessionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).CreateCheckoutSession(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionService_CreateCheckoutSession_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).CreateCheckoutSession(ctx, req.(*CheckoutSessionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SubscriptionService_CreateCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -553,6 +587,10 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.subscription.v1.SubscriptionService",
 	HandlerType: (*SubscriptionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateCheckoutSession",
+			Handler:    _SubscriptionService_CreateCheckoutSession_Handler,
+		},
 		{
 			MethodName: "CreateCustomer",
 			Handler:    _SubscriptionService_CreateCustomer_Handler,
