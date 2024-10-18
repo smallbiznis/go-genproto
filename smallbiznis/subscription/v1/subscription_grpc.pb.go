@@ -19,28 +19,30 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SubscriptionService_CreateSession_FullMethodName      = "/smallbiznis.subscription.v1.SubscriptionService/CreateSession"
-	SubscriptionService_GetSession_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/GetSession"
-	SubscriptionService_CreateCustomer_FullMethodName     = "/smallbiznis.subscription.v1.SubscriptionService/CreateCustomer"
-	SubscriptionService_ListProduct_FullMethodName        = "/smallbiznis.subscription.v1.SubscriptionService/ListProduct"
-	SubscriptionService_CreateProduct_FullMethodName      = "/smallbiznis.subscription.v1.SubscriptionService/CreateProduct"
-	SubscriptionService_GetProduct_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/GetProduct"
-	SubscriptionService_UpdateProduct_FullMethodName      = "/smallbiznis.subscription.v1.SubscriptionService/UpdateProduct"
-	SubscriptionService_ListPlan_FullMethodName           = "/smallbiznis.subscription.v1.SubscriptionService/ListPlan"
-	SubscriptionService_CreatePlan_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/CreatePlan"
-	SubscriptionService_GetPlan_FullMethodName            = "/smallbiznis.subscription.v1.SubscriptionService/GetPlan"
-	SubscriptionService_UpdatePlan_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan"
-	SubscriptionService_ListSubscription_FullMethodName   = "/smallbiznis.subscription.v1.SubscriptionService/ListSubscription"
-	SubscriptionService_CreateSubscription_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/CreateSubscription"
-	SubscriptionService_GetSubscription_FullMethodName    = "/smallbiznis.subscription.v1.SubscriptionService/GetSubscription"
-	SubscriptionService_UpdateSubscription_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/UpdateSubscription"
-	SubscriptionService_DeleteSubscription_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/DeleteSubscription"
+	SubscriptionService_CreatePaymentMethod_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/CreatePaymentMethod"
+	SubscriptionService_CreateSession_FullMethodName       = "/smallbiznis.subscription.v1.SubscriptionService/CreateSession"
+	SubscriptionService_GetSession_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/GetSession"
+	SubscriptionService_CreateCustomer_FullMethodName      = "/smallbiznis.subscription.v1.SubscriptionService/CreateCustomer"
+	SubscriptionService_ListProduct_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/ListProduct"
+	SubscriptionService_CreateProduct_FullMethodName       = "/smallbiznis.subscription.v1.SubscriptionService/CreateProduct"
+	SubscriptionService_GetProduct_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/GetProduct"
+	SubscriptionService_UpdateProduct_FullMethodName       = "/smallbiznis.subscription.v1.SubscriptionService/UpdateProduct"
+	SubscriptionService_ListPlan_FullMethodName            = "/smallbiznis.subscription.v1.SubscriptionService/ListPlan"
+	SubscriptionService_CreatePlan_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/CreatePlan"
+	SubscriptionService_GetPlan_FullMethodName             = "/smallbiznis.subscription.v1.SubscriptionService/GetPlan"
+	SubscriptionService_UpdatePlan_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan"
+	SubscriptionService_ListSubscription_FullMethodName    = "/smallbiznis.subscription.v1.SubscriptionService/ListSubscription"
+	SubscriptionService_CreateSubscription_FullMethodName  = "/smallbiznis.subscription.v1.SubscriptionService/CreateSubscription"
+	SubscriptionService_GetSubscription_FullMethodName     = "/smallbiznis.subscription.v1.SubscriptionService/GetSubscription"
+	SubscriptionService_UpdateSubscription_FullMethodName  = "/smallbiznis.subscription.v1.SubscriptionService/UpdateSubscription"
+	SubscriptionService_DeleteSubscription_FullMethodName  = "/smallbiznis.subscription.v1.SubscriptionService/DeleteSubscription"
 )
 
 // SubscriptionServiceClient is the client API for SubscriptionService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SubscriptionServiceClient interface {
+	CreatePaymentMethod(ctx context.Context, in *PaymentMethod, opts ...grpc.CallOption) (*PaymentMethod, error)
 	CreateSession(ctx context.Context, in *SessionRequest, opts ...grpc.CallOption) (*Session, error)
 	GetSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*Session, error)
 	CreateCustomer(ctx context.Context, in *Customer, opts ...grpc.CallOption) (*Customer, error)
@@ -65,6 +67,16 @@ type subscriptionServiceClient struct {
 
 func NewSubscriptionServiceClient(cc grpc.ClientConnInterface) SubscriptionServiceClient {
 	return &subscriptionServiceClient{cc}
+}
+
+func (c *subscriptionServiceClient) CreatePaymentMethod(ctx context.Context, in *PaymentMethod, opts ...grpc.CallOption) (*PaymentMethod, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PaymentMethod)
+	err := c.cc.Invoke(ctx, SubscriptionService_CreatePaymentMethod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *subscriptionServiceClient) CreateSession(ctx context.Context, in *SessionRequest, opts ...grpc.CallOption) (*Session, error) {
@@ -231,6 +243,7 @@ func (c *subscriptionServiceClient) DeleteSubscription(ctx context.Context, in *
 // All implementations must embed UnimplementedSubscriptionServiceServer
 // for forward compatibility.
 type SubscriptionServiceServer interface {
+	CreatePaymentMethod(context.Context, *PaymentMethod) (*PaymentMethod, error)
 	CreateSession(context.Context, *SessionRequest) (*Session, error)
 	GetSession(context.Context, *Session) (*Session, error)
 	CreateCustomer(context.Context, *Customer) (*Customer, error)
@@ -257,6 +270,9 @@ type SubscriptionServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSubscriptionServiceServer struct{}
 
+func (UnimplementedSubscriptionServiceServer) CreatePaymentMethod(context.Context, *PaymentMethod) (*PaymentMethod, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePaymentMethod not implemented")
+}
 func (UnimplementedSubscriptionServiceServer) CreateSession(context.Context, *SessionRequest) (*Session, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSession not implemented")
 }
@@ -324,6 +340,24 @@ func RegisterSubscriptionServiceServer(s grpc.ServiceRegistrar, srv Subscription
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&SubscriptionService_ServiceDesc, srv)
+}
+
+func _SubscriptionService_CreatePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PaymentMethod)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).CreatePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionService_CreatePaymentMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).CreatePaymentMethod(ctx, req.(*PaymentMethod))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SubscriptionService_CreateSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -621,6 +655,10 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.subscription.v1.SubscriptionService",
 	HandlerType: (*SubscriptionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreatePaymentMethod",
+			Handler:    _SubscriptionService_CreatePaymentMethod_Handler,
+		},
 		{
 			MethodName: "CreateSession",
 			Handler:    _SubscriptionService_CreateSession_Handler,
