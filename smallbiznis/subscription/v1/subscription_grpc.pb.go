@@ -27,9 +27,9 @@ const (
 	SubscriptionService_CreateProduct_FullMethodName       = "/smallbiznis.subscription.v1.SubscriptionService/CreateProduct"
 	SubscriptionService_GetProduct_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/GetProduct"
 	SubscriptionService_UpdateProduct_FullMethodName       = "/smallbiznis.subscription.v1.SubscriptionService/UpdateProduct"
-	SubscriptionService_ListPlan_FullMethodName            = "/smallbiznis.subscription.v1.SubscriptionService/ListPlan"
-	SubscriptionService_CreatePlan_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/CreatePlan"
-	SubscriptionService_GetPlan_FullMethodName             = "/smallbiznis.subscription.v1.SubscriptionService/GetPlan"
+	SubscriptionService_ListPrice_FullMethodName           = "/smallbiznis.subscription.v1.SubscriptionService/ListPrice"
+	SubscriptionService_CreatePrice_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/CreatePrice"
+	SubscriptionService_GetPrice_FullMethodName            = "/smallbiznis.subscription.v1.SubscriptionService/GetPrice"
 	SubscriptionService_UpdatePlan_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan"
 	SubscriptionService_ListSubscription_FullMethodName    = "/smallbiznis.subscription.v1.SubscriptionService/ListSubscription"
 	SubscriptionService_CreateSubscription_FullMethodName  = "/smallbiznis.subscription.v1.SubscriptionService/CreateSubscription"
@@ -50,10 +50,10 @@ type SubscriptionServiceClient interface {
 	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	GetProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
-	ListPlan(ctx context.Context, in *ListPlanRequest, opts ...grpc.CallOption) (*ListPlanResponse, error)
-	CreatePlan(ctx context.Context, in *Plan, opts ...grpc.CallOption) (*Plan, error)
-	GetPlan(ctx context.Context, in *Plan, opts ...grpc.CallOption) (*Plan, error)
-	UpdatePlan(ctx context.Context, in *Plan, opts ...grpc.CallOption) (*Plan, error)
+	ListPrice(ctx context.Context, in *ListPriceRequest, opts ...grpc.CallOption) (*ListPriceResponse, error)
+	CreatePrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error)
+	GetPrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error)
+	UpdatePlan(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error)
 	ListSubscription(ctx context.Context, in *ListSubscriptionRequest, opts ...grpc.CallOption) (*ListSubscriptionResponse, error)
 	CreateSubscription(ctx context.Context, in *Subscription, opts ...grpc.CallOption) (*Subscription, error)
 	GetSubscription(ctx context.Context, in *Subscription, opts ...grpc.CallOption) (*Subscription, error)
@@ -149,39 +149,39 @@ func (c *subscriptionServiceClient) UpdateProduct(ctx context.Context, in *Produ
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) ListPlan(ctx context.Context, in *ListPlanRequest, opts ...grpc.CallOption) (*ListPlanResponse, error) {
+func (c *subscriptionServiceClient) ListPrice(ctx context.Context, in *ListPriceRequest, opts ...grpc.CallOption) (*ListPriceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListPlanResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_ListPlan_FullMethodName, in, out, cOpts...)
+	out := new(ListPriceResponse)
+	err := c.cc.Invoke(ctx, SubscriptionService_ListPrice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) CreatePlan(ctx context.Context, in *Plan, opts ...grpc.CallOption) (*Plan, error) {
+func (c *subscriptionServiceClient) CreatePrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Plan)
-	err := c.cc.Invoke(ctx, SubscriptionService_CreatePlan_FullMethodName, in, out, cOpts...)
+	out := new(Price)
+	err := c.cc.Invoke(ctx, SubscriptionService_CreatePrice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) GetPlan(ctx context.Context, in *Plan, opts ...grpc.CallOption) (*Plan, error) {
+func (c *subscriptionServiceClient) GetPrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Plan)
-	err := c.cc.Invoke(ctx, SubscriptionService_GetPlan_FullMethodName, in, out, cOpts...)
+	out := new(Price)
+	err := c.cc.Invoke(ctx, SubscriptionService_GetPrice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) UpdatePlan(ctx context.Context, in *Plan, opts ...grpc.CallOption) (*Plan, error) {
+func (c *subscriptionServiceClient) UpdatePlan(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Plan)
+	out := new(Price)
 	err := c.cc.Invoke(ctx, SubscriptionService_UpdatePlan_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -251,10 +251,10 @@ type SubscriptionServiceServer interface {
 	CreateProduct(context.Context, *Product) (*Product, error)
 	GetProduct(context.Context, *Product) (*Product, error)
 	UpdateProduct(context.Context, *Product) (*Product, error)
-	ListPlan(context.Context, *ListPlanRequest) (*ListPlanResponse, error)
-	CreatePlan(context.Context, *Plan) (*Plan, error)
-	GetPlan(context.Context, *Plan) (*Plan, error)
-	UpdatePlan(context.Context, *Plan) (*Plan, error)
+	ListPrice(context.Context, *ListPriceRequest) (*ListPriceResponse, error)
+	CreatePrice(context.Context, *Price) (*Price, error)
+	GetPrice(context.Context, *Price) (*Price, error)
+	UpdatePlan(context.Context, *Price) (*Price, error)
 	ListSubscription(context.Context, *ListSubscriptionRequest) (*ListSubscriptionResponse, error)
 	CreateSubscription(context.Context, *Subscription) (*Subscription, error)
 	GetSubscription(context.Context, *Subscription) (*Subscription, error)
@@ -294,16 +294,16 @@ func (UnimplementedSubscriptionServiceServer) GetProduct(context.Context, *Produ
 func (UnimplementedSubscriptionServiceServer) UpdateProduct(context.Context, *Product) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) ListPlan(context.Context, *ListPlanRequest) (*ListPlanResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListPlan not implemented")
+func (UnimplementedSubscriptionServiceServer) ListPrice(context.Context, *ListPriceRequest) (*ListPriceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPrice not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) CreatePlan(context.Context, *Plan) (*Plan, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatePlan not implemented")
+func (UnimplementedSubscriptionServiceServer) CreatePrice(context.Context, *Price) (*Price, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePrice not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) GetPlan(context.Context, *Plan) (*Plan, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPlan not implemented")
+func (UnimplementedSubscriptionServiceServer) GetPrice(context.Context, *Price) (*Price, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPrice not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) UpdatePlan(context.Context, *Plan) (*Plan, error) {
+func (UnimplementedSubscriptionServiceServer) UpdatePlan(context.Context, *Price) (*Price, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePlan not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) ListSubscription(context.Context, *ListSubscriptionRequest) (*ListSubscriptionResponse, error) {
@@ -486,62 +486,62 @@ func _SubscriptionService_UpdateProduct_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_ListPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListPlanRequest)
+func _SubscriptionService_ListPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPriceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).ListPlan(ctx, in)
+		return srv.(SubscriptionServiceServer).ListPrice(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_ListPlan_FullMethodName,
+		FullMethod: SubscriptionService_ListPrice_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).ListPlan(ctx, req.(*ListPlanRequest))
+		return srv.(SubscriptionServiceServer).ListPrice(ctx, req.(*ListPriceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_CreatePlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Plan)
+func _SubscriptionService_CreatePrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Price)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).CreatePlan(ctx, in)
+		return srv.(SubscriptionServiceServer).CreatePrice(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_CreatePlan_FullMethodName,
+		FullMethod: SubscriptionService_CreatePrice_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).CreatePlan(ctx, req.(*Plan))
+		return srv.(SubscriptionServiceServer).CreatePrice(ctx, req.(*Price))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_GetPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Plan)
+func _SubscriptionService_GetPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Price)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).GetPlan(ctx, in)
+		return srv.(SubscriptionServiceServer).GetPrice(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_GetPlan_FullMethodName,
+		FullMethod: SubscriptionService_GetPrice_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).GetPlan(ctx, req.(*Plan))
+		return srv.(SubscriptionServiceServer).GetPrice(ctx, req.(*Price))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _SubscriptionService_UpdatePlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Plan)
+	in := new(Price)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -553,7 +553,7 @@ func _SubscriptionService_UpdatePlan_Handler(srv interface{}, ctx context.Contex
 		FullMethod: SubscriptionService_UpdatePlan_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).UpdatePlan(ctx, req.(*Plan))
+		return srv.(SubscriptionServiceServer).UpdatePlan(ctx, req.(*Price))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -688,16 +688,16 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SubscriptionService_UpdateProduct_Handler,
 		},
 		{
-			MethodName: "ListPlan",
-			Handler:    _SubscriptionService_ListPlan_Handler,
+			MethodName: "ListPrice",
+			Handler:    _SubscriptionService_ListPrice_Handler,
 		},
 		{
-			MethodName: "CreatePlan",
-			Handler:    _SubscriptionService_CreatePlan_Handler,
+			MethodName: "CreatePrice",
+			Handler:    _SubscriptionService_CreatePrice_Handler,
 		},
 		{
-			MethodName: "GetPlan",
-			Handler:    _SubscriptionService_GetPlan_Handler,
+			MethodName: "GetPrice",
+			Handler:    _SubscriptionService_GetPrice_Handler,
 		},
 		{
 			MethodName: "UpdatePlan",

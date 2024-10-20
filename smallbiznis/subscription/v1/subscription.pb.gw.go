@@ -416,73 +416,73 @@ func local_request_SubscriptionService_UpdateProduct_0(ctx context.Context, mars
 }
 
 var (
-	filter_SubscriptionService_ListPlan_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_SubscriptionService_ListPrice_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_SubscriptionService_ListPlan_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriptionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListPlanRequest
+func request_SubscriptionService_ListPrice_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriptionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListPriceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriptionService_ListPlan_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriptionService_ListPrice_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListPlan(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListPrice(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_SubscriptionService_ListPlan_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriptionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListPlanRequest
+func local_request_SubscriptionService_ListPrice_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriptionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListPriceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriptionService_ListPlan_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriptionService_ListPrice_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListPlan(ctx, &protoReq)
+	msg, err := server.ListPrice(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_SubscriptionService_CreatePlan_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriptionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Plan
+func request_SubscriptionService_CreatePrice_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriptionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq Price
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.CreatePlan(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreatePrice(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_SubscriptionService_CreatePlan_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriptionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Plan
+func local_request_SubscriptionService_CreatePrice_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriptionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq Price
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.CreatePlan(ctx, &protoReq)
+	msg, err := server.CreatePrice(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
 var (
-	filter_SubscriptionService_GetPlan_0 = &utilities.DoubleArray{Encoding: map[string]int{"id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_SubscriptionService_GetPrice_0 = &utilities.DoubleArray{Encoding: map[string]int{"id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
-func request_SubscriptionService_GetPlan_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriptionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Plan
+func request_SubscriptionService_GetPrice_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriptionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq Price
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -505,17 +505,17 @@ func request_SubscriptionService_GetPlan_0(ctx context.Context, marshaler runtim
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriptionService_GetPlan_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriptionService_GetPrice_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.GetPlan(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetPrice(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_SubscriptionService_GetPlan_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriptionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Plan
+func local_request_SubscriptionService_GetPrice_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriptionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq Price
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -538,17 +538,17 @@ func local_request_SubscriptionService_GetPlan_0(ctx context.Context, marshaler 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriptionService_GetPlan_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriptionService_GetPrice_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.GetPlan(ctx, &protoReq)
+	msg, err := server.GetPrice(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
 func request_SubscriptionService_UpdatePlan_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriptionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Plan
+	var protoReq Price
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -578,7 +578,7 @@ func request_SubscriptionService_UpdatePlan_0(ctx context.Context, marshaler run
 }
 
 func local_request_SubscriptionService_UpdatePlan_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriptionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Plan
+	var protoReq Price
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -1076,7 +1076,7 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 
 	})
 
-	mux.Handle("GET", pattern_SubscriptionService_ListPlan_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SubscriptionService_ListPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -1084,12 +1084,12 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/ListPlan", runtime.WithHTTPPathPattern("/v1/stripe/plans"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/ListPrice", runtime.WithHTTPPathPattern("/v1/stripe/prices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SubscriptionService_ListPlan_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SubscriptionService_ListPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -1097,11 +1097,11 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 			return
 		}
 
-		forward_SubscriptionService_ListPlan_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriptionService_ListPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_SubscriptionService_CreatePlan_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_SubscriptionService_CreatePrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -1109,12 +1109,12 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/CreatePlan", runtime.WithHTTPPathPattern("/v1/stripe/plans"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/CreatePrice", runtime.WithHTTPPathPattern("/v1/stripe/prices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SubscriptionService_CreatePlan_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SubscriptionService_CreatePrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -1122,11 +1122,11 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 			return
 		}
 
-		forward_SubscriptionService_CreatePlan_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriptionService_CreatePrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_SubscriptionService_GetPlan_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SubscriptionService_GetPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -1134,12 +1134,12 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/GetPlan", runtime.WithHTTPPathPattern("/v1/stripe/plans/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/GetPrice", runtime.WithHTTPPathPattern("/v1/stripe/prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SubscriptionService_GetPlan_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SubscriptionService_GetPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -1147,7 +1147,7 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 			return
 		}
 
-		forward_SubscriptionService_GetPlan_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriptionService_GetPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1159,7 +1159,7 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan", runtime.WithHTTPPathPattern("/v1/stripe/plans/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan", runtime.WithHTTPPathPattern("/v1/stripe/prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1518,69 +1518,69 @@ func RegisterSubscriptionServiceHandlerClient(ctx context.Context, mux *runtime.
 
 	})
 
-	mux.Handle("GET", pattern_SubscriptionService_ListPlan_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SubscriptionService_ListPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/ListPlan", runtime.WithHTTPPathPattern("/v1/stripe/plans"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/ListPrice", runtime.WithHTTPPathPattern("/v1/stripe/prices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SubscriptionService_ListPlan_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SubscriptionService_ListPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SubscriptionService_ListPlan_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriptionService_ListPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_SubscriptionService_CreatePlan_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_SubscriptionService_CreatePrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/CreatePlan", runtime.WithHTTPPathPattern("/v1/stripe/plans"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/CreatePrice", runtime.WithHTTPPathPattern("/v1/stripe/prices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SubscriptionService_CreatePlan_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SubscriptionService_CreatePrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SubscriptionService_CreatePlan_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriptionService_CreatePrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_SubscriptionService_GetPlan_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SubscriptionService_GetPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/GetPlan", runtime.WithHTTPPathPattern("/v1/stripe/plans/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/GetPrice", runtime.WithHTTPPathPattern("/v1/stripe/prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SubscriptionService_GetPlan_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SubscriptionService_GetPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SubscriptionService_GetPlan_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriptionService_GetPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1590,7 +1590,7 @@ func RegisterSubscriptionServiceHandlerClient(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan", runtime.WithHTTPPathPattern("/v1/stripe/plans/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan", runtime.WithHTTPPathPattern("/v1/stripe/prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1736,13 +1736,13 @@ var (
 
 	pattern_SubscriptionService_UpdateProduct_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "stripe", "products", "id"}, ""))
 
-	pattern_SubscriptionService_ListPlan_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "stripe", "plans"}, ""))
+	pattern_SubscriptionService_ListPrice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "stripe", "prices"}, ""))
 
-	pattern_SubscriptionService_CreatePlan_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "stripe", "plans"}, ""))
+	pattern_SubscriptionService_CreatePrice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "stripe", "prices"}, ""))
 
-	pattern_SubscriptionService_GetPlan_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "stripe", "plans", "id"}, ""))
+	pattern_SubscriptionService_GetPrice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "stripe", "prices", "id"}, ""))
 
-	pattern_SubscriptionService_UpdatePlan_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "stripe", "plans", "id"}, ""))
+	pattern_SubscriptionService_UpdatePlan_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "stripe", "prices", "id"}, ""))
 
 	pattern_SubscriptionService_ListSubscription_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "stripe", "subscriptions"}, ""))
 
@@ -1772,11 +1772,11 @@ var (
 
 	forward_SubscriptionService_UpdateProduct_0 = runtime.ForwardResponseMessage
 
-	forward_SubscriptionService_ListPlan_0 = runtime.ForwardResponseMessage
+	forward_SubscriptionService_ListPrice_0 = runtime.ForwardResponseMessage
 
-	forward_SubscriptionService_CreatePlan_0 = runtime.ForwardResponseMessage
+	forward_SubscriptionService_CreatePrice_0 = runtime.ForwardResponseMessage
 
-	forward_SubscriptionService_GetPlan_0 = runtime.ForwardResponseMessage
+	forward_SubscriptionService_GetPrice_0 = runtime.ForwardResponseMessage
 
 	forward_SubscriptionService_UpdatePlan_0 = runtime.ForwardResponseMessage
 
