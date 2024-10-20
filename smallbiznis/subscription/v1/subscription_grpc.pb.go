@@ -36,6 +36,8 @@ const (
 	SubscriptionService_GetSubscription_FullMethodName     = "/smallbiznis.subscription.v1.SubscriptionService/GetSubscription"
 	SubscriptionService_UpdateSubscription_FullMethodName  = "/smallbiznis.subscription.v1.SubscriptionService/UpdateSubscription"
 	SubscriptionService_DeleteSubscription_FullMethodName  = "/smallbiznis.subscription.v1.SubscriptionService/DeleteSubscription"
+	SubscriptionService_ListInvoice_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/ListInvoice"
+	SubscriptionService_GetInvoice_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/GetInvoice"
 )
 
 // SubscriptionServiceClient is the client API for SubscriptionService service.
@@ -59,6 +61,8 @@ type SubscriptionServiceClient interface {
 	GetSubscription(ctx context.Context, in *Subscription, opts ...grpc.CallOption) (*Subscription, error)
 	UpdateSubscription(ctx context.Context, in *Subscription, opts ...grpc.CallOption) (*Subscription, error)
 	DeleteSubscription(ctx context.Context, in *Subscription, opts ...grpc.CallOption) (*Subscription, error)
+	ListInvoice(ctx context.Context, in *ListInvoiceRequest, opts ...grpc.CallOption) (*ListInvoiceResponse, error)
+	GetInvoice(ctx context.Context, in *Invoice, opts ...grpc.CallOption) (*Invoice, error)
 }
 
 type subscriptionServiceClient struct {
@@ -239,6 +243,26 @@ func (c *subscriptionServiceClient) DeleteSubscription(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *subscriptionServiceClient) ListInvoice(ctx context.Context, in *ListInvoiceRequest, opts ...grpc.CallOption) (*ListInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListInvoiceResponse)
+	err := c.cc.Invoke(ctx, SubscriptionService_ListInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionServiceClient) GetInvoice(ctx context.Context, in *Invoice, opts ...grpc.CallOption) (*Invoice, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Invoice)
+	err := c.cc.Invoke(ctx, SubscriptionService_GetInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SubscriptionServiceServer is the server API for SubscriptionService service.
 // All implementations must embed UnimplementedSubscriptionServiceServer
 // for forward compatibility.
@@ -260,6 +284,8 @@ type SubscriptionServiceServer interface {
 	GetSubscription(context.Context, *Subscription) (*Subscription, error)
 	UpdateSubscription(context.Context, *Subscription) (*Subscription, error)
 	DeleteSubscription(context.Context, *Subscription) (*Subscription, error)
+	ListInvoice(context.Context, *ListInvoiceRequest) (*ListInvoiceResponse, error)
+	GetInvoice(context.Context, *Invoice) (*Invoice, error)
 	mustEmbedUnimplementedSubscriptionServiceServer()
 }
 
@@ -320,6 +346,12 @@ func (UnimplementedSubscriptionServiceServer) UpdateSubscription(context.Context
 }
 func (UnimplementedSubscriptionServiceServer) DeleteSubscription(context.Context, *Subscription) (*Subscription, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSubscription not implemented")
+}
+func (UnimplementedSubscriptionServiceServer) ListInvoice(context.Context, *ListInvoiceRequest) (*ListInvoiceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInvoice not implemented")
+}
+func (UnimplementedSubscriptionServiceServer) GetInvoice(context.Context, *Invoice) (*Invoice, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetInvoice not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) mustEmbedUnimplementedSubscriptionServiceServer() {}
 func (UnimplementedSubscriptionServiceServer) testEmbeddedByValue()                             {}
@@ -648,6 +680,42 @@ func _SubscriptionService_DeleteSubscription_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SubscriptionService_ListInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).ListInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionService_ListInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).ListInvoice(ctx, req.(*ListInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionService_GetInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Invoice)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).GetInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionService_GetInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).GetInvoice(ctx, req.(*Invoice))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SubscriptionService_ServiceDesc is the grpc.ServiceDesc for SubscriptionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -722,6 +790,14 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteSubscription",
 			Handler:    _SubscriptionService_DeleteSubscription_Handler,
+		},
+		{
+			MethodName: "ListInvoice",
+			Handler:    _SubscriptionService_ListInvoice_Handler,
+		},
+		{
+			MethodName: "GetInvoice",
+			Handler:    _SubscriptionService_GetInvoice_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
