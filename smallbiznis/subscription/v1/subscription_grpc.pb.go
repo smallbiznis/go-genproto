@@ -19,18 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	SubscriptionService_CreateBillingPortal_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/CreateBillingPortal"
 	SubscriptionService_CreateSession_FullMethodName       = "/smallbiznis.subscription.v1.SubscriptionService/CreateSession"
 	SubscriptionService_ConfirmationSession_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/ConfirmationSession"
 	SubscriptionService_CreateCustomer_FullMethodName      = "/smallbiznis.subscription.v1.SubscriptionService/CreateCustomer"
 	SubscriptionService_GetCustomer_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/GetCustomer"
 	SubscriptionService_ListProduct_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/ListProduct"
-	SubscriptionService_CreateProduct_FullMethodName       = "/smallbiznis.subscription.v1.SubscriptionService/CreateProduct"
 	SubscriptionService_GetProduct_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/GetProduct"
 	SubscriptionService_UpdateProduct_FullMethodName       = "/smallbiznis.subscription.v1.SubscriptionService/UpdateProduct"
 	SubscriptionService_ListPrice_FullMethodName           = "/smallbiznis.subscription.v1.SubscriptionService/ListPrice"
-	SubscriptionService_CreatePrice_FullMethodName         = "/smallbiznis.subscription.v1.SubscriptionService/CreatePrice"
 	SubscriptionService_GetPrice_FullMethodName            = "/smallbiznis.subscription.v1.SubscriptionService/GetPrice"
-	SubscriptionService_UpdatePlan_FullMethodName          = "/smallbiznis.subscription.v1.SubscriptionService/UpdatePlan"
 	SubscriptionService_ListSubscription_FullMethodName    = "/smallbiznis.subscription.v1.SubscriptionService/ListSubscription"
 	SubscriptionService_CreateSubscription_FullMethodName  = "/smallbiznis.subscription.v1.SubscriptionService/CreateSubscription"
 	SubscriptionService_GetSubscription_FullMethodName     = "/smallbiznis.subscription.v1.SubscriptionService/GetSubscription"
@@ -44,18 +42,16 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SubscriptionServiceClient interface {
+	CreateBillingPortal(ctx context.Context, in *CreateBillingRequest, opts ...grpc.CallOption) (*BillingPortalSession, error)
 	CreateSession(ctx context.Context, in *SessionRequest, opts ...grpc.CallOption) (*Session, error)
 	ConfirmationSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*PaymentMethod, error)
 	CreateCustomer(ctx context.Context, in *Customer, opts ...grpc.CallOption) (*Customer, error)
 	GetCustomer(ctx context.Context, in *Customer, opts ...grpc.CallOption) (*Customer, error)
 	ListProduct(ctx context.Context, in *ListProductRequest, opts ...grpc.CallOption) (*ListProductResponse, error)
-	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	GetProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	ListPrice(ctx context.Context, in *ListPriceRequest, opts ...grpc.CallOption) (*ListPriceResponse, error)
-	CreatePrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error)
 	GetPrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error)
-	UpdatePlan(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error)
 	ListSubscription(ctx context.Context, in *ListSubscriptionRequest, opts ...grpc.CallOption) (*ListSubscriptionResponse, error)
 	CreateSubscription(ctx context.Context, in *Subscription, opts ...grpc.CallOption) (*Subscription, error)
 	GetSubscription(ctx context.Context, in *Subscription, opts ...grpc.CallOption) (*Subscription, error)
@@ -71,6 +67,16 @@ type subscriptionServiceClient struct {
 
 func NewSubscriptionServiceClient(cc grpc.ClientConnInterface) SubscriptionServiceClient {
 	return &subscriptionServiceClient{cc}
+}
+
+func (c *subscriptionServiceClient) CreateBillingPortal(ctx context.Context, in *CreateBillingRequest, opts ...grpc.CallOption) (*BillingPortalSession, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BillingPortalSession)
+	err := c.cc.Invoke(ctx, SubscriptionService_CreateBillingPortal_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *subscriptionServiceClient) CreateSession(ctx context.Context, in *SessionRequest, opts ...grpc.CallOption) (*Session, error) {
@@ -123,16 +129,6 @@ func (c *subscriptionServiceClient) ListProduct(ctx context.Context, in *ListPro
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Product)
-	err := c.cc.Invoke(ctx, SubscriptionService_CreateProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *subscriptionServiceClient) GetProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Product)
@@ -163,30 +159,10 @@ func (c *subscriptionServiceClient) ListPrice(ctx context.Context, in *ListPrice
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) CreatePrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Price)
-	err := c.cc.Invoke(ctx, SubscriptionService_CreatePrice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *subscriptionServiceClient) GetPrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Price)
 	err := c.cc.Invoke(ctx, SubscriptionService_GetPrice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *subscriptionServiceClient) UpdatePlan(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Price, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Price)
-	err := c.cc.Invoke(ctx, SubscriptionService_UpdatePlan_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -267,18 +243,16 @@ func (c *subscriptionServiceClient) GetInvoice(ctx context.Context, in *Invoice,
 // All implementations must embed UnimplementedSubscriptionServiceServer
 // for forward compatibility.
 type SubscriptionServiceServer interface {
+	CreateBillingPortal(context.Context, *CreateBillingRequest) (*BillingPortalSession, error)
 	CreateSession(context.Context, *SessionRequest) (*Session, error)
 	ConfirmationSession(context.Context, *Session) (*PaymentMethod, error)
 	CreateCustomer(context.Context, *Customer) (*Customer, error)
 	GetCustomer(context.Context, *Customer) (*Customer, error)
 	ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error)
-	CreateProduct(context.Context, *Product) (*Product, error)
 	GetProduct(context.Context, *Product) (*Product, error)
 	UpdateProduct(context.Context, *Product) (*Product, error)
 	ListPrice(context.Context, *ListPriceRequest) (*ListPriceResponse, error)
-	CreatePrice(context.Context, *Price) (*Price, error)
 	GetPrice(context.Context, *Price) (*Price, error)
-	UpdatePlan(context.Context, *Price) (*Price, error)
 	ListSubscription(context.Context, *ListSubscriptionRequest) (*ListSubscriptionResponse, error)
 	CreateSubscription(context.Context, *Subscription) (*Subscription, error)
 	GetSubscription(context.Context, *Subscription) (*Subscription, error)
@@ -296,6 +270,9 @@ type SubscriptionServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSubscriptionServiceServer struct{}
 
+func (UnimplementedSubscriptionServiceServer) CreateBillingPortal(context.Context, *CreateBillingRequest) (*BillingPortalSession, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateBillingPortal not implemented")
+}
 func (UnimplementedSubscriptionServiceServer) CreateSession(context.Context, *SessionRequest) (*Session, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSession not implemented")
 }
@@ -311,9 +288,6 @@ func (UnimplementedSubscriptionServiceServer) GetCustomer(context.Context, *Cust
 func (UnimplementedSubscriptionServiceServer) ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProduct not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) CreateProduct(context.Context, *Product) (*Product, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateProduct not implemented")
-}
 func (UnimplementedSubscriptionServiceServer) GetProduct(context.Context, *Product) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
 }
@@ -323,14 +297,8 @@ func (UnimplementedSubscriptionServiceServer) UpdateProduct(context.Context, *Pr
 func (UnimplementedSubscriptionServiceServer) ListPrice(context.Context, *ListPriceRequest) (*ListPriceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPrice not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) CreatePrice(context.Context, *Price) (*Price, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatePrice not implemented")
-}
 func (UnimplementedSubscriptionServiceServer) GetPrice(context.Context, *Price) (*Price, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPrice not implemented")
-}
-func (UnimplementedSubscriptionServiceServer) UpdatePlan(context.Context, *Price) (*Price, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePlan not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) ListSubscription(context.Context, *ListSubscriptionRequest) (*ListSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSubscription not implemented")
@@ -372,6 +340,24 @@ func RegisterSubscriptionServiceServer(s grpc.ServiceRegistrar, srv Subscription
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&SubscriptionService_ServiceDesc, srv)
+}
+
+func _SubscriptionService_CreateBillingPortal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateBillingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).CreateBillingPortal(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionService_CreateBillingPortal_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).CreateBillingPortal(ctx, req.(*CreateBillingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SubscriptionService_CreateSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -464,24 +450,6 @@ func _SubscriptionService_ListProduct_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_CreateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Product)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).CreateProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SubscriptionService_CreateProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).CreateProduct(ctx, req.(*Product))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _SubscriptionService_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Product)
 	if err := dec(in); err != nil {
@@ -536,24 +504,6 @@ func _SubscriptionService_ListPrice_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_CreatePrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Price)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).CreatePrice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SubscriptionService_CreatePrice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).CreatePrice(ctx, req.(*Price))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _SubscriptionService_GetPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Price)
 	if err := dec(in); err != nil {
@@ -568,24 +518,6 @@ func _SubscriptionService_GetPrice_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SubscriptionServiceServer).GetPrice(ctx, req.(*Price))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SubscriptionService_UpdatePlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Price)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).UpdatePlan(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SubscriptionService_UpdatePlan_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).UpdatePlan(ctx, req.(*Price))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -724,6 +656,10 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SubscriptionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "CreateBillingPortal",
+			Handler:    _SubscriptionService_CreateBillingPortal_Handler,
+		},
+		{
 			MethodName: "CreateSession",
 			Handler:    _SubscriptionService_CreateSession_Handler,
 		},
@@ -744,10 +680,6 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SubscriptionService_ListProduct_Handler,
 		},
 		{
-			MethodName: "CreateProduct",
-			Handler:    _SubscriptionService_CreateProduct_Handler,
-		},
-		{
 			MethodName: "GetProduct",
 			Handler:    _SubscriptionService_GetProduct_Handler,
 		},
@@ -760,16 +692,8 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SubscriptionService_ListPrice_Handler,
 		},
 		{
-			MethodName: "CreatePrice",
-			Handler:    _SubscriptionService_CreatePrice_Handler,
-		},
-		{
 			MethodName: "GetPrice",
 			Handler:    _SubscriptionService_GetPrice_Handler,
-		},
-		{
-			MethodName: "UpdatePlan",
-			Handler:    _SubscriptionService_UpdatePlan_Handler,
 		},
 		{
 			MethodName: "ListSubscription",
