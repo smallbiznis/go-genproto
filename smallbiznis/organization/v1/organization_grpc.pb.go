@@ -8,6 +8,7 @@ package organization
 
 import (
 	context "context"
+	v1 "github.com/smallbiznis/go-genproto/smallbiznis/subscription/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,22 +21,24 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Service_ListShippingRate_FullMethodName   = "/smallbiznis.organization.v1.Service/ListShippingRate"
-	Service_GetShippingRate_FullMethodName    = "/smallbiznis.organization.v1.Service/GetShippingRate"
-	Service_CreateShippingRate_FullMethodName = "/smallbiznis.organization.v1.Service/CreateShippingRate"
-	Service_ListTaxRule_FullMethodName        = "/smallbiznis.organization.v1.Service/ListTaxRule"
-	Service_GetTaxRule_FullMethodName         = "/smallbiznis.organization.v1.Service/GetTaxRule"
-	Service_CreateTaxRule_FullMethodName      = "/smallbiznis.organization.v1.Service/CreateTaxRule"
-	Service_UpdateTaxRule_FullMethodName      = "/smallbiznis.organization.v1.Service/UpdateTaxRule"
-	Service_ListOrg_FullMethodName            = "/smallbiznis.organization.v1.Service/ListOrg"
-	Service_GetOrg_FullMethodName             = "/smallbiznis.organization.v1.Service/GetOrg"
-	Service_CreateOrg_FullMethodName          = "/smallbiznis.organization.v1.Service/CreateOrg"
-	Service_UpdateOrg_FullMethodName          = "/smallbiznis.organization.v1.Service/UpdateOrg"
-	Service_DeleteOrg_FullMethodName          = "/smallbiznis.organization.v1.Service/DeleteOrg"
-	Service_ListLocation_FullMethodName       = "/smallbiznis.organization.v1.Service/ListLocation"
-	Service_GetLocation_FullMethodName        = "/smallbiznis.organization.v1.Service/GetLocation"
-	Service_CrateLocation_FullMethodName      = "/smallbiznis.organization.v1.Service/CrateLocation"
-	Service_UpdateLocation_FullMethodName     = "/smallbiznis.organization.v1.Service/UpdateLocation"
+	Service_ListShippingRate_FullMethodName    = "/smallbiznis.organization.v1.Service/ListShippingRate"
+	Service_GetShippingRate_FullMethodName     = "/smallbiznis.organization.v1.Service/GetShippingRate"
+	Service_CreateShippingRate_FullMethodName  = "/smallbiznis.organization.v1.Service/CreateShippingRate"
+	Service_ListTaxRule_FullMethodName         = "/smallbiznis.organization.v1.Service/ListTaxRule"
+	Service_GetTaxRule_FullMethodName          = "/smallbiznis.organization.v1.Service/GetTaxRule"
+	Service_CreateTaxRule_FullMethodName       = "/smallbiznis.organization.v1.Service/CreateTaxRule"
+	Service_UpdateTaxRule_FullMethodName       = "/smallbiznis.organization.v1.Service/UpdateTaxRule"
+	Service_ListOrg_FullMethodName             = "/smallbiznis.organization.v1.Service/ListOrg"
+	Service_GetOrg_FullMethodName              = "/smallbiznis.organization.v1.Service/GetOrg"
+	Service_CreateOrg_FullMethodName           = "/smallbiznis.organization.v1.Service/CreateOrg"
+	Service_UpdateOrg_FullMethodName           = "/smallbiznis.organization.v1.Service/UpdateOrg"
+	Service_DeleteOrg_FullMethodName           = "/smallbiznis.organization.v1.Service/DeleteOrg"
+	Service_ListLocation_FullMethodName        = "/smallbiznis.organization.v1.Service/ListLocation"
+	Service_GetLocation_FullMethodName         = "/smallbiznis.organization.v1.Service/GetLocation"
+	Service_CrateLocation_FullMethodName       = "/smallbiznis.organization.v1.Service/CrateLocation"
+	Service_UpdateLocation_FullMethodName      = "/smallbiznis.organization.v1.Service/UpdateLocation"
+	Service_GetSubscription_FullMethodName     = "/smallbiznis.organization.v1.Service/GetSubscription"
+	Service_CreateBillingPortal_FullMethodName = "/smallbiznis.organization.v1.Service/CreateBillingPortal"
 )
 
 // ServiceClient is the client API for Service service.
@@ -58,6 +61,8 @@ type ServiceClient interface {
 	GetLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error)
 	CrateLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error)
 	UpdateLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error)
+	GetSubscription(ctx context.Context, in *v1.Subscription, opts ...grpc.CallOption) (*v1.Subscription, error)
+	CreateBillingPortal(ctx context.Context, in *CreateBillingRequest, opts ...grpc.CallOption) (*v1.BillingPortalSession, error)
 }
 
 type serviceClient struct {
@@ -228,6 +233,26 @@ func (c *serviceClient) UpdateLocation(ctx context.Context, in *Location, opts .
 	return out, nil
 }
 
+func (c *serviceClient) GetSubscription(ctx context.Context, in *v1.Subscription, opts ...grpc.CallOption) (*v1.Subscription, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v1.Subscription)
+	err := c.cc.Invoke(ctx, Service_GetSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) CreateBillingPortal(ctx context.Context, in *CreateBillingRequest, opts ...grpc.CallOption) (*v1.BillingPortalSession, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v1.BillingPortalSession)
+	err := c.cc.Invoke(ctx, Service_CreateBillingPortal_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceServer is the server API for Service service.
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility.
@@ -248,6 +273,8 @@ type ServiceServer interface {
 	GetLocation(context.Context, *Location) (*Location, error)
 	CrateLocation(context.Context, *Location) (*Location, error)
 	UpdateLocation(context.Context, *Location) (*Location, error)
+	GetSubscription(context.Context, *v1.Subscription) (*v1.Subscription, error)
+	CreateBillingPortal(context.Context, *CreateBillingRequest) (*v1.BillingPortalSession, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -305,6 +332,12 @@ func (UnimplementedServiceServer) CrateLocation(context.Context, *Location) (*Lo
 }
 func (UnimplementedServiceServer) UpdateLocation(context.Context, *Location) (*Location, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateLocation not implemented")
+}
+func (UnimplementedServiceServer) GetSubscription(context.Context, *v1.Subscription) (*v1.Subscription, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSubscription not implemented")
+}
+func (UnimplementedServiceServer) CreateBillingPortal(context.Context, *CreateBillingRequest) (*v1.BillingPortalSession, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateBillingPortal not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 func (UnimplementedServiceServer) testEmbeddedByValue()                 {}
@@ -615,6 +648,42 @@ func _Service_UpdateLocation_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_GetSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.Subscription)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).GetSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_GetSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).GetSubscription(ctx, req.(*v1.Subscription))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_CreateBillingPortal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateBillingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).CreateBillingPortal(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_CreateBillingPortal_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).CreateBillingPortal(ctx, req.(*CreateBillingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -685,6 +754,14 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateLocation",
 			Handler:    _Service_UpdateLocation_Handler,
+		},
+		{
+			MethodName: "GetSubscription",
+			Handler:    _Service_GetSubscription_Handler,
+		},
+		{
+			MethodName: "CreateBillingPortal",
+			Handler:    _Service_CreateBillingPortal_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
