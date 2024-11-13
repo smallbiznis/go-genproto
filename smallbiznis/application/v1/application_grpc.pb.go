@@ -19,215 +19,215 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ApplicationService_ListApp_FullMethodName   = "/smallbiznis.application.v1.ApplicationService/ListApp"
-	ApplicationService_GetApp_FullMethodName    = "/smallbiznis.application.v1.ApplicationService/GetApp"
-	ApplicationService_CreateApp_FullMethodName = "/smallbiznis.application.v1.ApplicationService/CreateApp"
-	ApplicationService_UpdateApp_FullMethodName = "/smallbiznis.application.v1.ApplicationService/UpdateApp"
+	Service_ListApp_FullMethodName   = "/smallbiznis.application.v1.Service/ListApp"
+	Service_GetApp_FullMethodName    = "/smallbiznis.application.v1.Service/GetApp"
+	Service_CreateApp_FullMethodName = "/smallbiznis.application.v1.Service/CreateApp"
+	Service_UpdateApp_FullMethodName = "/smallbiznis.application.v1.Service/UpdateApp"
 )
 
-// ApplicationServiceClient is the client API for ApplicationService service.
+// ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ApplicationServiceClient interface {
+type ServiceClient interface {
 	ListApp(ctx context.Context, in *ListAppRequest, opts ...grpc.CallOption) (*ListAppResponse, error)
-	GetApp(ctx context.Context, in *GetAppRequest, opts ...grpc.CallOption) (*Application, error)
-	CreateApp(ctx context.Context, in *Application, opts ...grpc.CallOption) (*Application, error)
-	UpdateApp(ctx context.Context, in *Application, opts ...grpc.CallOption) (*Application, error)
+	GetApp(ctx context.Context, in *GetAppRequest, opts ...grpc.CallOption) (*App, error)
+	CreateApp(ctx context.Context, in *App, opts ...grpc.CallOption) (*App, error)
+	UpdateApp(ctx context.Context, in *App, opts ...grpc.CallOption) (*App, error)
 }
 
-type applicationServiceClient struct {
+type serviceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewApplicationServiceClient(cc grpc.ClientConnInterface) ApplicationServiceClient {
-	return &applicationServiceClient{cc}
+func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
+	return &serviceClient{cc}
 }
 
-func (c *applicationServiceClient) ListApp(ctx context.Context, in *ListAppRequest, opts ...grpc.CallOption) (*ListAppResponse, error) {
+func (c *serviceClient) ListApp(ctx context.Context, in *ListAppRequest, opts ...grpc.CallOption) (*ListAppResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListAppResponse)
-	err := c.cc.Invoke(ctx, ApplicationService_ListApp_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Service_ListApp_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *applicationServiceClient) GetApp(ctx context.Context, in *GetAppRequest, opts ...grpc.CallOption) (*Application, error) {
+func (c *serviceClient) GetApp(ctx context.Context, in *GetAppRequest, opts ...grpc.CallOption) (*App, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Application)
-	err := c.cc.Invoke(ctx, ApplicationService_GetApp_FullMethodName, in, out, cOpts...)
+	out := new(App)
+	err := c.cc.Invoke(ctx, Service_GetApp_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *applicationServiceClient) CreateApp(ctx context.Context, in *Application, opts ...grpc.CallOption) (*Application, error) {
+func (c *serviceClient) CreateApp(ctx context.Context, in *App, opts ...grpc.CallOption) (*App, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Application)
-	err := c.cc.Invoke(ctx, ApplicationService_CreateApp_FullMethodName, in, out, cOpts...)
+	out := new(App)
+	err := c.cc.Invoke(ctx, Service_CreateApp_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *applicationServiceClient) UpdateApp(ctx context.Context, in *Application, opts ...grpc.CallOption) (*Application, error) {
+func (c *serviceClient) UpdateApp(ctx context.Context, in *App, opts ...grpc.CallOption) (*App, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Application)
-	err := c.cc.Invoke(ctx, ApplicationService_UpdateApp_FullMethodName, in, out, cOpts...)
+	out := new(App)
+	err := c.cc.Invoke(ctx, Service_UpdateApp_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ApplicationServiceServer is the server API for ApplicationService service.
-// All implementations must embed UnimplementedApplicationServiceServer
+// ServiceServer is the server API for Service service.
+// All implementations must embed UnimplementedServiceServer
 // for forward compatibility.
-type ApplicationServiceServer interface {
+type ServiceServer interface {
 	ListApp(context.Context, *ListAppRequest) (*ListAppResponse, error)
-	GetApp(context.Context, *GetAppRequest) (*Application, error)
-	CreateApp(context.Context, *Application) (*Application, error)
-	UpdateApp(context.Context, *Application) (*Application, error)
-	mustEmbedUnimplementedApplicationServiceServer()
+	GetApp(context.Context, *GetAppRequest) (*App, error)
+	CreateApp(context.Context, *App) (*App, error)
+	UpdateApp(context.Context, *App) (*App, error)
+	mustEmbedUnimplementedServiceServer()
 }
 
-// UnimplementedApplicationServiceServer must be embedded to have
+// UnimplementedServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedApplicationServiceServer struct{}
+type UnimplementedServiceServer struct{}
 
-func (UnimplementedApplicationServiceServer) ListApp(context.Context, *ListAppRequest) (*ListAppResponse, error) {
+func (UnimplementedServiceServer) ListApp(context.Context, *ListAppRequest) (*ListAppResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListApp not implemented")
 }
-func (UnimplementedApplicationServiceServer) GetApp(context.Context, *GetAppRequest) (*Application, error) {
+func (UnimplementedServiceServer) GetApp(context.Context, *GetAppRequest) (*App, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApp not implemented")
 }
-func (UnimplementedApplicationServiceServer) CreateApp(context.Context, *Application) (*Application, error) {
+func (UnimplementedServiceServer) CreateApp(context.Context, *App) (*App, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateApp not implemented")
 }
-func (UnimplementedApplicationServiceServer) UpdateApp(context.Context, *Application) (*Application, error) {
+func (UnimplementedServiceServer) UpdateApp(context.Context, *App) (*App, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateApp not implemented")
 }
-func (UnimplementedApplicationServiceServer) mustEmbedUnimplementedApplicationServiceServer() {}
-func (UnimplementedApplicationServiceServer) testEmbeddedByValue()                            {}
+func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
+func (UnimplementedServiceServer) testEmbeddedByValue()                 {}
 
-// UnsafeApplicationServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ApplicationServiceServer will
+// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ServiceServer will
 // result in compilation errors.
-type UnsafeApplicationServiceServer interface {
-	mustEmbedUnimplementedApplicationServiceServer()
+type UnsafeServiceServer interface {
+	mustEmbedUnimplementedServiceServer()
 }
 
-func RegisterApplicationServiceServer(s grpc.ServiceRegistrar, srv ApplicationServiceServer) {
-	// If the following call pancis, it indicates UnimplementedApplicationServiceServer was
+func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
+	// If the following call pancis, it indicates UnimplementedServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&ApplicationService_ServiceDesc, srv)
+	s.RegisterService(&Service_ServiceDesc, srv)
 }
 
-func _ApplicationService_ListApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_ListApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAppRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ApplicationServiceServer).ListApp(ctx, in)
+		return srv.(ServiceServer).ListApp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ApplicationService_ListApp_FullMethodName,
+		FullMethod: Service_ListApp_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApplicationServiceServer).ListApp(ctx, req.(*ListAppRequest))
+		return srv.(ServiceServer).ListApp(ctx, req.(*ListAppRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ApplicationService_GetApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_GetApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAppRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ApplicationServiceServer).GetApp(ctx, in)
+		return srv.(ServiceServer).GetApp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ApplicationService_GetApp_FullMethodName,
+		FullMethod: Service_GetApp_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApplicationServiceServer).GetApp(ctx, req.(*GetAppRequest))
+		return srv.(ServiceServer).GetApp(ctx, req.(*GetAppRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ApplicationService_CreateApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Application)
+func _Service_CreateApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(App)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ApplicationServiceServer).CreateApp(ctx, in)
+		return srv.(ServiceServer).CreateApp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ApplicationService_CreateApp_FullMethodName,
+		FullMethod: Service_CreateApp_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApplicationServiceServer).CreateApp(ctx, req.(*Application))
+		return srv.(ServiceServer).CreateApp(ctx, req.(*App))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ApplicationService_UpdateApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Application)
+func _Service_UpdateApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(App)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ApplicationServiceServer).UpdateApp(ctx, in)
+		return srv.(ServiceServer).UpdateApp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ApplicationService_UpdateApp_FullMethodName,
+		FullMethod: Service_UpdateApp_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApplicationServiceServer).UpdateApp(ctx, req.(*Application))
+		return srv.(ServiceServer).UpdateApp(ctx, req.(*App))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// ApplicationService_ServiceDesc is the grpc.ServiceDesc for ApplicationService service.
+// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var ApplicationService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "smallbiznis.application.v1.ApplicationService",
-	HandlerType: (*ApplicationServiceServer)(nil),
+var Service_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "smallbiznis.application.v1.Service",
+	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ListApp",
-			Handler:    _ApplicationService_ListApp_Handler,
+			Handler:    _Service_ListApp_Handler,
 		},
 		{
 			MethodName: "GetApp",
-			Handler:    _ApplicationService_GetApp_Handler,
+			Handler:    _Service_GetApp_Handler,
 		},
 		{
 			MethodName: "CreateApp",
-			Handler:    _ApplicationService_CreateApp_Handler,
+			Handler:    _Service_CreateApp_Handler,
 		},
 		{
 			MethodName: "UpdateApp",
-			Handler:    _ApplicationService_UpdateApp_Handler,
+			Handler:    _Service_UpdateApp_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
