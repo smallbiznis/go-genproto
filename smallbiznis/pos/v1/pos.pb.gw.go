@@ -257,25 +257,19 @@ func local_request_Service_DeleteMember_0(ctx context.Context, marshaler runtime
 
 }
 
+var (
+	filter_Service_LookupPasscode_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
 func request_Service_LookupPasscode_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq LookupPasscodeRequest
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["staff_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "staff_id")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-
-	protoReq.StaffId, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "staff_id", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Service_LookupPasscode_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.LookupPasscode(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -287,21 +281,11 @@ func local_request_Service_LookupPasscode_0(ctx context.Context, marshaler runti
 	var protoReq LookupPasscodeRequest
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["staff_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "staff_id")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-
-	protoReq.StaffId, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "staff_id", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Service_LookupPasscode_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.LookupPasscode(ctx, &protoReq)
@@ -310,29 +294,12 @@ func local_request_Service_LookupPasscode_0(ctx context.Context, marshaler runti
 }
 
 var (
-	filter_Service_VerifyPasscode_0 = &utilities.DoubleArray{Encoding: map[string]int{"staff_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_Service_VerifyPasscode_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
 func request_Service_VerifyPasscode_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq VerifyPasscodeRequest
 	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["staff_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "staff_id")
-	}
-
-	protoReq.StaffId, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "staff_id", err)
-	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -350,23 +317,6 @@ func local_request_Service_VerifyPasscode_0(ctx context.Context, marshaler runti
 	var protoReq VerifyPasscodeRequest
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["staff_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "staff_id")
-	}
-
-	protoReq.StaffId, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "staff_id", err)
-	}
-
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
@@ -380,29 +330,12 @@ func local_request_Service_VerifyPasscode_0(ctx context.Context, marshaler runti
 }
 
 var (
-	filter_Service_RegisterPasscode_0 = &utilities.DoubleArray{Encoding: map[string]int{"staff_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_Service_RegisterPasscode_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
 func request_Service_RegisterPasscode_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RegisterPasscodeRequest
 	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["staff_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "staff_id")
-	}
-
-	protoReq.StaffId, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "staff_id", err)
-	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -419,23 +352,6 @@ func request_Service_RegisterPasscode_0(ctx context.Context, marshaler runtime.M
 func local_request_Service_RegisterPasscode_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RegisterPasscodeRequest
 	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["staff_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "staff_id")
-	}
-
-	protoReq.StaffId, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "staff_id", err)
-	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -589,7 +505,7 @@ func RegisterServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/LookupPasscode", runtime.WithHTTPPathPattern("/v1/staffs/{staff_id}/passcode/lookup"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/LookupPasscode", runtime.WithHTTPPathPattern("/v1/passcode/lookup"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -614,7 +530,7 @@ func RegisterServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/VerifyPasscode", runtime.WithHTTPPathPattern("/v1/staffs/{staff_id}/passcode/verify"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/VerifyPasscode", runtime.WithHTTPPathPattern("/v1/passcode/verify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -639,7 +555,7 @@ func RegisterServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/RegisterPasscode", runtime.WithHTTPPathPattern("/v1/staffs/{staff_id}/passcode/register"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/RegisterPasscode", runtime.WithHTTPPathPattern("/v1/passcode/register"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -813,7 +729,7 @@ func RegisterServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/LookupPasscode", runtime.WithHTTPPathPattern("/v1/staffs/{staff_id}/passcode/lookup"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/LookupPasscode", runtime.WithHTTPPathPattern("/v1/passcode/lookup"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -835,7 +751,7 @@ func RegisterServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/VerifyPasscode", runtime.WithHTTPPathPattern("/v1/staffs/{staff_id}/passcode/verify"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/VerifyPasscode", runtime.WithHTTPPathPattern("/v1/passcode/verify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -857,7 +773,7 @@ func RegisterServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/RegisterPasscode", runtime.WithHTTPPathPattern("/v1/staffs/{staff_id}/passcode/register"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.pos.v1.Service/RegisterPasscode", runtime.WithHTTPPathPattern("/v1/passcode/register"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -887,11 +803,11 @@ var (
 
 	pattern_Service_DeleteMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "staffs", "staff_id"}, ""))
 
-	pattern_Service_LookupPasscode_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"v1", "staffs", "staff_id", "passcode", "lookup"}, ""))
+	pattern_Service_LookupPasscode_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "passcode", "lookup"}, ""))
 
-	pattern_Service_VerifyPasscode_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"v1", "staffs", "staff_id", "passcode", "verify"}, ""))
+	pattern_Service_VerifyPasscode_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "passcode", "verify"}, ""))
 
-	pattern_Service_RegisterPasscode_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"v1", "staffs", "staff_id", "passcode", "register"}, ""))
+	pattern_Service_RegisterPasscode_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "passcode", "register"}, ""))
 )
 
 var (
