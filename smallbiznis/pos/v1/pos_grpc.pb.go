@@ -20,11 +20,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Service_ListStaff_FullMethodName    = "/smallbiznis.pos.v1.Service/ListStaff"
-	Service_GetStaff_FullMethodName     = "/smallbiznis.pos.v1.Service/GetStaff"
-	Service_AddStaff_FullMethodName     = "/smallbiznis.pos.v1.Service/AddStaff"
-	Service_UpdateStaff_FullMethodName  = "/smallbiznis.pos.v1.Service/UpdateStaff"
-	Service_DeleteMember_FullMethodName = "/smallbiznis.pos.v1.Service/DeleteMember"
+	Service_ListStaff_FullMethodName        = "/smallbiznis.pos.v1.Service/ListStaff"
+	Service_GetStaff_FullMethodName         = "/smallbiznis.pos.v1.Service/GetStaff"
+	Service_AddStaff_FullMethodName         = "/smallbiznis.pos.v1.Service/AddStaff"
+	Service_UpdateStaff_FullMethodName      = "/smallbiznis.pos.v1.Service/UpdateStaff"
+	Service_DeleteMember_FullMethodName     = "/smallbiznis.pos.v1.Service/DeleteMember"
+	Service_LookupPasscode_FullMethodName   = "/smallbiznis.pos.v1.Service/LookupPasscode"
+	Service_VerifyPasscode_FullMethodName   = "/smallbiznis.pos.v1.Service/VerifyPasscode"
+	Service_RegisterPasscode_FullMethodName = "/smallbiznis.pos.v1.Service/RegisterPasscode"
 )
 
 // ServiceClient is the client API for Service service.
@@ -36,6 +39,9 @@ type ServiceClient interface {
 	AddStaff(ctx context.Context, in *AddStaffRequest, opts ...grpc.CallOption) (*Staff, error)
 	UpdateStaff(ctx context.Context, in *UpdateStaffRequest, opts ...grpc.CallOption) (*Staff, error)
 	DeleteMember(ctx context.Context, in *DeleteStaffRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	LookupPasscode(ctx context.Context, in *LookupPasscodeRequest, opts ...grpc.CallOption) (*LookupPasscodeResponse, error)
+	VerifyPasscode(ctx context.Context, in *VerifyPasscodeRequest, opts ...grpc.CallOption) (*VerifyPasscodeResponse, error)
+	RegisterPasscode(ctx context.Context, in *RegisterPasscodeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type serviceClient struct {
@@ -96,6 +102,36 @@ func (c *serviceClient) DeleteMember(ctx context.Context, in *DeleteStaffRequest
 	return out, nil
 }
 
+func (c *serviceClient) LookupPasscode(ctx context.Context, in *LookupPasscodeRequest, opts ...grpc.CallOption) (*LookupPasscodeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LookupPasscodeResponse)
+	err := c.cc.Invoke(ctx, Service_LookupPasscode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) VerifyPasscode(ctx context.Context, in *VerifyPasscodeRequest, opts ...grpc.CallOption) (*VerifyPasscodeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VerifyPasscodeResponse)
+	err := c.cc.Invoke(ctx, Service_VerifyPasscode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) RegisterPasscode(ctx context.Context, in *RegisterPasscodeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Service_RegisterPasscode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceServer is the server API for Service service.
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility.
@@ -105,6 +141,9 @@ type ServiceServer interface {
 	AddStaff(context.Context, *AddStaffRequest) (*Staff, error)
 	UpdateStaff(context.Context, *UpdateStaffRequest) (*Staff, error)
 	DeleteMember(context.Context, *DeleteStaffRequest) (*emptypb.Empty, error)
+	LookupPasscode(context.Context, *LookupPasscodeRequest) (*LookupPasscodeResponse, error)
+	VerifyPasscode(context.Context, *VerifyPasscodeRequest) (*VerifyPasscodeResponse, error)
+	RegisterPasscode(context.Context, *RegisterPasscodeRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -129,6 +168,15 @@ func (UnimplementedServiceServer) UpdateStaff(context.Context, *UpdateStaffReque
 }
 func (UnimplementedServiceServer) DeleteMember(context.Context, *DeleteStaffRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteMember not implemented")
+}
+func (UnimplementedServiceServer) LookupPasscode(context.Context, *LookupPasscodeRequest) (*LookupPasscodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LookupPasscode not implemented")
+}
+func (UnimplementedServiceServer) VerifyPasscode(context.Context, *VerifyPasscodeRequest) (*VerifyPasscodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyPasscode not implemented")
+}
+func (UnimplementedServiceServer) RegisterPasscode(context.Context, *RegisterPasscodeRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterPasscode not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 func (UnimplementedServiceServer) testEmbeddedByValue()                 {}
@@ -241,6 +289,60 @@ func _Service_DeleteMember_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_LookupPasscode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LookupPasscodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).LookupPasscode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_LookupPasscode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).LookupPasscode(ctx, req.(*LookupPasscodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_VerifyPasscode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyPasscodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).VerifyPasscode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_VerifyPasscode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).VerifyPasscode(ctx, req.(*VerifyPasscodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_RegisterPasscode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterPasscodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).RegisterPasscode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_RegisterPasscode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).RegisterPasscode(ctx, req.(*RegisterPasscodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -267,6 +369,18 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteMember",
 			Handler:    _Service_DeleteMember_Handler,
+		},
+		{
+			MethodName: "LookupPasscode",
+			Handler:    _Service_LookupPasscode_Handler,
+		},
+		{
+			MethodName: "VerifyPasscode",
+			Handler:    _Service_VerifyPasscode_Handler,
+		},
+		{
+			MethodName: "RegisterPasscode",
+			Handler:    _Service_RegisterPasscode_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
