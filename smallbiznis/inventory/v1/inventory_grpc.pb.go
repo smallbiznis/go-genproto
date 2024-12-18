@@ -20,41 +20,23 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Service_ListProduct_FullMethodName         = "/smallbiznis.inventory.v1.Service/ListProduct"
-	Service_GetProduct_FullMethodName          = "/smallbiznis.inventory.v1.Service/GetProduct"
-	Service_AddProduct_FullMethodName          = "/smallbiznis.inventory.v1.Service/AddProduct"
-	Service_UpdateProduct_FullMethodName       = "/smallbiznis.inventory.v1.Service/UpdateProduct"
-	Service_DeleteProduct_FullMethodName       = "/smallbiznis.inventory.v1.Service/DeleteProduct"
-	Service_ListVariant_FullMethodName         = "/smallbiznis.inventory.v1.Service/ListVariant"
-	Service_GetVariant_FullMethodName          = "/smallbiznis.inventory.v1.Service/GetVariant"
-	Service_UpdateVariant_FullMethodName       = "/smallbiznis.inventory.v1.Service/UpdateVariant"
-	Service_ListInventoryItem_FullMethodName   = "/smallbiznis.inventory.v1.Service/ListInventoryItem"
-	Service_GetInventoryItem_FullMethodName    = "/smallbiznis.inventory.v1.Service/GetInventoryItem"
-	Service_CreateInventoryItem_FullMethodName = "/smallbiznis.inventory.v1.Service/CreateInventoryItem"
-	Service_UpdateInventoryItem_FullMethodName = "/smallbiznis.inventory.v1.Service/UpdateInventoryItem"
-	Service_ReservedStock_FullMethodName       = "/smallbiznis.inventory.v1.Service/ReservedStock"
-	Service_ReleaseStock_FullMethodName        = "/smallbiznis.inventory.v1.Service/ReleaseStock"
+	Service_ListInventory_FullMethodName   = "/smallbiznis.inventory.v1.Service/ListInventory"
+	Service_GetInventory_FullMethodName    = "/smallbiznis.inventory.v1.Service/GetInventory"
+	Service_CreateInventory_FullMethodName = "/smallbiznis.inventory.v1.Service/CreateInventory"
+	Service_UpdateInventory_FullMethodName = "/smallbiznis.inventory.v1.Service/UpdateInventory"
+	Service_ReservedStock_FullMethodName   = "/smallbiznis.inventory.v1.Service/ReservedStock"
+	Service_ReleaseStock_FullMethodName    = "/smallbiznis.inventory.v1.Service/ReleaseStock"
 )
 
 // ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
-	// Product
-	ListProduct(ctx context.Context, in *ListProductRequest, opts ...grpc.CallOption) (*ListProductResponse, error)
-	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error)
-	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*Product, error)
-	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
-	DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	ListVariant(ctx context.Context, in *ListVariantRequest, opts ...grpc.CallOption) (*ListVariantResponse, error)
-	// Variant
-	GetVariant(ctx context.Context, in *GetVariantRequest, opts ...grpc.CallOption) (*Variant, error)
-	UpdateVariant(ctx context.Context, in *Variant, opts ...grpc.CallOption) (*Variant, error)
 	// Inventory
-	ListInventoryItem(ctx context.Context, in *ListInventoryItemRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error)
-	GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error)
-	CreateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
-	UpdateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
+	ListInventory(ctx context.Context, in *ListInventoryRequest, opts ...grpc.CallOption) (*ListInventoryResponse, error)
+	GetInventory(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*Inventory, error)
+	CreateInventory(ctx context.Context, in *Inventory, opts ...grpc.CallOption) (*Inventory, error)
+	UpdateInventory(ctx context.Context, in *Inventory, opts ...grpc.CallOption) (*Inventory, error)
 	ReservedStock(ctx context.Context, in *ReservedStockRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ReleaseStock(ctx context.Context, in *ReleaseStockRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -67,120 +49,40 @@ func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
 	return &serviceClient{cc}
 }
 
-func (c *serviceClient) ListProduct(ctx context.Context, in *ListProductRequest, opts ...grpc.CallOption) (*ListProductResponse, error) {
+func (c *serviceClient) ListInventory(ctx context.Context, in *ListInventoryRequest, opts ...grpc.CallOption) (*ListInventoryResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListProductResponse)
-	err := c.cc.Invoke(ctx, Service_ListProduct_FullMethodName, in, out, cOpts...)
+	out := new(ListInventoryResponse)
+	err := c.cc.Invoke(ctx, Service_ListInventory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serviceClient) GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error) {
+func (c *serviceClient) GetInventory(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*Inventory, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Product)
-	err := c.cc.Invoke(ctx, Service_GetProduct_FullMethodName, in, out, cOpts...)
+	out := new(Inventory)
+	err := c.cc.Invoke(ctx, Service_GetInventory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serviceClient) AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*Product, error) {
+func (c *serviceClient) CreateInventory(ctx context.Context, in *Inventory, opts ...grpc.CallOption) (*Inventory, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Product)
-	err := c.cc.Invoke(ctx, Service_AddProduct_FullMethodName, in, out, cOpts...)
+	out := new(Inventory)
+	err := c.cc.Invoke(ctx, Service_CreateInventory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serviceClient) UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error) {
+func (c *serviceClient) UpdateInventory(ctx context.Context, in *Inventory, opts ...grpc.CallOption) (*Inventory, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Product)
-	err := c.cc.Invoke(ctx, Service_UpdateProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) DeleteProduct(ctx context.Context, in *DeleteProductrequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Service_DeleteProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) ListVariant(ctx context.Context, in *ListVariantRequest, opts ...grpc.CallOption) (*ListVariantResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListVariantResponse)
-	err := c.cc.Invoke(ctx, Service_ListVariant_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) GetVariant(ctx context.Context, in *GetVariantRequest, opts ...grpc.CallOption) (*Variant, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Variant)
-	err := c.cc.Invoke(ctx, Service_GetVariant_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) UpdateVariant(ctx context.Context, in *Variant, opts ...grpc.CallOption) (*Variant, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Variant)
-	err := c.cc.Invoke(ctx, Service_UpdateVariant_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) ListInventoryItem(ctx context.Context, in *ListInventoryItemRequest, opts ...grpc.CallOption) (*ListInventoryItemResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListInventoryItemResponse)
-	err := c.cc.Invoke(ctx, Service_ListInventoryItem_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) GetInventoryItem(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*InventoryItem, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(InventoryItem)
-	err := c.cc.Invoke(ctx, Service_GetInventoryItem_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) CreateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(InventoryItem)
-	err := c.cc.Invoke(ctx, Service_CreateInventoryItem_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceClient) UpdateInventoryItem(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(InventoryItem)
-	err := c.cc.Invoke(ctx, Service_UpdateInventoryItem_FullMethodName, in, out, cOpts...)
+	out := new(Inventory)
+	err := c.cc.Invoke(ctx, Service_UpdateInventory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -211,21 +113,11 @@ func (c *serviceClient) ReleaseStock(ctx context.Context, in *ReleaseStockReques
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility.
 type ServiceServer interface {
-	// Product
-	ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error)
-	GetProduct(context.Context, *GetProductRequest) (*Product, error)
-	AddProduct(context.Context, *AddProductRequest) (*Product, error)
-	UpdateProduct(context.Context, *Product) (*Product, error)
-	DeleteProduct(context.Context, *DeleteProductrequest) (*emptypb.Empty, error)
-	ListVariant(context.Context, *ListVariantRequest) (*ListVariantResponse, error)
-	// Variant
-	GetVariant(context.Context, *GetVariantRequest) (*Variant, error)
-	UpdateVariant(context.Context, *Variant) (*Variant, error)
 	// Inventory
-	ListInventoryItem(context.Context, *ListInventoryItemRequest) (*ListInventoryItemResponse, error)
-	GetInventoryItem(context.Context, *GetInventoryRequest) (*InventoryItem, error)
-	CreateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error)
-	UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error)
+	ListInventory(context.Context, *ListInventoryRequest) (*ListInventoryResponse, error)
+	GetInventory(context.Context, *GetInventoryRequest) (*Inventory, error)
+	CreateInventory(context.Context, *Inventory) (*Inventory, error)
+	UpdateInventory(context.Context, *Inventory) (*Inventory, error)
 	ReservedStock(context.Context, *ReservedStockRequest) (*emptypb.Empty, error)
 	ReleaseStock(context.Context, *ReleaseStockRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedServiceServer()
@@ -238,41 +130,17 @@ type ServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedServiceServer struct{}
 
-func (UnimplementedServiceServer) ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListProduct not implemented")
+func (UnimplementedServiceServer) ListInventory(context.Context, *ListInventoryRequest) (*ListInventoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInventory not implemented")
 }
-func (UnimplementedServiceServer) GetProduct(context.Context, *GetProductRequest) (*Product, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
+func (UnimplementedServiceServer) GetInventory(context.Context, *GetInventoryRequest) (*Inventory, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetInventory not implemented")
 }
-func (UnimplementedServiceServer) AddProduct(context.Context, *AddProductRequest) (*Product, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
+func (UnimplementedServiceServer) CreateInventory(context.Context, *Inventory) (*Inventory, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateInventory not implemented")
 }
-func (UnimplementedServiceServer) UpdateProduct(context.Context, *Product) (*Product, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
-}
-func (UnimplementedServiceServer) DeleteProduct(context.Context, *DeleteProductrequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
-}
-func (UnimplementedServiceServer) ListVariant(context.Context, *ListVariantRequest) (*ListVariantResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListVariant not implemented")
-}
-func (UnimplementedServiceServer) GetVariant(context.Context, *GetVariantRequest) (*Variant, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetVariant not implemented")
-}
-func (UnimplementedServiceServer) UpdateVariant(context.Context, *Variant) (*Variant, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateVariant not implemented")
-}
-func (UnimplementedServiceServer) ListInventoryItem(context.Context, *ListInventoryItemRequest) (*ListInventoryItemResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListInventoryItem not implemented")
-}
-func (UnimplementedServiceServer) GetInventoryItem(context.Context, *GetInventoryRequest) (*InventoryItem, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetInventoryItem not implemented")
-}
-func (UnimplementedServiceServer) CreateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateInventoryItem not implemented")
-}
-func (UnimplementedServiceServer) UpdateInventoryItem(context.Context, *InventoryItem) (*InventoryItem, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateInventoryItem not implemented")
+func (UnimplementedServiceServer) UpdateInventory(context.Context, *Inventory) (*Inventory, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateInventory not implemented")
 }
 func (UnimplementedServiceServer) ReservedStock(context.Context, *ReservedStockRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReservedStock not implemented")
@@ -301,218 +169,74 @@ func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
 	s.RegisterService(&Service_ServiceDesc, srv)
 }
 
-func _Service_ListProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListProductRequest)
+func _Service_ListInventory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListInventoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).ListProduct(ctx, in)
+		return srv.(ServiceServer).ListInventory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Service_ListProduct_FullMethodName,
+		FullMethod: Service_ListInventory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).ListProduct(ctx, req.(*ListProductRequest))
+		return srv.(ServiceServer).ListInventory(ctx, req.(*ListInventoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Service_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).GetProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_GetProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetProduct(ctx, req.(*GetProductRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_AddProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddProductRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).AddProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_AddProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).AddProduct(ctx, req.(*AddProductRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Product)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).UpdateProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_UpdateProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).UpdateProduct(ctx, req.(*Product))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteProductrequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).DeleteProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_DeleteProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).DeleteProduct(ctx, req.(*DeleteProductrequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_ListVariant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListVariantRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).ListVariant(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_ListVariant_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).ListVariant(ctx, req.(*ListVariantRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_GetVariant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetVariantRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).GetVariant(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_GetVariant_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetVariant(ctx, req.(*GetVariantRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_UpdateVariant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Variant)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).UpdateVariant(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_UpdateVariant_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).UpdateVariant(ctx, req.(*Variant))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_ListInventoryItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListInventoryItemRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).ListInventoryItem(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_ListInventoryItem_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).ListInventoryItem(ctx, req.(*ListInventoryItemRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Service_GetInventoryItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_GetInventory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetInventoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).GetInventoryItem(ctx, in)
+		return srv.(ServiceServer).GetInventory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Service_GetInventoryItem_FullMethodName,
+		FullMethod: Service_GetInventory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetInventoryItem(ctx, req.(*GetInventoryRequest))
+		return srv.(ServiceServer).GetInventory(ctx, req.(*GetInventoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Service_CreateInventoryItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InventoryItem)
+func _Service_CreateInventory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Inventory)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).CreateInventoryItem(ctx, in)
+		return srv.(ServiceServer).CreateInventory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Service_CreateInventoryItem_FullMethodName,
+		FullMethod: Service_CreateInventory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).CreateInventoryItem(ctx, req.(*InventoryItem))
+		return srv.(ServiceServer).CreateInventory(ctx, req.(*Inventory))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Service_UpdateInventoryItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InventoryItem)
+func _Service_UpdateInventory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Inventory)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).UpdateInventoryItem(ctx, in)
+		return srv.(ServiceServer).UpdateInventory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Service_UpdateInventoryItem_FullMethodName,
+		FullMethod: Service_UpdateInventory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).UpdateInventoryItem(ctx, req.(*InventoryItem))
+		return srv.(ServiceServer).UpdateInventory(ctx, req.(*Inventory))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -561,52 +285,20 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListProduct",
-			Handler:    _Service_ListProduct_Handler,
+			MethodName: "ListInventory",
+			Handler:    _Service_ListInventory_Handler,
 		},
 		{
-			MethodName: "GetProduct",
-			Handler:    _Service_GetProduct_Handler,
+			MethodName: "GetInventory",
+			Handler:    _Service_GetInventory_Handler,
 		},
 		{
-			MethodName: "AddProduct",
-			Handler:    _Service_AddProduct_Handler,
+			MethodName: "CreateInventory",
+			Handler:    _Service_CreateInventory_Handler,
 		},
 		{
-			MethodName: "UpdateProduct",
-			Handler:    _Service_UpdateProduct_Handler,
-		},
-		{
-			MethodName: "DeleteProduct",
-			Handler:    _Service_DeleteProduct_Handler,
-		},
-		{
-			MethodName: "ListVariant",
-			Handler:    _Service_ListVariant_Handler,
-		},
-		{
-			MethodName: "GetVariant",
-			Handler:    _Service_GetVariant_Handler,
-		},
-		{
-			MethodName: "UpdateVariant",
-			Handler:    _Service_UpdateVariant_Handler,
-		},
-		{
-			MethodName: "ListInventoryItem",
-			Handler:    _Service_ListInventoryItem_Handler,
-		},
-		{
-			MethodName: "GetInventoryItem",
-			Handler:    _Service_GetInventoryItem_Handler,
-		},
-		{
-			MethodName: "CreateInventoryItem",
-			Handler:    _Service_CreateInventoryItem_Handler,
-		},
-		{
-			MethodName: "UpdateInventoryItem",
-			Handler:    _Service_UpdateInventoryItem_Handler,
+			MethodName: "UpdateInventory",
+			Handler:    _Service_UpdateInventory_Handler,
 		},
 		{
 			MethodName: "ReservedStock",
