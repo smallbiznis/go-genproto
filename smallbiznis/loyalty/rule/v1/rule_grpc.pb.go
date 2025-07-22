@@ -19,200 +19,200 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	EarnRuleService_CreateEarnRules_FullMethodName   = "/smallbiznis.loyalty.rule.v1.EarnRuleService/CreateEarnRules"
-	EarnRuleService_ListEarnRules_FullMethodName     = "/smallbiznis.loyalty.rule.v1.EarnRuleService/ListEarnRules"
-	EarnRuleService_UpdateEarnRules_FullMethodName   = "/smallbiznis.loyalty.rule.v1.EarnRuleService/UpdateEarnRules"
-	EarnRuleService_EvaluateEarnRuleS_FullMethodName = "/smallbiznis.loyalty.rule.v1.EarnRuleService/EvaluateEarnRuleS"
+	Service_CreateEarnRules_FullMethodName   = "/smallbiznis.loyalty.rule.v1.Service/CreateEarnRules"
+	Service_ListEarnRules_FullMethodName     = "/smallbiznis.loyalty.rule.v1.Service/ListEarnRules"
+	Service_UpdateEarnRules_FullMethodName   = "/smallbiznis.loyalty.rule.v1.Service/UpdateEarnRules"
+	Service_EvaluateEarnRuleS_FullMethodName = "/smallbiznis.loyalty.rule.v1.Service/EvaluateEarnRuleS"
 )
 
-// EarnRuleServiceClient is the client API for EarnRuleService service.
+// ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type EarnRuleServiceClient interface {
+type ServiceClient interface {
 	CreateEarnRules(ctx context.Context, in *CreateEarnRuleRequest, opts ...grpc.CallOption) (*EarnRule, error)
 	ListEarnRules(ctx context.Context, in *ListEarnRulesRequest, opts ...grpc.CallOption) (*ListEarnRulesResponse, error)
 	UpdateEarnRules(ctx context.Context, in *UpdateEarnRuleRequest, opts ...grpc.CallOption) (*EarnRule, error)
 	EvaluateEarnRuleS(ctx context.Context, in *EvaluateEarnRulesRequest, opts ...grpc.CallOption) (*EvaluateEarnRulesResponse, error)
 }
 
-type earnRuleServiceClient struct {
+type serviceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewEarnRuleServiceClient(cc grpc.ClientConnInterface) EarnRuleServiceClient {
-	return &earnRuleServiceClient{cc}
+func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
+	return &serviceClient{cc}
 }
 
-func (c *earnRuleServiceClient) CreateEarnRules(ctx context.Context, in *CreateEarnRuleRequest, opts ...grpc.CallOption) (*EarnRule, error) {
+func (c *serviceClient) CreateEarnRules(ctx context.Context, in *CreateEarnRuleRequest, opts ...grpc.CallOption) (*EarnRule, error) {
 	out := new(EarnRule)
-	err := c.cc.Invoke(ctx, EarnRuleService_CreateEarnRules_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Service_CreateEarnRules_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *earnRuleServiceClient) ListEarnRules(ctx context.Context, in *ListEarnRulesRequest, opts ...grpc.CallOption) (*ListEarnRulesResponse, error) {
+func (c *serviceClient) ListEarnRules(ctx context.Context, in *ListEarnRulesRequest, opts ...grpc.CallOption) (*ListEarnRulesResponse, error) {
 	out := new(ListEarnRulesResponse)
-	err := c.cc.Invoke(ctx, EarnRuleService_ListEarnRules_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Service_ListEarnRules_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *earnRuleServiceClient) UpdateEarnRules(ctx context.Context, in *UpdateEarnRuleRequest, opts ...grpc.CallOption) (*EarnRule, error) {
+func (c *serviceClient) UpdateEarnRules(ctx context.Context, in *UpdateEarnRuleRequest, opts ...grpc.CallOption) (*EarnRule, error) {
 	out := new(EarnRule)
-	err := c.cc.Invoke(ctx, EarnRuleService_UpdateEarnRules_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Service_UpdateEarnRules_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *earnRuleServiceClient) EvaluateEarnRuleS(ctx context.Context, in *EvaluateEarnRulesRequest, opts ...grpc.CallOption) (*EvaluateEarnRulesResponse, error) {
+func (c *serviceClient) EvaluateEarnRuleS(ctx context.Context, in *EvaluateEarnRulesRequest, opts ...grpc.CallOption) (*EvaluateEarnRulesResponse, error) {
 	out := new(EvaluateEarnRulesResponse)
-	err := c.cc.Invoke(ctx, EarnRuleService_EvaluateEarnRuleS_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Service_EvaluateEarnRuleS_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// EarnRuleServiceServer is the server API for EarnRuleService service.
-// All implementations must embed UnimplementedEarnRuleServiceServer
+// ServiceServer is the server API for Service service.
+// All implementations must embed UnimplementedServiceServer
 // for forward compatibility
-type EarnRuleServiceServer interface {
+type ServiceServer interface {
 	CreateEarnRules(context.Context, *CreateEarnRuleRequest) (*EarnRule, error)
 	ListEarnRules(context.Context, *ListEarnRulesRequest) (*ListEarnRulesResponse, error)
 	UpdateEarnRules(context.Context, *UpdateEarnRuleRequest) (*EarnRule, error)
 	EvaluateEarnRuleS(context.Context, *EvaluateEarnRulesRequest) (*EvaluateEarnRulesResponse, error)
-	mustEmbedUnimplementedEarnRuleServiceServer()
+	mustEmbedUnimplementedServiceServer()
 }
 
-// UnimplementedEarnRuleServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedEarnRuleServiceServer struct {
+// UnimplementedServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedServiceServer struct {
 }
 
-func (UnimplementedEarnRuleServiceServer) CreateEarnRules(context.Context, *CreateEarnRuleRequest) (*EarnRule, error) {
+func (UnimplementedServiceServer) CreateEarnRules(context.Context, *CreateEarnRuleRequest) (*EarnRule, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateEarnRules not implemented")
 }
-func (UnimplementedEarnRuleServiceServer) ListEarnRules(context.Context, *ListEarnRulesRequest) (*ListEarnRulesResponse, error) {
+func (UnimplementedServiceServer) ListEarnRules(context.Context, *ListEarnRulesRequest) (*ListEarnRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListEarnRules not implemented")
 }
-func (UnimplementedEarnRuleServiceServer) UpdateEarnRules(context.Context, *UpdateEarnRuleRequest) (*EarnRule, error) {
+func (UnimplementedServiceServer) UpdateEarnRules(context.Context, *UpdateEarnRuleRequest) (*EarnRule, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateEarnRules not implemented")
 }
-func (UnimplementedEarnRuleServiceServer) EvaluateEarnRuleS(context.Context, *EvaluateEarnRulesRequest) (*EvaluateEarnRulesResponse, error) {
+func (UnimplementedServiceServer) EvaluateEarnRuleS(context.Context, *EvaluateEarnRulesRequest) (*EvaluateEarnRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EvaluateEarnRuleS not implemented")
 }
-func (UnimplementedEarnRuleServiceServer) mustEmbedUnimplementedEarnRuleServiceServer() {}
+func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 
-// UnsafeEarnRuleServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to EarnRuleServiceServer will
+// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ServiceServer will
 // result in compilation errors.
-type UnsafeEarnRuleServiceServer interface {
-	mustEmbedUnimplementedEarnRuleServiceServer()
+type UnsafeServiceServer interface {
+	mustEmbedUnimplementedServiceServer()
 }
 
-func RegisterEarnRuleServiceServer(s grpc.ServiceRegistrar, srv EarnRuleServiceServer) {
-	s.RegisterService(&EarnRuleService_ServiceDesc, srv)
+func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
+	s.RegisterService(&Service_ServiceDesc, srv)
 }
 
-func _EarnRuleService_CreateEarnRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_CreateEarnRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateEarnRuleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EarnRuleServiceServer).CreateEarnRules(ctx, in)
+		return srv.(ServiceServer).CreateEarnRules(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EarnRuleService_CreateEarnRules_FullMethodName,
+		FullMethod: Service_CreateEarnRules_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EarnRuleServiceServer).CreateEarnRules(ctx, req.(*CreateEarnRuleRequest))
+		return srv.(ServiceServer).CreateEarnRules(ctx, req.(*CreateEarnRuleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EarnRuleService_ListEarnRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_ListEarnRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListEarnRulesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EarnRuleServiceServer).ListEarnRules(ctx, in)
+		return srv.(ServiceServer).ListEarnRules(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EarnRuleService_ListEarnRules_FullMethodName,
+		FullMethod: Service_ListEarnRules_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EarnRuleServiceServer).ListEarnRules(ctx, req.(*ListEarnRulesRequest))
+		return srv.(ServiceServer).ListEarnRules(ctx, req.(*ListEarnRulesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EarnRuleService_UpdateEarnRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_UpdateEarnRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateEarnRuleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EarnRuleServiceServer).UpdateEarnRules(ctx, in)
+		return srv.(ServiceServer).UpdateEarnRules(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EarnRuleService_UpdateEarnRules_FullMethodName,
+		FullMethod: Service_UpdateEarnRules_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EarnRuleServiceServer).UpdateEarnRules(ctx, req.(*UpdateEarnRuleRequest))
+		return srv.(ServiceServer).UpdateEarnRules(ctx, req.(*UpdateEarnRuleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EarnRuleService_EvaluateEarnRuleS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_EvaluateEarnRuleS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EvaluateEarnRulesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EarnRuleServiceServer).EvaluateEarnRuleS(ctx, in)
+		return srv.(ServiceServer).EvaluateEarnRuleS(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EarnRuleService_EvaluateEarnRuleS_FullMethodName,
+		FullMethod: Service_EvaluateEarnRuleS_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EarnRuleServiceServer).EvaluateEarnRuleS(ctx, req.(*EvaluateEarnRulesRequest))
+		return srv.(ServiceServer).EvaluateEarnRuleS(ctx, req.(*EvaluateEarnRulesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// EarnRuleService_ServiceDesc is the grpc.ServiceDesc for EarnRuleService service.
+// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var EarnRuleService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "smallbiznis.loyalty.rule.v1.EarnRuleService",
-	HandlerType: (*EarnRuleServiceServer)(nil),
+var Service_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "smallbiznis.loyalty.rule.v1.Service",
+	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateEarnRules",
-			Handler:    _EarnRuleService_CreateEarnRules_Handler,
+			Handler:    _Service_CreateEarnRules_Handler,
 		},
 		{
 			MethodName: "ListEarnRules",
-			Handler:    _EarnRuleService_ListEarnRules_Handler,
+			Handler:    _Service_ListEarnRules_Handler,
 		},
 		{
 			MethodName: "UpdateEarnRules",
-			Handler:    _EarnRuleService_UpdateEarnRules_Handler,
+			Handler:    _Service_UpdateEarnRules_Handler,
 		},
 		{
 			MethodName: "EvaluateEarnRuleS",
-			Handler:    _EarnRuleService_EvaluateEarnRuleS_Handler,
+			Handler:    _Service_EvaluateEarnRuleS_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

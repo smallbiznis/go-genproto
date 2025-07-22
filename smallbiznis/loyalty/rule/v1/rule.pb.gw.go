@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_EarnRuleService_CreateEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, client EarnRuleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Service_CreateEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateEarnRuleRequest
 	var metadata runtime.ServerMetadata
 
@@ -48,7 +48,7 @@ func request_EarnRuleService_CreateEarnRules_0(ctx context.Context, marshaler ru
 
 }
 
-func local_request_EarnRuleService_CreateEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, server EarnRuleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Service_CreateEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateEarnRuleRequest
 	var metadata runtime.ServerMetadata
 
@@ -66,17 +66,17 @@ func local_request_EarnRuleService_CreateEarnRules_0(ctx context.Context, marsha
 }
 
 var (
-	filter_EarnRuleService_ListEarnRules_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_Service_ListEarnRules_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_EarnRuleService_ListEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, client EarnRuleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Service_ListEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListEarnRulesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EarnRuleService_ListEarnRules_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Service_ListEarnRules_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -85,14 +85,14 @@ func request_EarnRuleService_ListEarnRules_0(ctx context.Context, marshaler runt
 
 }
 
-func local_request_EarnRuleService_ListEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, server EarnRuleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Service_ListEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListEarnRulesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EarnRuleService_ListEarnRules_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Service_ListEarnRules_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -101,7 +101,7 @@ func local_request_EarnRuleService_ListEarnRules_0(ctx context.Context, marshale
 
 }
 
-func request_EarnRuleService_UpdateEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, client EarnRuleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Service_UpdateEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, client ServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateEarnRuleRequest
 	var metadata runtime.ServerMetadata
 
@@ -135,7 +135,7 @@ func request_EarnRuleService_UpdateEarnRules_0(ctx context.Context, marshaler ru
 
 }
 
-func local_request_EarnRuleService_UpdateEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, server EarnRuleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Service_UpdateEarnRules_0(ctx context.Context, marshaler runtime.Marshaler, server ServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateEarnRuleRequest
 	var metadata runtime.ServerMetadata
 
@@ -169,13 +169,13 @@ func local_request_EarnRuleService_UpdateEarnRules_0(ctx context.Context, marsha
 
 }
 
-// RegisterEarnRuleServiceHandlerServer registers the http handlers for service EarnRuleService to "mux".
-// UnaryRPC     :call EarnRuleServiceServer directly.
+// RegisterServiceHandlerServer registers the http handlers for service Service to "mux".
+// UnaryRPC     :call ServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterEarnRuleServiceHandlerFromEndpoint instead.
-func RegisterEarnRuleServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server EarnRuleServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterServiceHandlerFromEndpoint instead.
+func RegisterServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server ServiceServer) error {
 
-	mux.Handle("POST", pattern_EarnRuleService_CreateEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Service_CreateEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -183,12 +183,12 @@ func RegisterEarnRuleServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.EarnRuleService/CreateEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.Service/CreateEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_EarnRuleService_CreateEarnRules_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Service_CreateEarnRules_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -196,11 +196,11 @@ func RegisterEarnRuleServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_EarnRuleService_CreateEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Service_CreateEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_EarnRuleService_ListEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Service_ListEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -208,12 +208,12 @@ func RegisterEarnRuleServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.EarnRuleService/ListEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.Service/ListEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_EarnRuleService_ListEarnRules_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Service_ListEarnRules_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -221,11 +221,11 @@ func RegisterEarnRuleServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_EarnRuleService_ListEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Service_ListEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_EarnRuleService_UpdateEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_Service_UpdateEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -233,12 +233,12 @@ func RegisterEarnRuleServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.EarnRuleService/UpdateEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.Service/UpdateEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_EarnRuleService_UpdateEarnRules_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Service_UpdateEarnRules_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -246,16 +246,16 @@ func RegisterEarnRuleServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_EarnRuleService_UpdateEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Service_UpdateEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterEarnRuleServiceHandlerFromEndpoint is same as RegisterEarnRuleServiceHandler but
+// RegisterServiceHandlerFromEndpoint is same as RegisterServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterEarnRuleServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.DialContext(ctx, endpoint, opts...)
 	if err != nil {
 		return err
@@ -275,85 +275,85 @@ func RegisterEarnRuleServiceHandlerFromEndpoint(ctx context.Context, mux *runtim
 		}()
 	}()
 
-	return RegisterEarnRuleServiceHandler(ctx, mux, conn)
+	return RegisterServiceHandler(ctx, mux, conn)
 }
 
-// RegisterEarnRuleServiceHandler registers the http handlers for service EarnRuleService to "mux".
+// RegisterServiceHandler registers the http handlers for service Service to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterEarnRuleServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterEarnRuleServiceHandlerClient(ctx, mux, NewEarnRuleServiceClient(conn))
+func RegisterServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterServiceHandlerClient(ctx, mux, NewServiceClient(conn))
 }
 
-// RegisterEarnRuleServiceHandlerClient registers the http handlers for service EarnRuleService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "EarnRuleServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "EarnRuleServiceClient"
+// RegisterServiceHandlerClient registers the http handlers for service Service
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "ServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "ServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "EarnRuleServiceClient" to call the correct interceptors.
-func RegisterEarnRuleServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client EarnRuleServiceClient) error {
+// "ServiceClient" to call the correct interceptors.
+func RegisterServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client ServiceClient) error {
 
-	mux.Handle("POST", pattern_EarnRuleService_CreateEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Service_CreateEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.EarnRuleService/CreateEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.Service/CreateEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_EarnRuleService_CreateEarnRules_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Service_CreateEarnRules_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_EarnRuleService_CreateEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Service_CreateEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_EarnRuleService_ListEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Service_ListEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.EarnRuleService/ListEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.Service/ListEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_EarnRuleService_ListEarnRules_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Service_ListEarnRules_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_EarnRuleService_ListEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Service_ListEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_EarnRuleService_UpdateEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_Service_UpdateEarnRules_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.EarnRuleService/UpdateEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.loyalty.rule.v1.Service/UpdateEarnRules", runtime.WithHTTPPathPattern("/v1/earn_rules/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_EarnRuleService_UpdateEarnRules_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Service_UpdateEarnRules_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_EarnRuleService_UpdateEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Service_UpdateEarnRules_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -361,17 +361,17 @@ func RegisterEarnRuleServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_EarnRuleService_CreateEarnRules_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "earn_rules"}, ""))
+	pattern_Service_CreateEarnRules_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "earn_rules"}, ""))
 
-	pattern_EarnRuleService_ListEarnRules_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "earn_rules"}, ""))
+	pattern_Service_ListEarnRules_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "earn_rules"}, ""))
 
-	pattern_EarnRuleService_UpdateEarnRules_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "earn_rules", "id"}, ""))
+	pattern_Service_UpdateEarnRules_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "earn_rules", "id"}, ""))
 )
 
 var (
-	forward_EarnRuleService_CreateEarnRules_0 = runtime.ForwardResponseMessage
+	forward_Service_CreateEarnRules_0 = runtime.ForwardResponseMessage
 
-	forward_EarnRuleService_ListEarnRules_0 = runtime.ForwardResponseMessage
+	forward_Service_ListEarnRules_0 = runtime.ForwardResponseMessage
 
-	forward_EarnRuleService_UpdateEarnRules_0 = runtime.ForwardResponseMessage
+	forward_Service_UpdateEarnRules_0 = runtime.ForwardResponseMessage
 )
