@@ -240,10 +240,13 @@ type EarningRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UserId         string           `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	OrganizationId string           `protobuf:"bytes,2,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
-	ReferenceId    string           `protobuf:"bytes,3,opt,name=reference_id,json=referenceId,proto3" json:"reference_id,omitempty"`
-	Attributes     *structpb.Struct `protobuf:"bytes,4,opt,name=attributes,proto3" json:"attributes,omitempty"`
+	UserId         string `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	OrganizationId string `protobuf:"bytes,2,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	ReferenceId    string `protobuf:"bytes,3,opt,name=reference_id,json=referenceId,proto3" json:"reference_id,omitempty"`
+	// Types that are assignable to Attributes:
+	//
+	//	*EarningRequest_Transaction
+	Attributes isEarningRequest_Attributes `protobuf_oneof:"attributes"`
 }
 
 func (x *EarningRequest) Reset() {
@@ -299,11 +302,276 @@ func (x *EarningRequest) GetReferenceId() string {
 	return ""
 }
 
-func (x *EarningRequest) GetAttributes() *structpb.Struct {
-	if x != nil {
-		return x.Attributes
+func (m *EarningRequest) GetAttributes() isEarningRequest_Attributes {
+	if m != nil {
+		return m.Attributes
 	}
 	return nil
+}
+
+func (x *EarningRequest) GetTransaction() *TransactionAttributes {
+	if x, ok := x.GetAttributes().(*EarningRequest_Transaction); ok {
+		return x.Transaction
+	}
+	return nil
+}
+
+type isEarningRequest_Attributes interface {
+	isEarningRequest_Attributes()
+}
+
+type EarningRequest_Transaction struct {
+	Transaction *TransactionAttributes `protobuf:"bytes,4,opt,name=transaction,proto3,oneof"`
+}
+
+func (*EarningRequest_Transaction) isEarningRequest_Attributes() {}
+
+// Attributes for point-earning transactions across various industries
+type TransactionAttributes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Category      string             `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`                                                                                      // Required: must be "transaction"
+	Amount        float64            `protobuf:"fixed64,2,opt,name=amount,proto3" json:"amount,omitempty"`                                                                                        // Total transaction amount (after discount)
+	Currency      string             `protobuf:"bytes,3,opt,name=currency,proto3" json:"currency,omitempty"`                                                                                      // Currency code, e.g., "IDR", "USD"
+	SourceId      string             `protobuf:"bytes,4,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`                                                                      // Unique transaction/order/invoice ID
+	RewardName    string             `protobuf:"bytes,5,opt,name=reward_name,json=rewardName,proto3" json:"reward_name,omitempty"`                                                                // Human-friendly reward name for history display
+	ItemCategory  string             `protobuf:"bytes,6,opt,name=item_category,json=itemCategory,proto3" json:"item_category,omitempty"`                                                          // Main product category, e.g., "food", "digital"
+	SubCategory   string             `protobuf:"bytes,7,opt,name=sub_category,json=subCategory,proto3" json:"sub_category,omitempty"`                                                             // Optional subcategory
+	PaymentMethod string             `protobuf:"bytes,8,opt,name=payment_method,json=paymentMethod,proto3" json:"payment_method,omitempty"`                                                       // Payment method, e.g., "gopay", "credit_card"
+	Channel       string             `protobuf:"bytes,9,opt,name=channel,proto3" json:"channel,omitempty"`                                                                                        // Channel of transaction, e.g., "mobile", "web", "offline"
+	BrandId       string             `protobuf:"bytes,10,opt,name=brand_id,json=brandId,proto3" json:"brand_id,omitempty"`                                                                        // Brand ID, e.g., "KFC", "Starbucks"
+	MerchantId    string             `protobuf:"bytes,11,opt,name=merchant_id,json=merchantId,proto3" json:"merchant_id,omitempty"`                                                               // Merchant ID (useful for franchise/multi-tenant)
+	OutletId      string             `protobuf:"bytes,12,opt,name=outlet_id,json=outletId,proto3" json:"outlet_id,omitempty"`                                                                     // Outlet/store/branch ID
+	PromoId       string             `protobuf:"bytes,13,opt,name=promo_id,json=promoId,proto3" json:"promo_id,omitempty"`                                                                        // Promo or campaign ID
+	Items         []*TransactionItem `protobuf:"bytes,14,rep,name=items,proto3" json:"items,omitempty"`                                                                                           // List of purchased items
+	Custom        map[string]string  `protobuf:"bytes,15,rep,name=custom,proto3" json:"custom,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"` // Custom key-value data for extensibility
+}
+
+func (x *TransactionAttributes) Reset() {
+	*x = TransactionAttributes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TransactionAttributes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransactionAttributes) ProtoMessage() {}
+
+func (x *TransactionAttributes) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransactionAttributes.ProtoReflect.Descriptor instead.
+func (*TransactionAttributes) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *TransactionAttributes) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *TransactionAttributes) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetSourceId() string {
+	if x != nil {
+		return x.SourceId
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetRewardName() string {
+	if x != nil {
+		return x.RewardName
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetItemCategory() string {
+	if x != nil {
+		return x.ItemCategory
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetSubCategory() string {
+	if x != nil {
+		return x.SubCategory
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetPaymentMethod() string {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetChannel() string {
+	if x != nil {
+		return x.Channel
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetBrandId() string {
+	if x != nil {
+		return x.BrandId
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetMerchantId() string {
+	if x != nil {
+		return x.MerchantId
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetOutletId() string {
+	if x != nil {
+		return x.OutletId
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetPromoId() string {
+	if x != nil {
+		return x.PromoId
+	}
+	return ""
+}
+
+func (x *TransactionAttributes) GetItems() []*TransactionItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *TransactionAttributes) GetCustom() map[string]string {
+	if x != nil {
+		return x.Custom
+	}
+	return nil
+}
+
+// Individual purchased item
+type TransactionItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Sku      string  `protobuf:"bytes,1,opt,name=sku,proto3" json:"sku,omitempty"`           // Product SKU code
+	Name     string  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`         // Product name (optional)
+	Category string  `protobuf:"bytes,3,opt,name=category,proto3" json:"category,omitempty"` // Product category
+	Qty      int32   `protobuf:"varint,4,opt,name=qty,proto3" json:"qty,omitempty"`          // Quantity purchased
+	Price    float64 `protobuf:"fixed64,5,opt,name=price,proto3" json:"price,omitempty"`     // Price per unit
+	Total    float64 `protobuf:"fixed64,6,opt,name=total,proto3" json:"total,omitempty"`     // Total price (qty * price)
+}
+
+func (x *TransactionItem) Reset() {
+	*x = TransactionItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TransactionItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransactionItem) ProtoMessage() {}
+
+func (x *TransactionItem) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransactionItem.ProtoReflect.Descriptor instead.
+func (*TransactionItem) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *TransactionItem) GetSku() string {
+	if x != nil {
+		return x.Sku
+	}
+	return ""
+}
+
+func (x *TransactionItem) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TransactionItem) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+func (x *TransactionItem) GetQty() int32 {
+	if x != nil {
+		return x.Qty
+	}
+	return 0
+}
+
+func (x *TransactionItem) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *TransactionItem) GetTotal() float64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
 }
 
 type EarningResponse struct {
@@ -319,7 +587,7 @@ type EarningResponse struct {
 func (x *EarningResponse) Reset() {
 	*x = EarningResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[3]
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -332,7 +600,7 @@ func (x *EarningResponse) String() string {
 func (*EarningResponse) ProtoMessage() {}
 
 func (x *EarningResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[3]
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -345,7 +613,7 @@ func (x *EarningResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EarningResponse.ProtoReflect.Descriptor instead.
 func (*EarningResponse) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{3}
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *EarningResponse) GetTransactionId() string {
@@ -380,7 +648,7 @@ type StatusEarningRequest struct {
 func (x *StatusEarningRequest) Reset() {
 	*x = StatusEarningRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[4]
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -393,7 +661,7 @@ func (x *StatusEarningRequest) String() string {
 func (*StatusEarningRequest) ProtoMessage() {}
 
 func (x *StatusEarningRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[4]
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -406,7 +674,7 @@ func (x *StatusEarningRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StatusEarningRequest.ProtoReflect.Descriptor instead.
 func (*StatusEarningRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{4}
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *StatusEarningRequest) GetTransactionId() string {
@@ -430,7 +698,7 @@ type StatusEarningResponse struct {
 func (x *StatusEarningResponse) Reset() {
 	*x = StatusEarningResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[5]
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -443,7 +711,7 @@ func (x *StatusEarningResponse) String() string {
 func (*StatusEarningResponse) ProtoMessage() {}
 
 func (x *StatusEarningResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[5]
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -456,7 +724,7 @@ func (x *StatusEarningResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StatusEarningResponse.ProtoReflect.Descriptor instead.
 func (*StatusEarningResponse) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{5}
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *StatusEarningResponse) GetTransactionId() string {
@@ -501,7 +769,7 @@ type RedeemValidationRequest struct {
 func (x *RedeemValidationRequest) Reset() {
 	*x = RedeemValidationRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[6]
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -514,7 +782,7 @@ func (x *RedeemValidationRequest) String() string {
 func (*RedeemValidationRequest) ProtoMessage() {}
 
 func (x *RedeemValidationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[6]
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -527,7 +795,7 @@ func (x *RedeemValidationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RedeemValidationRequest.ProtoReflect.Descriptor instead.
 func (*RedeemValidationRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{6}
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *RedeemValidationRequest) GetOrganizationId() string {
@@ -572,7 +840,7 @@ type RedeemValidationResponse struct {
 func (x *RedeemValidationResponse) Reset() {
 	*x = RedeemValidationResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[7]
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -585,7 +853,7 @@ func (x *RedeemValidationResponse) String() string {
 func (*RedeemValidationResponse) ProtoMessage() {}
 
 func (x *RedeemValidationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[7]
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -598,7 +866,7 @@ func (x *RedeemValidationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RedeemValidationResponse.ProtoReflect.Descriptor instead.
 func (*RedeemValidationResponse) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{7}
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *RedeemValidationResponse) GetIsValid() bool {
@@ -645,7 +913,7 @@ type RedeemRequest struct {
 func (x *RedeemRequest) Reset() {
 	*x = RedeemRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[8]
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -658,7 +926,7 @@ func (x *RedeemRequest) String() string {
 func (*RedeemRequest) ProtoMessage() {}
 
 func (x *RedeemRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[8]
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -671,7 +939,7 @@ func (x *RedeemRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RedeemRequest.ProtoReflect.Descriptor instead.
 func (*RedeemRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{8}
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *RedeemRequest) GetOrganizationId() string {
@@ -730,7 +998,7 @@ type RedeemResponse struct {
 func (x *RedeemResponse) Reset() {
 	*x = RedeemResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[9]
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -743,7 +1011,7 @@ func (x *RedeemResponse) String() string {
 func (*RedeemResponse) ProtoMessage() {}
 
 func (x *RedeemResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[9]
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -756,7 +1024,7 @@ func (x *RedeemResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RedeemResponse.ProtoReflect.Descriptor instead.
 func (*RedeemResponse) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{9}
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *RedeemResponse) GetReferenceId() string {
@@ -798,7 +1066,7 @@ type StatusRedeemRequest struct {
 func (x *StatusRedeemRequest) Reset() {
 	*x = StatusRedeemRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[10]
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -811,7 +1079,7 @@ func (x *StatusRedeemRequest) String() string {
 func (*StatusRedeemRequest) ProtoMessage() {}
 
 func (x *StatusRedeemRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[10]
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -824,7 +1092,7 @@ func (x *StatusRedeemRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StatusRedeemRequest.ProtoReflect.Descriptor instead.
 func (*StatusRedeemRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{10}
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *StatusRedeemRequest) GetTransactionId() string {
@@ -853,7 +1121,7 @@ type StatusRedeemResponse struct {
 func (x *StatusRedeemResponse) Reset() {
 	*x = StatusRedeemResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[11]
+		mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -866,7 +1134,7 @@ func (x *StatusRedeemResponse) String() string {
 func (*StatusRedeemResponse) ProtoMessage() {}
 
 func (x *StatusRedeemResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[11]
+	mi := &file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -879,7 +1147,7 @@ func (x *StatusRedeemResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StatusRedeemResponse.ProtoReflect.Descriptor instead.
 func (*StatusRedeemResponse) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{11}
+	return file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *StatusRedeemResponse) GetReferenceId() string {
@@ -973,7 +1241,7 @@ var file_smallbiznis_loyalty_point_v1_point_proto_rawDesc = []byte{
 	0x72, 0x6e, 0x69, 0x6e, 0x67, 0x50, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x27, 0x0a, 0x0f, 0x65, 0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65,
 	0x64, 0x5f, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x65,
-	0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x22, 0xae, 0x01,
+	0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x22, 0xdc, 0x01,
 	0x0a, 0x0e, 0x45, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x27, 0x0a, 0x0f, 0x6f, 0x72, 0x67,
@@ -981,10 +1249,62 @@ var file_smallbiznis_loyalty_point_v1_point_proto_rawDesc = []byte{
 	0x28, 0x09, 0x52, 0x0e, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e,
 	0x49, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x5f,
 	0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65,
-	0x6e, 0x63, 0x65, 0x49, 0x64, 0x12, 0x37, 0x0a, 0x0a, 0x61, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75,
-	0x74, 0x65, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
-	0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x75,
-	0x63, 0x74, 0x52, 0x0a, 0x61, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x73, 0x22, 0xb1,
+	0x6e, 0x63, 0x65, 0x49, 0x64, 0x12, 0x57, 0x0a, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x33, 0x2e, 0x73, 0x6d, 0x61,
+	0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6c, 0x6f, 0x79, 0x61, 0x6c, 0x74, 0x79,
+	0x2e, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x73, 0x48,
+	0x00, 0x52, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x0c,
+	0x0a, 0x0a, 0x61, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x73, 0x22, 0xfb, 0x04, 0x0a,
+	0x15, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x74, 0x74, 0x72,
+	0x69, 0x62, 0x75, 0x74, 0x65, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f,
+	0x72, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f,
+	0x72, 0x79, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x01, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x75,
+	0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x75,
+	0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65,
+	0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x49, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x5f, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64,
+	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x69, 0x74, 0x65, 0x6d, 0x5f, 0x63, 0x61, 0x74,
+	0x65, 0x67, 0x6f, 0x72, 0x79, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x69, 0x74, 0x65,
+	0x6d, 0x43, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x12, 0x21, 0x0a, 0x0c, 0x73, 0x75, 0x62,
+	0x5f, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0b, 0x73, 0x75, 0x62, 0x43, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x12, 0x25, 0x0a, 0x0e,
+	0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x6d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x18, 0x08,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x4d, 0x65, 0x74,
+	0x68, 0x6f, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x18, 0x09,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x12, 0x19, 0x0a,
+	0x08, 0x62, 0x72, 0x61, 0x6e, 0x64, 0x5f, 0x69, 0x64, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x62, 0x72, 0x61, 0x6e, 0x64, 0x49, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x6d, 0x65, 0x72, 0x63,
+	0x68, 0x61, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x6d,
+	0x65, 0x72, 0x63, 0x68, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x6f, 0x75, 0x74,
+	0x6c, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6f, 0x75,
+	0x74, 0x6c, 0x65, 0x74, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x5f,
+	0x69, 0x64, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x49,
+	0x64, 0x12, 0x43, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x0e, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x2d, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6c,
+	0x6f, 0x79, 0x61, 0x6c, 0x74, 0x79, 0x2e, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e,
+	0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x74, 0x65, 0x6d, 0x52,
+	0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x12, 0x57, 0x0a, 0x06, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d,
+	0x18, 0x0f, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x3f, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69,
+	0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6c, 0x6f, 0x79, 0x61, 0x6c, 0x74, 0x79, 0x2e, 0x70, 0x6f, 0x69,
+	0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x41, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x73, 0x2e, 0x43, 0x75, 0x73, 0x74,
+	0x6f, 0x6d, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x06, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x1a,
+	0x39, 0x0a, 0x0b, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10,
+	0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79,
+	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x91, 0x01, 0x0a, 0x0f, 0x54,
+	0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x10,
+	0x0a, 0x03, 0x73, 0x6b, 0x75, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x73, 0x6b, 0x75,
+	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79,
+	0x12, 0x10, 0x0a, 0x03, 0x71, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x71,
+	0x74, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61,
+	0x6c, 0x18, 0x06, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x22, 0xb1,
 	0x01, 0x0a, 0x0f, 0x45, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f,
 	0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x74, 0x72, 0x61, 0x6e,
@@ -1187,58 +1507,63 @@ func file_smallbiznis_loyalty_point_v1_point_proto_rawDescGZIP() []byte {
 }
 
 var file_smallbiznis_loyalty_point_v1_point_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_smallbiznis_loyalty_point_v1_point_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_smallbiznis_loyalty_point_v1_point_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_smallbiznis_loyalty_point_v1_point_proto_goTypes = []interface{}{
 	(Status)(0),                      // 0: smallbiznis.loyalty.point.v1.Status
 	(RewardType)(0),                  // 1: smallbiznis.loyalty.point.v1.RewardType
 	(*EarningPreviewRequest)(nil),    // 2: smallbiznis.loyalty.point.v1.EarningPreviewRequest
 	(*EarningPreviewResponse)(nil),   // 3: smallbiznis.loyalty.point.v1.EarningPreviewResponse
 	(*EarningRequest)(nil),           // 4: smallbiznis.loyalty.point.v1.EarningRequest
-	(*EarningResponse)(nil),          // 5: smallbiznis.loyalty.point.v1.EarningResponse
-	(*StatusEarningRequest)(nil),     // 6: smallbiznis.loyalty.point.v1.StatusEarningRequest
-	(*StatusEarningResponse)(nil),    // 7: smallbiznis.loyalty.point.v1.StatusEarningResponse
-	(*RedeemValidationRequest)(nil),  // 8: smallbiznis.loyalty.point.v1.RedeemValidationRequest
-	(*RedeemValidationResponse)(nil), // 9: smallbiznis.loyalty.point.v1.RedeemValidationResponse
-	(*RedeemRequest)(nil),            // 10: smallbiznis.loyalty.point.v1.RedeemRequest
-	(*RedeemResponse)(nil),           // 11: smallbiznis.loyalty.point.v1.RedeemResponse
-	(*StatusRedeemRequest)(nil),      // 12: smallbiznis.loyalty.point.v1.StatusRedeemRequest
-	(*StatusRedeemResponse)(nil),     // 13: smallbiznis.loyalty.point.v1.StatusRedeemResponse
-	(*structpb.Struct)(nil),          // 14: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),    // 15: google.protobuf.Timestamp
+	(*TransactionAttributes)(nil),    // 5: smallbiznis.loyalty.point.v1.TransactionAttributes
+	(*TransactionItem)(nil),          // 6: smallbiznis.loyalty.point.v1.TransactionItem
+	(*EarningResponse)(nil),          // 7: smallbiznis.loyalty.point.v1.EarningResponse
+	(*StatusEarningRequest)(nil),     // 8: smallbiznis.loyalty.point.v1.StatusEarningRequest
+	(*StatusEarningResponse)(nil),    // 9: smallbiznis.loyalty.point.v1.StatusEarningResponse
+	(*RedeemValidationRequest)(nil),  // 10: smallbiznis.loyalty.point.v1.RedeemValidationRequest
+	(*RedeemValidationResponse)(nil), // 11: smallbiznis.loyalty.point.v1.RedeemValidationResponse
+	(*RedeemRequest)(nil),            // 12: smallbiznis.loyalty.point.v1.RedeemRequest
+	(*RedeemResponse)(nil),           // 13: smallbiznis.loyalty.point.v1.RedeemResponse
+	(*StatusRedeemRequest)(nil),      // 14: smallbiznis.loyalty.point.v1.StatusRedeemRequest
+	(*StatusRedeemResponse)(nil),     // 15: smallbiznis.loyalty.point.v1.StatusRedeemResponse
+	nil,                              // 16: smallbiznis.loyalty.point.v1.TransactionAttributes.CustomEntry
+	(*structpb.Struct)(nil),          // 17: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),    // 18: google.protobuf.Timestamp
 }
 var file_smallbiznis_loyalty_point_v1_point_proto_depIdxs = []int32{
-	14, // 0: smallbiznis.loyalty.point.v1.EarningPreviewRequest.attributes:type_name -> google.protobuf.Struct
-	14, // 1: smallbiznis.loyalty.point.v1.EarningRequest.attributes:type_name -> google.protobuf.Struct
-	0,  // 2: smallbiznis.loyalty.point.v1.EarningResponse.status:type_name -> smallbiznis.loyalty.point.v1.Status
-	15, // 3: smallbiznis.loyalty.point.v1.EarningResponse.created_at:type_name -> google.protobuf.Timestamp
-	0,  // 4: smallbiznis.loyalty.point.v1.StatusEarningResponse.status:type_name -> smallbiznis.loyalty.point.v1.Status
-	15, // 5: smallbiznis.loyalty.point.v1.StatusEarningResponse.created_at:type_name -> google.protobuf.Timestamp
-	14, // 6: smallbiznis.loyalty.point.v1.RedeemValidationRequest.attributes:type_name -> google.protobuf.Struct
-	1,  // 7: smallbiznis.loyalty.point.v1.RedeemRequest.reward_type:type_name -> smallbiznis.loyalty.point.v1.RewardType
-	14, // 8: smallbiznis.loyalty.point.v1.RedeemRequest.attributes:type_name -> google.protobuf.Struct
-	0,  // 9: smallbiznis.loyalty.point.v1.RedeemResponse.status:type_name -> smallbiznis.loyalty.point.v1.Status
-	15, // 10: smallbiznis.loyalty.point.v1.RedeemResponse.redeemed_at:type_name -> google.protobuf.Timestamp
-	0,  // 11: smallbiznis.loyalty.point.v1.StatusRedeemResponse.status:type_name -> smallbiznis.loyalty.point.v1.Status
-	1,  // 12: smallbiznis.loyalty.point.v1.StatusRedeemResponse.reward_type:type_name -> smallbiznis.loyalty.point.v1.RewardType
-	15, // 13: smallbiznis.loyalty.point.v1.StatusRedeemResponse.redeemed_at:type_name -> google.protobuf.Timestamp
-	14, // 14: smallbiznis.loyalty.point.v1.StatusRedeemResponse.data:type_name -> google.protobuf.Struct
-	2,  // 15: smallbiznis.loyalty.point.v1.Service.PreviewEarning:input_type -> smallbiznis.loyalty.point.v1.EarningPreviewRequest
-	4,  // 16: smallbiznis.loyalty.point.v1.Service.CreateEarning:input_type -> smallbiznis.loyalty.point.v1.EarningRequest
-	6,  // 17: smallbiznis.loyalty.point.v1.Service.GetEarningStatus:input_type -> smallbiznis.loyalty.point.v1.StatusEarningRequest
-	8,  // 18: smallbiznis.loyalty.point.v1.Service.ValidateRedeem:input_type -> smallbiznis.loyalty.point.v1.RedeemValidationRequest
-	10, // 19: smallbiznis.loyalty.point.v1.Service.RedeemPoint:input_type -> smallbiznis.loyalty.point.v1.RedeemRequest
-	12, // 20: smallbiznis.loyalty.point.v1.Service.GetRedeemStatus:input_type -> smallbiznis.loyalty.point.v1.StatusRedeemRequest
-	3,  // 21: smallbiznis.loyalty.point.v1.Service.PreviewEarning:output_type -> smallbiznis.loyalty.point.v1.EarningPreviewResponse
-	5,  // 22: smallbiznis.loyalty.point.v1.Service.CreateEarning:output_type -> smallbiznis.loyalty.point.v1.EarningResponse
-	7,  // 23: smallbiznis.loyalty.point.v1.Service.GetEarningStatus:output_type -> smallbiznis.loyalty.point.v1.StatusEarningResponse
-	9,  // 24: smallbiznis.loyalty.point.v1.Service.ValidateRedeem:output_type -> smallbiznis.loyalty.point.v1.RedeemValidationResponse
-	11, // 25: smallbiznis.loyalty.point.v1.Service.RedeemPoint:output_type -> smallbiznis.loyalty.point.v1.RedeemResponse
-	13, // 26: smallbiznis.loyalty.point.v1.Service.GetRedeemStatus:output_type -> smallbiznis.loyalty.point.v1.StatusRedeemResponse
-	21, // [21:27] is the sub-list for method output_type
-	15, // [15:21] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	17, // 0: smallbiznis.loyalty.point.v1.EarningPreviewRequest.attributes:type_name -> google.protobuf.Struct
+	5,  // 1: smallbiznis.loyalty.point.v1.EarningRequest.transaction:type_name -> smallbiznis.loyalty.point.v1.TransactionAttributes
+	6,  // 2: smallbiznis.loyalty.point.v1.TransactionAttributes.items:type_name -> smallbiznis.loyalty.point.v1.TransactionItem
+	16, // 3: smallbiznis.loyalty.point.v1.TransactionAttributes.custom:type_name -> smallbiznis.loyalty.point.v1.TransactionAttributes.CustomEntry
+	0,  // 4: smallbiznis.loyalty.point.v1.EarningResponse.status:type_name -> smallbiznis.loyalty.point.v1.Status
+	18, // 5: smallbiznis.loyalty.point.v1.EarningResponse.created_at:type_name -> google.protobuf.Timestamp
+	0,  // 6: smallbiznis.loyalty.point.v1.StatusEarningResponse.status:type_name -> smallbiznis.loyalty.point.v1.Status
+	18, // 7: smallbiznis.loyalty.point.v1.StatusEarningResponse.created_at:type_name -> google.protobuf.Timestamp
+	17, // 8: smallbiznis.loyalty.point.v1.RedeemValidationRequest.attributes:type_name -> google.protobuf.Struct
+	1,  // 9: smallbiznis.loyalty.point.v1.RedeemRequest.reward_type:type_name -> smallbiznis.loyalty.point.v1.RewardType
+	17, // 10: smallbiznis.loyalty.point.v1.RedeemRequest.attributes:type_name -> google.protobuf.Struct
+	0,  // 11: smallbiznis.loyalty.point.v1.RedeemResponse.status:type_name -> smallbiznis.loyalty.point.v1.Status
+	18, // 12: smallbiznis.loyalty.point.v1.RedeemResponse.redeemed_at:type_name -> google.protobuf.Timestamp
+	0,  // 13: smallbiznis.loyalty.point.v1.StatusRedeemResponse.status:type_name -> smallbiznis.loyalty.point.v1.Status
+	1,  // 14: smallbiznis.loyalty.point.v1.StatusRedeemResponse.reward_type:type_name -> smallbiznis.loyalty.point.v1.RewardType
+	18, // 15: smallbiznis.loyalty.point.v1.StatusRedeemResponse.redeemed_at:type_name -> google.protobuf.Timestamp
+	17, // 16: smallbiznis.loyalty.point.v1.StatusRedeemResponse.data:type_name -> google.protobuf.Struct
+	2,  // 17: smallbiznis.loyalty.point.v1.Service.PreviewEarning:input_type -> smallbiznis.loyalty.point.v1.EarningPreviewRequest
+	4,  // 18: smallbiznis.loyalty.point.v1.Service.CreateEarning:input_type -> smallbiznis.loyalty.point.v1.EarningRequest
+	8,  // 19: smallbiznis.loyalty.point.v1.Service.GetEarningStatus:input_type -> smallbiznis.loyalty.point.v1.StatusEarningRequest
+	10, // 20: smallbiznis.loyalty.point.v1.Service.ValidateRedeem:input_type -> smallbiznis.loyalty.point.v1.RedeemValidationRequest
+	12, // 21: smallbiznis.loyalty.point.v1.Service.RedeemPoint:input_type -> smallbiznis.loyalty.point.v1.RedeemRequest
+	14, // 22: smallbiznis.loyalty.point.v1.Service.GetRedeemStatus:input_type -> smallbiznis.loyalty.point.v1.StatusRedeemRequest
+	3,  // 23: smallbiznis.loyalty.point.v1.Service.PreviewEarning:output_type -> smallbiznis.loyalty.point.v1.EarningPreviewResponse
+	7,  // 24: smallbiznis.loyalty.point.v1.Service.CreateEarning:output_type -> smallbiznis.loyalty.point.v1.EarningResponse
+	9,  // 25: smallbiznis.loyalty.point.v1.Service.GetEarningStatus:output_type -> smallbiznis.loyalty.point.v1.StatusEarningResponse
+	11, // 26: smallbiznis.loyalty.point.v1.Service.ValidateRedeem:output_type -> smallbiznis.loyalty.point.v1.RedeemValidationResponse
+	13, // 27: smallbiznis.loyalty.point.v1.Service.RedeemPoint:output_type -> smallbiznis.loyalty.point.v1.RedeemResponse
+	15, // 28: smallbiznis.loyalty.point.v1.Service.GetRedeemStatus:output_type -> smallbiznis.loyalty.point.v1.StatusRedeemResponse
+	23, // [23:29] is the sub-list for method output_type
+	17, // [17:23] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_smallbiznis_loyalty_point_v1_point_proto_init() }
@@ -1284,7 +1609,7 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EarningResponse); i {
+			switch v := v.(*TransactionAttributes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1296,7 +1621,7 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StatusEarningRequest); i {
+			switch v := v.(*TransactionItem); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1308,7 +1633,7 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StatusEarningResponse); i {
+			switch v := v.(*EarningResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1320,7 +1645,7 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RedeemValidationRequest); i {
+			switch v := v.(*StatusEarningRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1332,7 +1657,7 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RedeemValidationResponse); i {
+			switch v := v.(*StatusEarningResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1344,7 +1669,7 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RedeemRequest); i {
+			switch v := v.(*RedeemValidationRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1356,7 +1681,7 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RedeemResponse); i {
+			switch v := v.(*RedeemValidationResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1368,7 +1693,7 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StatusRedeemRequest); i {
+			switch v := v.(*RedeemRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1380,6 +1705,30 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RedeemResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StatusRedeemRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StatusRedeemResponse); i {
 			case 0:
 				return &v.state
@@ -1392,13 +1741,16 @@ func file_smallbiznis_loyalty_point_v1_point_proto_init() {
 			}
 		}
 	}
+	file_smallbiznis_loyalty_point_v1_point_proto_msgTypes[2].OneofWrappers = []interface{}{
+		(*EarningRequest_Transaction)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_smallbiznis_loyalty_point_v1_point_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   12,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
