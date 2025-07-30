@@ -2,11 +2,11 @@
 // source: smallbiznis/workflow/v1/workflow.proto
 
 /*
-Package orgv1 is a reverse proxy.
+Package workflowv1 is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package orgv1
+package workflowv1
 
 import (
 	"context"

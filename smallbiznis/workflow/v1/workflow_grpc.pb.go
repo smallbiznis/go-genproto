@@ -4,7 +4,7 @@
 // - protoc             v4.23.4
 // source: smallbiznis/workflow/v1/workflow.proto
 
-package orgv1
+package workflowv1
 
 import (
 	context "context"
