@@ -31,10 +31,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
-	AddEntry(ctx context.Context, in *AddEntryRequest, opts ...grpc.CallOption) (*AddEntryResponse, error)
+	AddEntry(ctx context.Context, in *AddEntryRequest, opts ...grpc.CallOption) (*LedgerEntry, error)
 	RevertEntry(ctx context.Context, in *RevertEntryRequest, opts ...grpc.CallOption) (*LedgerEntry, error)
 	ListEntries(ctx context.Context, in *ListEntriesRequest, opts ...grpc.CallOption) (*ListEntriesResponse, error)
-	GetEntry(ctx context.Context, in *GetEntryRequest, opts ...grpc.CallOption) (*AddEntryResponse, error)
+	GetEntry(ctx context.Context, in *GetEntryRequest, opts ...grpc.CallOption) (*LedgerEntry, error)
 	VerifyChain(ctx context.Context, in *VerifyChainRequest, opts ...grpc.CallOption) (*VerifyChainResponse, error)
 	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error)
 }
@@ -47,8 +47,8 @@ func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
 	return &serviceClient{cc}
 }
 
-func (c *serviceClient) AddEntry(ctx context.Context, in *AddEntryRequest, opts ...grpc.CallOption) (*AddEntryResponse, error) {
-	out := new(AddEntryResponse)
+func (c *serviceClient) AddEntry(ctx context.Context, in *AddEntryRequest, opts ...grpc.CallOption) (*LedgerEntry, error) {
+	out := new(LedgerEntry)
 	err := c.cc.Invoke(ctx, Service_AddEntry_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -74,8 +74,8 @@ func (c *serviceClient) ListEntries(ctx context.Context, in *ListEntriesRequest,
 	return out, nil
 }
 
-func (c *serviceClient) GetEntry(ctx context.Context, in *GetEntryRequest, opts ...grpc.CallOption) (*AddEntryResponse, error) {
-	out := new(AddEntryResponse)
+func (c *serviceClient) GetEntry(ctx context.Context, in *GetEntryRequest, opts ...grpc.CallOption) (*LedgerEntry, error) {
+	out := new(LedgerEntry)
 	err := c.cc.Invoke(ctx, Service_GetEntry_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -105,10 +105,10 @@ func (c *serviceClient) GetBalance(ctx context.Context, in *GetBalanceRequest, o
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility
 type ServiceServer interface {
-	AddEntry(context.Context, *AddEntryRequest) (*AddEntryResponse, error)
+	AddEntry(context.Context, *AddEntryRequest) (*LedgerEntry, error)
 	RevertEntry(context.Context, *RevertEntryRequest) (*LedgerEntry, error)
 	ListEntries(context.Context, *ListEntriesRequest) (*ListEntriesResponse, error)
-	GetEntry(context.Context, *GetEntryRequest) (*AddEntryResponse, error)
+	GetEntry(context.Context, *GetEntryRequest) (*LedgerEntry, error)
 	VerifyChain(context.Context, *VerifyChainRequest) (*VerifyChainResponse, error)
 	GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error)
 	mustEmbedUnimplementedServiceServer()
@@ -118,7 +118,7 @@ type ServiceServer interface {
 type UnimplementedServiceServer struct {
 }
 
-func (UnimplementedServiceServer) AddEntry(context.Context, *AddEntryRequest) (*AddEntryResponse, error) {
+func (UnimplementedServiceServer) AddEntry(context.Context, *AddEntryRequest) (*LedgerEntry, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddEntry not implemented")
 }
 func (UnimplementedServiceServer) RevertEntry(context.Context, *RevertEntryRequest) (*LedgerEntry, error) {
@@ -127,7 +127,7 @@ func (UnimplementedServiceServer) RevertEntry(context.Context, *RevertEntryReque
 func (UnimplementedServiceServer) ListEntries(context.Context, *ListEntriesRequest) (*ListEntriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListEntries not implemented")
 }
-func (UnimplementedServiceServer) GetEntry(context.Context, *GetEntryRequest) (*AddEntryResponse, error) {
+func (UnimplementedServiceServer) GetEntry(context.Context, *GetEntryRequest) (*LedgerEntry, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEntry not implemented")
 }
 func (UnimplementedServiceServer) VerifyChain(context.Context, *VerifyChainRequest) (*VerifyChainResponse, error) {
