@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,20 +20,65 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	OrganizationService_CreateOrganization_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/CreateOrganization"
-	OrganizationService_GetOrganization_FullMethodName    = "/smallbiznis.organization.v1.OrganizationService/GetOrganization"
-	OrganizationService_ListOrganization_FullMethodName   = "/smallbiznis.organization.v1.OrganizationService/ListOrganization"
-	OrganizationService_UpdateOrganization_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/UpdateOrganization"
+	OrganizationService_CreateOrganization_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/CreateOrganization"
+	OrganizationService_GetOrganization_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/GetOrganization"
+	OrganizationService_ListOrganization_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/ListOrganization"
+	OrganizationService_UpdateOrganization_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/UpdateOrganization"
+	OrganizationService_GetOnboardingState_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/GetOnboardingState"
+	OrganizationService_StartOnboarding_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/StartOnboarding"
+	OrganizationService_CompleteOnboarding_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/CompleteOnboarding"
+	OrganizationService_PutBusinessProfile_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/PutBusinessProfile"
+	OrganizationService_PutTaxConfig_FullMethodName           = "/smallbiznis.organization.v1.OrganizationService/PutTaxConfig"
+	OrganizationService_CreateLocation_FullMethodName         = "/smallbiznis.organization.v1.OrganizationService/CreateLocation"
+	OrganizationService_ListLocations_FullMethodName          = "/smallbiznis.organization.v1.OrganizationService/ListLocations"
+	OrganizationService_PutReceiptTemplate_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/PutReceiptTemplate"
+	OrganizationService_ConnectPaymentProvider_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/ConnectPaymentProvider"
+	OrganizationService_CreateDomain_FullMethodName           = "/smallbiznis.organization.v1.OrganizationService/CreateDomain"
+	OrganizationService_VerifyDomainDNS_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/VerifyDomainDNS"
+	OrganizationService_ProvisionDomainTLS_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/ProvisionDomainTLS"
+	OrganizationService_CreateRegion_FullMethodName           = "/smallbiznis.organization.v1.OrganizationService/CreateRegion"
+	OrganizationService_ListRegions_FullMethodName            = "/smallbiznis.organization.v1.OrganizationService/ListRegions"
+	OrganizationService_CreatePricebook_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/CreatePricebook"
+	OrganizationService_UpsertPricebookItems_FullMethodName   = "/smallbiznis.organization.v1.OrganizationService/UpsertPricebookItems"
+	OrganizationService_ListPricebooks_FullMethodName         = "/smallbiznis.organization.v1.OrganizationService/ListPricebooks"
+	OrganizationService_CreateTaxProfile_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/CreateTaxProfile"
+	OrganizationService_ListTaxProfiles_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/ListTaxProfiles"
 )
 
 // OrganizationServiceClient is the client API for OrganizationService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrganizationServiceClient interface {
+	// -------- Core Org CRUD --------
 	CreateOrganization(ctx context.Context, in *CreateOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
 	GetOrganization(ctx context.Context, in *GetOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
 	ListOrganization(ctx context.Context, in *ListOrganizationRequest, opts ...grpc.CallOption) (*ListOrganizationResponse, error)
 	UpdateOrganization(ctx context.Context, in *UpdateOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
+	// -------- Onboarding Wizard --------
+	GetOnboardingState(ctx context.Context, in *GetOnboardingStateRequest, opts ...grpc.CallOption) (*GetOnboardingStateResponse, error)
+	StartOnboarding(ctx context.Context, in *StartOnboardingRequest, opts ...grpc.CallOption) (*GetOnboardingStateResponse, error)
+	CompleteOnboarding(ctx context.Context, in *CompleteOnboardingRequest, opts ...grpc.CallOption) (*GetOnboardingStateResponse, error)
+	// Step 1: Business Profile
+	PutBusinessProfile(ctx context.Context, in *PutBusinessProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Step 2: Tax Config
+	PutTaxConfig(ctx context.Context, in *PutTaxConfigRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Step 3: Location & POS
+	CreateLocation(ctx context.Context, in *CreateLocationRequest, opts ...grpc.CallOption) (*Location, error)
+	ListLocations(ctx context.Context, in *ListLocationsRequest, opts ...grpc.CallOption) (*ListLocationsResponse, error)
+	PutReceiptTemplate(ctx context.Context, in *PutReceiptTemplateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Step 4: Payments & Domain (optional)
+	ConnectPaymentProvider(ctx context.Context, in *ConnectPaymentProviderRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CreateDomain(ctx context.Context, in *CreateDomainRequest, opts ...grpc.CallOption) (*Domain, error)
+	VerifyDomainDNS(ctx context.Context, in *VerifyDomainDNSRequest, opts ...grpc.CallOption) (*Domain, error)
+	ProvisionDomainTLS(ctx context.Context, in *ProvisionDomainTLSRequest, opts ...grpc.CallOption) (*Domain, error)
+	// -------- Globalization (Regions, Pricebooks, Tax Profiles) --------
+	CreateRegion(ctx context.Context, in *CreateRegionRequest, opts ...grpc.CallOption) (*OrgRegion, error)
+	ListRegions(ctx context.Context, in *ListRegionsRequest, opts ...grpc.CallOption) (*ListRegionsResponse, error)
+	CreatePricebook(ctx context.Context, in *CreatePricebookRequest, opts ...grpc.CallOption) (*Pricebook, error)
+	UpsertPricebookItems(ctx context.Context, in *UpsertPricebookItemsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ListPricebooks(ctx context.Context, in *ListPricebooksRequest, opts ...grpc.CallOption) (*ListPricebooksResponse, error)
+	CreateTaxProfile(ctx context.Context, in *CreateTaxProfileRequest, opts ...grpc.CallOption) (*TaxProfile, error)
+	ListTaxProfiles(ctx context.Context, in *ListTaxProfilesRequest, opts ...grpc.CallOption) (*ListTaxProfilesResponse, error)
 }
 
 type organizationServiceClient struct {
@@ -79,14 +125,211 @@ func (c *organizationServiceClient) UpdateOrganization(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *organizationServiceClient) GetOnboardingState(ctx context.Context, in *GetOnboardingStateRequest, opts ...grpc.CallOption) (*GetOnboardingStateResponse, error) {
+	out := new(GetOnboardingStateResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_GetOnboardingState_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) StartOnboarding(ctx context.Context, in *StartOnboardingRequest, opts ...grpc.CallOption) (*GetOnboardingStateResponse, error) {
+	out := new(GetOnboardingStateResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_StartOnboarding_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) CompleteOnboarding(ctx context.Context, in *CompleteOnboardingRequest, opts ...grpc.CallOption) (*GetOnboardingStateResponse, error) {
+	out := new(GetOnboardingStateResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_CompleteOnboarding_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) PutBusinessProfile(ctx context.Context, in *PutBusinessProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, OrganizationService_PutBusinessProfile_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) PutTaxConfig(ctx context.Context, in *PutTaxConfigRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, OrganizationService_PutTaxConfig_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) CreateLocation(ctx context.Context, in *CreateLocationRequest, opts ...grpc.CallOption) (*Location, error) {
+	out := new(Location)
+	err := c.cc.Invoke(ctx, OrganizationService_CreateLocation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) ListLocations(ctx context.Context, in *ListLocationsRequest, opts ...grpc.CallOption) (*ListLocationsResponse, error) {
+	out := new(ListLocationsResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_ListLocations_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) PutReceiptTemplate(ctx context.Context, in *PutReceiptTemplateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, OrganizationService_PutReceiptTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) ConnectPaymentProvider(ctx context.Context, in *ConnectPaymentProviderRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, OrganizationService_ConnectPaymentProvider_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) CreateDomain(ctx context.Context, in *CreateDomainRequest, opts ...grpc.CallOption) (*Domain, error) {
+	out := new(Domain)
+	err := c.cc.Invoke(ctx, OrganizationService_CreateDomain_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) VerifyDomainDNS(ctx context.Context, in *VerifyDomainDNSRequest, opts ...grpc.CallOption) (*Domain, error) {
+	out := new(Domain)
+	err := c.cc.Invoke(ctx, OrganizationService_VerifyDomainDNS_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) ProvisionDomainTLS(ctx context.Context, in *ProvisionDomainTLSRequest, opts ...grpc.CallOption) (*Domain, error) {
+	out := new(Domain)
+	err := c.cc.Invoke(ctx, OrganizationService_ProvisionDomainTLS_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) CreateRegion(ctx context.Context, in *CreateRegionRequest, opts ...grpc.CallOption) (*OrgRegion, error) {
+	out := new(OrgRegion)
+	err := c.cc.Invoke(ctx, OrganizationService_CreateRegion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) ListRegions(ctx context.Context, in *ListRegionsRequest, opts ...grpc.CallOption) (*ListRegionsResponse, error) {
+	out := new(ListRegionsResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_ListRegions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) CreatePricebook(ctx context.Context, in *CreatePricebookRequest, opts ...grpc.CallOption) (*Pricebook, error) {
+	out := new(Pricebook)
+	err := c.cc.Invoke(ctx, OrganizationService_CreatePricebook_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) UpsertPricebookItems(ctx context.Context, in *UpsertPricebookItemsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, OrganizationService_UpsertPricebookItems_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) ListPricebooks(ctx context.Context, in *ListPricebooksRequest, opts ...grpc.CallOption) (*ListPricebooksResponse, error) {
+	out := new(ListPricebooksResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_ListPricebooks_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) CreateTaxProfile(ctx context.Context, in *CreateTaxProfileRequest, opts ...grpc.CallOption) (*TaxProfile, error) {
+	out := new(TaxProfile)
+	err := c.cc.Invoke(ctx, OrganizationService_CreateTaxProfile_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) ListTaxProfiles(ctx context.Context, in *ListTaxProfilesRequest, opts ...grpc.CallOption) (*ListTaxProfilesResponse, error) {
+	out := new(ListTaxProfilesResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_ListTaxProfiles_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrganizationServiceServer is the server API for OrganizationService service.
 // All implementations must embed UnimplementedOrganizationServiceServer
 // for forward compatibility
 type OrganizationServiceServer interface {
+	// -------- Core Org CRUD --------
 	CreateOrganization(context.Context, *CreateOrganizationRequest) (*Organization, error)
 	GetOrganization(context.Context, *GetOrganizationRequest) (*Organization, error)
 	ListOrganization(context.Context, *ListOrganizationRequest) (*ListOrganizationResponse, error)
 	UpdateOrganization(context.Context, *UpdateOrganizationRequest) (*Organization, error)
+	// -------- Onboarding Wizard --------
+	GetOnboardingState(context.Context, *GetOnboardingStateRequest) (*GetOnboardingStateResponse, error)
+	StartOnboarding(context.Context, *StartOnboardingRequest) (*GetOnboardingStateResponse, error)
+	CompleteOnboarding(context.Context, *CompleteOnboardingRequest) (*GetOnboardingStateResponse, error)
+	// Step 1: Business Profile
+	PutBusinessProfile(context.Context, *PutBusinessProfileRequest) (*emptypb.Empty, error)
+	// Step 2: Tax Config
+	PutTaxConfig(context.Context, *PutTaxConfigRequest) (*emptypb.Empty, error)
+	// Step 3: Location & POS
+	CreateLocation(context.Context, *CreateLocationRequest) (*Location, error)
+	ListLocations(context.Context, *ListLocationsRequest) (*ListLocationsResponse, error)
+	PutReceiptTemplate(context.Context, *PutReceiptTemplateRequest) (*emptypb.Empty, error)
+	// Step 4: Payments & Domain (optional)
+	ConnectPaymentProvider(context.Context, *ConnectPaymentProviderRequest) (*emptypb.Empty, error)
+	CreateDomain(context.Context, *CreateDomainRequest) (*Domain, error)
+	VerifyDomainDNS(context.Context, *VerifyDomainDNSRequest) (*Domain, error)
+	ProvisionDomainTLS(context.Context, *ProvisionDomainTLSRequest) (*Domain, error)
+	// -------- Globalization (Regions, Pricebooks, Tax Profiles) --------
+	CreateRegion(context.Context, *CreateRegionRequest) (*OrgRegion, error)
+	ListRegions(context.Context, *ListRegionsRequest) (*ListRegionsResponse, error)
+	CreatePricebook(context.Context, *CreatePricebookRequest) (*Pricebook, error)
+	UpsertPricebookItems(context.Context, *UpsertPricebookItemsRequest) (*emptypb.Empty, error)
+	ListPricebooks(context.Context, *ListPricebooksRequest) (*ListPricebooksResponse, error)
+	CreateTaxProfile(context.Context, *CreateTaxProfileRequest) (*TaxProfile, error)
+	ListTaxProfiles(context.Context, *ListTaxProfilesRequest) (*ListTaxProfilesResponse, error)
 	mustEmbedUnimplementedOrganizationServiceServer()
 }
 
@@ -105,6 +348,63 @@ func (UnimplementedOrganizationServiceServer) ListOrganization(context.Context, 
 }
 func (UnimplementedOrganizationServiceServer) UpdateOrganization(context.Context, *UpdateOrganizationRequest) (*Organization, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOrganization not implemented")
+}
+func (UnimplementedOrganizationServiceServer) GetOnboardingState(context.Context, *GetOnboardingStateRequest) (*GetOnboardingStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOnboardingState not implemented")
+}
+func (UnimplementedOrganizationServiceServer) StartOnboarding(context.Context, *StartOnboardingRequest) (*GetOnboardingStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartOnboarding not implemented")
+}
+func (UnimplementedOrganizationServiceServer) CompleteOnboarding(context.Context, *CompleteOnboardingRequest) (*GetOnboardingStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompleteOnboarding not implemented")
+}
+func (UnimplementedOrganizationServiceServer) PutBusinessProfile(context.Context, *PutBusinessProfileRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutBusinessProfile not implemented")
+}
+func (UnimplementedOrganizationServiceServer) PutTaxConfig(context.Context, *PutTaxConfigRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutTaxConfig not implemented")
+}
+func (UnimplementedOrganizationServiceServer) CreateLocation(context.Context, *CreateLocationRequest) (*Location, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateLocation not implemented")
+}
+func (UnimplementedOrganizationServiceServer) ListLocations(context.Context, *ListLocationsRequest) (*ListLocationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListLocations not implemented")
+}
+func (UnimplementedOrganizationServiceServer) PutReceiptTemplate(context.Context, *PutReceiptTemplateRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutReceiptTemplate not implemented")
+}
+func (UnimplementedOrganizationServiceServer) ConnectPaymentProvider(context.Context, *ConnectPaymentProviderRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConnectPaymentProvider not implemented")
+}
+func (UnimplementedOrganizationServiceServer) CreateDomain(context.Context, *CreateDomainRequest) (*Domain, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDomain not implemented")
+}
+func (UnimplementedOrganizationServiceServer) VerifyDomainDNS(context.Context, *VerifyDomainDNSRequest) (*Domain, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyDomainDNS not implemented")
+}
+func (UnimplementedOrganizationServiceServer) ProvisionDomainTLS(context.Context, *ProvisionDomainTLSRequest) (*Domain, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProvisionDomainTLS not implemented")
+}
+func (UnimplementedOrganizationServiceServer) CreateRegion(context.Context, *CreateRegionRequest) (*OrgRegion, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRegion not implemented")
+}
+func (UnimplementedOrganizationServiceServer) ListRegions(context.Context, *ListRegionsRequest) (*ListRegionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRegions not implemented")
+}
+func (UnimplementedOrganizationServiceServer) CreatePricebook(context.Context, *CreatePricebookRequest) (*Pricebook, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePricebook not implemented")
+}
+func (UnimplementedOrganizationServiceServer) UpsertPricebookItems(context.Context, *UpsertPricebookItemsRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpsertPricebookItems not implemented")
+}
+func (UnimplementedOrganizationServiceServer) ListPricebooks(context.Context, *ListPricebooksRequest) (*ListPricebooksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPricebooks not implemented")
+}
+func (UnimplementedOrganizationServiceServer) CreateTaxProfile(context.Context, *CreateTaxProfileRequest) (*TaxProfile, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTaxProfile not implemented")
+}
+func (UnimplementedOrganizationServiceServer) ListTaxProfiles(context.Context, *ListTaxProfilesRequest) (*ListTaxProfilesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTaxProfiles not implemented")
 }
 func (UnimplementedOrganizationServiceServer) mustEmbedUnimplementedOrganizationServiceServer() {}
 
@@ -191,6 +491,348 @@ func _OrganizationService_UpdateOrganization_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrganizationService_GetOnboardingState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOnboardingStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).GetOnboardingState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_GetOnboardingState_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).GetOnboardingState(ctx, req.(*GetOnboardingStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_StartOnboarding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartOnboardingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).StartOnboarding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_StartOnboarding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).StartOnboarding(ctx, req.(*StartOnboardingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_CompleteOnboarding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompleteOnboardingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).CompleteOnboarding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_CompleteOnboarding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).CompleteOnboarding(ctx, req.(*CompleteOnboardingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_PutBusinessProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PutBusinessProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).PutBusinessProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_PutBusinessProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).PutBusinessProfile(ctx, req.(*PutBusinessProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_PutTaxConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PutTaxConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).PutTaxConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_PutTaxConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).PutTaxConfig(ctx, req.(*PutTaxConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_CreateLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateLocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).CreateLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_CreateLocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).CreateLocation(ctx, req.(*CreateLocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_ListLocations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLocationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).ListLocations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_ListLocations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).ListLocations(ctx, req.(*ListLocationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_PutReceiptTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PutReceiptTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).PutReceiptTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_PutReceiptTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).PutReceiptTemplate(ctx, req.(*PutReceiptTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_ConnectPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConnectPaymentProviderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).ConnectPaymentProvider(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_ConnectPaymentProvider_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).ConnectPaymentProvider(ctx, req.(*ConnectPaymentProviderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_CreateDomain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDomainRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).CreateDomain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_CreateDomain_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).CreateDomain(ctx, req.(*CreateDomainRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_VerifyDomainDNS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyDomainDNSRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).VerifyDomainDNS(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_VerifyDomainDNS_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).VerifyDomainDNS(ctx, req.(*VerifyDomainDNSRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_ProvisionDomainTLS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProvisionDomainTLSRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).ProvisionDomainTLS(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_ProvisionDomainTLS_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).ProvisionDomainTLS(ctx, req.(*ProvisionDomainTLSRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_CreateRegion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRegionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).CreateRegion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_CreateRegion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).CreateRegion(ctx, req.(*CreateRegionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_ListRegions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListRegionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).ListRegions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_ListRegions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).ListRegions(ctx, req.(*ListRegionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_CreatePricebook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePricebookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).CreatePricebook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_CreatePricebook_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).CreatePricebook(ctx, req.(*CreatePricebookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_UpsertPricebookItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpsertPricebookItemsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).UpsertPricebookItems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_UpsertPricebookItems_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).UpsertPricebookItems(ctx, req.(*UpsertPricebookItemsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_ListPricebooks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPricebooksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).ListPricebooks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_ListPricebooks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).ListPricebooks(ctx, req.(*ListPricebooksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_CreateTaxProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTaxProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).CreateTaxProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_CreateTaxProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).CreateTaxProfile(ctx, req.(*CreateTaxProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_ListTaxProfiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTaxProfilesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).ListTaxProfiles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_ListTaxProfiles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).ListTaxProfiles(ctx, req.(*ListTaxProfilesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrganizationService_ServiceDesc is the grpc.ServiceDesc for OrganizationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -213,6 +855,82 @@ var OrganizationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateOrganization",
 			Handler:    _OrganizationService_UpdateOrganization_Handler,
+		},
+		{
+			MethodName: "GetOnboardingState",
+			Handler:    _OrganizationService_GetOnboardingState_Handler,
+		},
+		{
+			MethodName: "StartOnboarding",
+			Handler:    _OrganizationService_StartOnboarding_Handler,
+		},
+		{
+			MethodName: "CompleteOnboarding",
+			Handler:    _OrganizationService_CompleteOnboarding_Handler,
+		},
+		{
+			MethodName: "PutBusinessProfile",
+			Handler:    _OrganizationService_PutBusinessProfile_Handler,
+		},
+		{
+			MethodName: "PutTaxConfig",
+			Handler:    _OrganizationService_PutTaxConfig_Handler,
+		},
+		{
+			MethodName: "CreateLocation",
+			Handler:    _OrganizationService_CreateLocation_Handler,
+		},
+		{
+			MethodName: "ListLocations",
+			Handler:    _OrganizationService_ListLocations_Handler,
+		},
+		{
+			MethodName: "PutReceiptTemplate",
+			Handler:    _OrganizationService_PutReceiptTemplate_Handler,
+		},
+		{
+			MethodName: "ConnectPaymentProvider",
+			Handler:    _OrganizationService_ConnectPaymentProvider_Handler,
+		},
+		{
+			MethodName: "CreateDomain",
+			Handler:    _OrganizationService_CreateDomain_Handler,
+		},
+		{
+			MethodName: "VerifyDomainDNS",
+			Handler:    _OrganizationService_VerifyDomainDNS_Handler,
+		},
+		{
+			MethodName: "ProvisionDomainTLS",
+			Handler:    _OrganizationService_ProvisionDomainTLS_Handler,
+		},
+		{
+			MethodName: "CreateRegion",
+			Handler:    _OrganizationService_CreateRegion_Handler,
+		},
+		{
+			MethodName: "ListRegions",
+			Handler:    _OrganizationService_ListRegions_Handler,
+		},
+		{
+			MethodName: "CreatePricebook",
+			Handler:    _OrganizationService_CreatePricebook_Handler,
+		},
+		{
+			MethodName: "UpsertPricebookItems",
+			Handler:    _OrganizationService_UpsertPricebookItems_Handler,
+		},
+		{
+			MethodName: "ListPricebooks",
+			Handler:    _OrganizationService_ListPricebooks_Handler,
+		},
+		{
+			MethodName: "CreateTaxProfile",
+			Handler:    _OrganizationService_CreateTaxProfile_Handler,
+		},
+		{
+			MethodName: "ListTaxProfiles",
+			Handler:    _OrganizationService_ListTaxProfiles_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
