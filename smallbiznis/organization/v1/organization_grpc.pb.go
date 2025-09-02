@@ -30,6 +30,9 @@ const (
 	OrganizationService_ListLocation_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/ListLocation"
 	OrganizationService_CreateLocation_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/CreateLocation"
 	OrganizationService_GetLocation_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/GetLocation"
+	OrganizationService_CreateInvitation_FullMethodName   = "/smallbiznis.organization.v1.OrganizationService/CreateInvitation"
+	OrganizationService_GetInvitation_FullMethodName      = "/smallbiznis.organization.v1.OrganizationService/GetInvitation"
+	OrganizationService_VerifyInvitation_FullMethodName   = "/smallbiznis.organization.v1.OrganizationService/VerifyInvitation"
 )
 
 // OrganizationServiceClient is the client API for OrganizationService service.
@@ -47,6 +50,9 @@ type OrganizationServiceClient interface {
 	ListLocation(ctx context.Context, in *ListLocationRequest, opts ...grpc.CallOption) (*ListLocationResponse, error)
 	CreateLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error)
 	GetLocation(ctx context.Context, in *GetLocationRequest, opts ...grpc.CallOption) (*Location, error)
+	CreateInvitation(ctx context.Context, in *InvitationRequest, opts ...grpc.CallOption) (*InvitationResponse, error)
+	GetInvitation(ctx context.Context, in *GetInvitationRequest, opts ...grpc.CallOption) (*Invitation, error)
+	VerifyInvitation(ctx context.Context, in *VerifyInvitationRequest, opts ...grpc.CallOption) (*VerifyInvitationResponse, error)
 }
 
 type organizationServiceClient struct {
@@ -156,6 +162,33 @@ func (c *organizationServiceClient) GetLocation(ctx context.Context, in *GetLoca
 	return out, nil
 }
 
+func (c *organizationServiceClient) CreateInvitation(ctx context.Context, in *InvitationRequest, opts ...grpc.CallOption) (*InvitationResponse, error) {
+	out := new(InvitationResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_CreateInvitation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) GetInvitation(ctx context.Context, in *GetInvitationRequest, opts ...grpc.CallOption) (*Invitation, error) {
+	out := new(Invitation)
+	err := c.cc.Invoke(ctx, OrganizationService_GetInvitation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) VerifyInvitation(ctx context.Context, in *VerifyInvitationRequest, opts ...grpc.CallOption) (*VerifyInvitationResponse, error) {
+	out := new(VerifyInvitationResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_VerifyInvitation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrganizationServiceServer is the server API for OrganizationService service.
 // All implementations must embed UnimplementedOrganizationServiceServer
 // for forward compatibility
@@ -171,6 +204,9 @@ type OrganizationServiceServer interface {
 	ListLocation(context.Context, *ListLocationRequest) (*ListLocationResponse, error)
 	CreateLocation(context.Context, *Location) (*Location, error)
 	GetLocation(context.Context, *GetLocationRequest) (*Location, error)
+	CreateInvitation(context.Context, *InvitationRequest) (*InvitationResponse, error)
+	GetInvitation(context.Context, *GetInvitationRequest) (*Invitation, error)
+	VerifyInvitation(context.Context, *VerifyInvitationRequest) (*VerifyInvitationResponse, error)
 	mustEmbedUnimplementedOrganizationServiceServer()
 }
 
@@ -210,6 +246,15 @@ func (UnimplementedOrganizationServiceServer) CreateLocation(context.Context, *L
 }
 func (UnimplementedOrganizationServiceServer) GetLocation(context.Context, *GetLocationRequest) (*Location, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLocation not implemented")
+}
+func (UnimplementedOrganizationServiceServer) CreateInvitation(context.Context, *InvitationRequest) (*InvitationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateInvitation not implemented")
+}
+func (UnimplementedOrganizationServiceServer) GetInvitation(context.Context, *GetInvitationRequest) (*Invitation, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetInvitation not implemented")
+}
+func (UnimplementedOrganizationServiceServer) VerifyInvitation(context.Context, *VerifyInvitationRequest) (*VerifyInvitationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyInvitation not implemented")
 }
 func (UnimplementedOrganizationServiceServer) mustEmbedUnimplementedOrganizationServiceServer() {}
 
@@ -422,6 +467,60 @@ func _OrganizationService_GetLocation_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrganizationService_CreateInvitation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InvitationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).CreateInvitation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_CreateInvitation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).CreateInvitation(ctx, req.(*InvitationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_GetInvitation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetInvitationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).GetInvitation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_GetInvitation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).GetInvitation(ctx, req.(*GetInvitationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_VerifyInvitation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyInvitationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).VerifyInvitation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_VerifyInvitation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).VerifyInvitation(ctx, req.(*VerifyInvitationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrganizationService_ServiceDesc is the grpc.ServiceDesc for OrganizationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -472,6 +571,18 @@ var OrganizationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLocation",
 			Handler:    _OrganizationService_GetLocation_Handler,
+		},
+		{
+			MethodName: "CreateInvitation",
+			Handler:    _OrganizationService_CreateInvitation_Handler,
+		},
+		{
+			MethodName: "GetInvitation",
+			Handler:    _OrganizationService_GetInvitation_Handler,
+		},
+		{
+			MethodName: "VerifyInvitation",
+			Handler:    _OrganizationService_VerifyInvitation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
