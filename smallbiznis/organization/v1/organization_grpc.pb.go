@@ -27,6 +27,9 @@ const (
 	OrganizationService_GetOrganization_FullMethodName    = "/smallbiznis.organization.v1.OrganizationService/GetOrganization"
 	OrganizationService_ListOrganization_FullMethodName   = "/smallbiznis.organization.v1.OrganizationService/ListOrganization"
 	OrganizationService_UpdateOrganization_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/UpdateOrganization"
+	OrganizationService_ListLocation_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/ListLocation"
+	OrganizationService_CreateLocation_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/CreateLocation"
+	OrganizationService_GetLocation_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/GetLocation"
 )
 
 // OrganizationServiceClient is the client API for OrganizationService service.
@@ -41,6 +44,9 @@ type OrganizationServiceClient interface {
 	GetOrganization(ctx context.Context, in *GetOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
 	ListOrganization(ctx context.Context, in *ListOrganizationRequest, opts ...grpc.CallOption) (*ListOrganizationResponse, error)
 	UpdateOrganization(ctx context.Context, in *UpdateOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
+	ListLocation(ctx context.Context, in *ListLocationRequest, opts ...grpc.CallOption) (*ListLocationResponse, error)
+	CreateLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error)
+	GetLocation(ctx context.Context, in *GetLocationRequest, opts ...grpc.CallOption) (*Location, error)
 }
 
 type organizationServiceClient struct {
@@ -123,6 +129,33 @@ func (c *organizationServiceClient) UpdateOrganization(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *organizationServiceClient) ListLocation(ctx context.Context, in *ListLocationRequest, opts ...grpc.CallOption) (*ListLocationResponse, error) {
+	out := new(ListLocationResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_ListLocation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) CreateLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error) {
+	out := new(Location)
+	err := c.cc.Invoke(ctx, OrganizationService_CreateLocation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) GetLocation(ctx context.Context, in *GetLocationRequest, opts ...grpc.CallOption) (*Location, error) {
+	out := new(Location)
+	err := c.cc.Invoke(ctx, OrganizationService_GetLocation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrganizationServiceServer is the server API for OrganizationService service.
 // All implementations must embed UnimplementedOrganizationServiceServer
 // for forward compatibility
@@ -135,6 +168,9 @@ type OrganizationServiceServer interface {
 	GetOrganization(context.Context, *GetOrganizationRequest) (*Organization, error)
 	ListOrganization(context.Context, *ListOrganizationRequest) (*ListOrganizationResponse, error)
 	UpdateOrganization(context.Context, *UpdateOrganizationRequest) (*Organization, error)
+	ListLocation(context.Context, *ListLocationRequest) (*ListLocationResponse, error)
+	CreateLocation(context.Context, *Location) (*Location, error)
+	GetLocation(context.Context, *GetLocationRequest) (*Location, error)
 	mustEmbedUnimplementedOrganizationServiceServer()
 }
 
@@ -165,6 +201,15 @@ func (UnimplementedOrganizationServiceServer) ListOrganization(context.Context, 
 }
 func (UnimplementedOrganizationServiceServer) UpdateOrganization(context.Context, *UpdateOrganizationRequest) (*Organization, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOrganization not implemented")
+}
+func (UnimplementedOrganizationServiceServer) ListLocation(context.Context, *ListLocationRequest) (*ListLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListLocation not implemented")
+}
+func (UnimplementedOrganizationServiceServer) CreateLocation(context.Context, *Location) (*Location, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateLocation not implemented")
+}
+func (UnimplementedOrganizationServiceServer) GetLocation(context.Context, *GetLocationRequest) (*Location, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLocation not implemented")
 }
 func (UnimplementedOrganizationServiceServer) mustEmbedUnimplementedOrganizationServiceServer() {}
 
@@ -323,6 +368,60 @@ func _OrganizationService_UpdateOrganization_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrganizationService_ListLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).ListLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_ListLocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).ListLocation(ctx, req.(*ListLocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_CreateLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Location)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).CreateLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_CreateLocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).CreateLocation(ctx, req.(*Location))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_GetLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).GetLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_GetLocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).GetLocation(ctx, req.(*GetLocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrganizationService_ServiceDesc is the grpc.ServiceDesc for OrganizationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -361,6 +460,18 @@ var OrganizationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateOrganization",
 			Handler:    _OrganizationService_UpdateOrganization_Handler,
+		},
+		{
+			MethodName: "ListLocation",
+			Handler:    _OrganizationService_ListLocation_Handler,
+		},
+		{
+			MethodName: "CreateLocation",
+			Handler:    _OrganizationService_CreateLocation_Handler,
+		},
+		{
+			MethodName: "GetLocation",
+			Handler:    _OrganizationService_GetLocation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
