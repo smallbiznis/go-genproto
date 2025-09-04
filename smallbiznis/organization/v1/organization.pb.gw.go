@@ -468,7 +468,7 @@ func local_request_OrganizationService_GetLocation_0(ctx context.Context, marsha
 }
 
 func request_OrganizationService_CreateInvitation_0(ctx context.Context, marshaler runtime.Marshaler, client OrganizationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq InvitationRequest
+	var protoReq CreateInvitationRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -485,7 +485,7 @@ func request_OrganizationService_CreateInvitation_0(ctx context.Context, marshal
 }
 
 func local_request_OrganizationService_CreateInvitation_0(ctx context.Context, marshaler runtime.Marshaler, server OrganizationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq InvitationRequest
+	var protoReq CreateInvitationRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
