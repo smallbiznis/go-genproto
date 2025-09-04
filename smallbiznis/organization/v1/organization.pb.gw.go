@@ -382,7 +382,7 @@ func local_request_OrganizationService_ListLocation_0(ctx context.Context, marsh
 }
 
 func request_OrganizationService_CreateLocation_0(ctx context.Context, marshaler runtime.Marshaler, client OrganizationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Location
+	var protoReq CreateLocationRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -399,7 +399,7 @@ func request_OrganizationService_CreateLocation_0(ctx context.Context, marshaler
 }
 
 func local_request_OrganizationService_CreateLocation_0(ctx context.Context, marshaler runtime.Marshaler, server OrganizationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Location
+	var protoReq CreateLocationRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)

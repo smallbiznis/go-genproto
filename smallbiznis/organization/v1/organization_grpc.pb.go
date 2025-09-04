@@ -48,7 +48,7 @@ type OrganizationServiceClient interface {
 	ListOrganization(ctx context.Context, in *ListOrganizationRequest, opts ...grpc.CallOption) (*ListOrganizationResponse, error)
 	UpdateOrganization(ctx context.Context, in *UpdateOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
 	ListLocation(ctx context.Context, in *ListLocationRequest, opts ...grpc.CallOption) (*ListLocationResponse, error)
-	CreateLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error)
+	CreateLocation(ctx context.Context, in *CreateLocationRequest, opts ...grpc.CallOption) (*Location, error)
 	GetLocation(ctx context.Context, in *GetLocationRequest, opts ...grpc.CallOption) (*Location, error)
 	CreateInvitation(ctx context.Context, in *InvitationRequest, opts ...grpc.CallOption) (*InvitationResponse, error)
 	GetInvitation(ctx context.Context, in *GetInvitationRequest, opts ...grpc.CallOption) (*Invitation, error)
@@ -144,7 +144,7 @@ func (c *organizationServiceClient) ListLocation(ctx context.Context, in *ListLo
 	return out, nil
 }
 
-func (c *organizationServiceClient) CreateLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Location, error) {
+func (c *organizationServiceClient) CreateLocation(ctx context.Context, in *CreateLocationRequest, opts ...grpc.CallOption) (*Location, error) {
 	out := new(Location)
 	err := c.cc.Invoke(ctx, OrganizationService_CreateLocation_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -202,7 +202,7 @@ type OrganizationServiceServer interface {
 	ListOrganization(context.Context, *ListOrganizationRequest) (*ListOrganizationResponse, error)
 	UpdateOrganization(context.Context, *UpdateOrganizationRequest) (*Organization, error)
 	ListLocation(context.Context, *ListLocationRequest) (*ListLocationResponse, error)
-	CreateLocation(context.Context, *Location) (*Location, error)
+	CreateLocation(context.Context, *CreateLocationRequest) (*Location, error)
 	GetLocation(context.Context, *GetLocationRequest) (*Location, error)
 	CreateInvitation(context.Context, *InvitationRequest) (*InvitationResponse, error)
 	GetInvitation(context.Context, *GetInvitationRequest) (*Invitation, error)
@@ -241,7 +241,7 @@ func (UnimplementedOrganizationServiceServer) UpdateOrganization(context.Context
 func (UnimplementedOrganizationServiceServer) ListLocation(context.Context, *ListLocationRequest) (*ListLocationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListLocation not implemented")
 }
-func (UnimplementedOrganizationServiceServer) CreateLocation(context.Context, *Location) (*Location, error) {
+func (UnimplementedOrganizationServiceServer) CreateLocation(context.Context, *CreateLocationRequest) (*Location, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateLocation not implemented")
 }
 func (UnimplementedOrganizationServiceServer) GetLocation(context.Context, *GetLocationRequest) (*Location, error) {
@@ -432,7 +432,7 @@ func _OrganizationService_ListLocation_Handler(srv interface{}, ctx context.Cont
 }
 
 func _OrganizationService_CreateLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Location)
+	in := new(CreateLocationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -444,7 +444,7 @@ func _OrganizationService_CreateLocation_Handler(srv interface{}, ctx context.Co
 		FullMethod: OrganizationService_CreateLocation_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrganizationServiceServer).CreateLocation(ctx, req.(*Location))
+		return srv.(OrganizationServiceServer).CreateLocation(ctx, req.(*CreateLocationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
