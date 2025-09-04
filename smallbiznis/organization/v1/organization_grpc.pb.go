@@ -43,14 +43,17 @@ type OrganizationServiceClient interface {
 	ListCountry(ctx context.Context, in *ListContryRequest, opts ...grpc.CallOption) (*ListCountryResponse, error)
 	ListTimezone(ctx context.Context, in *ListTimezoneRequest, opts ...grpc.CallOption) (*ListTimezoneResponse, error)
 	ListCurrency(ctx context.Context, in *ListCurrencyRequest, opts ...grpc.CallOption) (*ListCurrencyResponse, error)
+	// Organization
 	LookupOrganization(ctx context.Context, in *LookupOrganizationRequest, opts ...grpc.CallOption) (*LookupOrganizationResponse, error)
 	CreateOrganization(ctx context.Context, in *CreateOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
 	GetOrganization(ctx context.Context, in *GetOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
 	ListOrganization(ctx context.Context, in *ListOrganizationRequest, opts ...grpc.CallOption) (*ListOrganizationResponse, error)
 	UpdateOrganization(ctx context.Context, in *UpdateOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
+	// Location
 	ListLocation(ctx context.Context, in *ListLocationRequest, opts ...grpc.CallOption) (*ListLocationResponse, error)
 	CreateLocation(ctx context.Context, in *CreateLocationRequest, opts ...grpc.CallOption) (*Location, error)
 	GetLocation(ctx context.Context, in *GetLocationRequest, opts ...grpc.CallOption) (*Location, error)
+	// Invitation
 	CreateInvitation(ctx context.Context, in *CreateInvitationRequest, opts ...grpc.CallOption) (*CreateInvitationResponse, error)
 	GetInvitation(ctx context.Context, in *GetInvitationRequest, opts ...grpc.CallOption) (*Invitation, error)
 	RevokeInvitation(ctx context.Context, in *RevokeInvitationRequest, opts ...grpc.CallOption) (*RevokeInvitationResponse, error)
@@ -207,14 +210,17 @@ type OrganizationServiceServer interface {
 	ListCountry(context.Context, *ListContryRequest) (*ListCountryResponse, error)
 	ListTimezone(context.Context, *ListTimezoneRequest) (*ListTimezoneResponse, error)
 	ListCurrency(context.Context, *ListCurrencyRequest) (*ListCurrencyResponse, error)
+	// Organization
 	LookupOrganization(context.Context, *LookupOrganizationRequest) (*LookupOrganizationResponse, error)
 	CreateOrganization(context.Context, *CreateOrganizationRequest) (*Organization, error)
 	GetOrganization(context.Context, *GetOrganizationRequest) (*Organization, error)
 	ListOrganization(context.Context, *ListOrganizationRequest) (*ListOrganizationResponse, error)
 	UpdateOrganization(context.Context, *UpdateOrganizationRequest) (*Organization, error)
+	// Location
 	ListLocation(context.Context, *ListLocationRequest) (*ListLocationResponse, error)
 	CreateLocation(context.Context, *CreateLocationRequest) (*Location, error)
 	GetLocation(context.Context, *GetLocationRequest) (*Location, error)
+	// Invitation
 	CreateInvitation(context.Context, *CreateInvitationRequest) (*CreateInvitationResponse, error)
 	GetInvitation(context.Context, *GetInvitationRequest) (*Invitation, error)
 	RevokeInvitation(context.Context, *RevokeInvitationRequest) (*RevokeInvitationResponse, error)

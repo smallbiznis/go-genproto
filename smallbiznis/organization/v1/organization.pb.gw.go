@@ -616,14 +616,14 @@ func request_OrganizationService_VerifyInvitation_0(ctx context.Context, marshal
 		_   = err
 	)
 
-	val, ok = pathParams["code"]
+	val, ok = pathParams["token"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "code")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "token")
 	}
 
-	protoReq.Code, err = runtime.String(val)
+	protoReq.Token, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "code", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
 
 	msg, err := client.VerifyInvitation(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -642,14 +642,14 @@ func local_request_OrganizationService_VerifyInvitation_0(ctx context.Context, m
 		_   = err
 	)
 
-	val, ok = pathParams["code"]
+	val, ok = pathParams["token"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "code")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "token")
 	}
 
-	protoReq.Code, err = runtime.String(val)
+	protoReq.Token, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "code", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
 
 	msg, err := server.VerifyInvitation(ctx, &protoReq)
@@ -988,7 +988,7 @@ func RegisterOrganizationServiceHandlerServer(ctx context.Context, mux *runtime.
 
 	})
 
-	mux.Handle("PUT", pattern_OrganizationService_RevokeInvitation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OrganizationService_RevokeInvitation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -1013,7 +1013,7 @@ func RegisterOrganizationServiceHandlerServer(ctx context.Context, mux *runtime.
 
 	})
 
-	mux.Handle("PUT", pattern_OrganizationService_VerifyInvitation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OrganizationService_VerifyInvitation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -1021,7 +1021,7 @@ func RegisterOrganizationServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.organization.v1.OrganizationService/VerifyInvitation", runtime.WithHTTPPathPattern("/v1/invitations/{code}/verify"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.organization.v1.OrganizationService/VerifyInvitation", runtime.WithHTTPPathPattern("/v1/invitations/{token}/verify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1365,7 +1365,7 @@ func RegisterOrganizationServiceHandlerClient(ctx context.Context, mux *runtime.
 
 	})
 
-	mux.Handle("PUT", pattern_OrganizationService_RevokeInvitation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OrganizationService_RevokeInvitation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1387,13 +1387,13 @@ func RegisterOrganizationServiceHandlerClient(ctx context.Context, mux *runtime.
 
 	})
 
-	mux.Handle("PUT", pattern_OrganizationService_VerifyInvitation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OrganizationService_VerifyInvitation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.organization.v1.OrganizationService/VerifyInvitation", runtime.WithHTTPPathPattern("/v1/invitations/{code}/verify"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.organization.v1.OrganizationService/VerifyInvitation", runtime.WithHTTPPathPattern("/v1/invitations/{token}/verify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1441,7 +1441,7 @@ var (
 
 	pattern_OrganizationService_RevokeInvitation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "invitations", "invitation_id", "revoke"}, ""))
 
-	pattern_OrganizationService_VerifyInvitation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "invitations", "code", "verify"}, ""))
+	pattern_OrganizationService_VerifyInvitation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "invitations", "token", "verify"}, ""))
 )
 
 var (
