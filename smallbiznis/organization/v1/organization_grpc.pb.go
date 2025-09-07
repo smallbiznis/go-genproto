@@ -20,7 +20,9 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	OrganizationService_ListCountry_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/ListCountry"
+	OrganizationService_GetCountry_FullMethodName         = "/smallbiznis.organization.v1.OrganizationService/GetCountry"
 	OrganizationService_ListTimezone_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/ListTimezone"
+	OrganizationService_GetTimezone_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/GetTimezone"
 	OrganizationService_ListCurrency_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/ListCurrency"
 	OrganizationService_LookupOrganization_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/LookupOrganization"
 	OrganizationService_CreateOrganization_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/CreateOrganization"
@@ -41,7 +43,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrganizationServiceClient interface {
 	ListCountry(ctx context.Context, in *ListContryRequest, opts ...grpc.CallOption) (*ListCountryResponse, error)
+	GetCountry(ctx context.Context, in *GetCountryRequest, opts ...grpc.CallOption) (*Countries, error)
 	ListTimezone(ctx context.Context, in *ListTimezoneRequest, opts ...grpc.CallOption) (*ListTimezoneResponse, error)
+	GetTimezone(ctx context.Context, in *GetTimezoneRequest, opts ...grpc.CallOption) (*Timezones, error)
 	ListCurrency(ctx context.Context, in *ListCurrencyRequest, opts ...grpc.CallOption) (*ListCurrencyResponse, error)
 	// Organization
 	LookupOrganization(ctx context.Context, in *LookupOrganizationRequest, opts ...grpc.CallOption) (*LookupOrganizationResponse, error)
@@ -77,9 +81,27 @@ func (c *organizationServiceClient) ListCountry(ctx context.Context, in *ListCon
 	return out, nil
 }
 
+func (c *organizationServiceClient) GetCountry(ctx context.Context, in *GetCountryRequest, opts ...grpc.CallOption) (*Countries, error) {
+	out := new(Countries)
+	err := c.cc.Invoke(ctx, OrganizationService_GetCountry_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *organizationServiceClient) ListTimezone(ctx context.Context, in *ListTimezoneRequest, opts ...grpc.CallOption) (*ListTimezoneResponse, error) {
 	out := new(ListTimezoneResponse)
 	err := c.cc.Invoke(ctx, OrganizationService_ListTimezone_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) GetTimezone(ctx context.Context, in *GetTimezoneRequest, opts ...grpc.CallOption) (*Timezones, error) {
+	out := new(Timezones)
+	err := c.cc.Invoke(ctx, OrganizationService_GetTimezone_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +230,9 @@ func (c *organizationServiceClient) VerifyInvitation(ctx context.Context, in *Ve
 // for forward compatibility
 type OrganizationServiceServer interface {
 	ListCountry(context.Context, *ListContryRequest) (*ListCountryResponse, error)
+	GetCountry(context.Context, *GetCountryRequest) (*Countries, error)
 	ListTimezone(context.Context, *ListTimezoneRequest) (*ListTimezoneResponse, error)
+	GetTimezone(context.Context, *GetTimezoneRequest) (*Timezones, error)
 	ListCurrency(context.Context, *ListCurrencyRequest) (*ListCurrencyResponse, error)
 	// Organization
 	LookupOrganization(context.Context, *LookupOrganizationRequest) (*LookupOrganizationResponse, error)
@@ -235,8 +259,14 @@ type UnimplementedOrganizationServiceServer struct {
 func (UnimplementedOrganizationServiceServer) ListCountry(context.Context, *ListContryRequest) (*ListCountryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCountry not implemented")
 }
+func (UnimplementedOrganizationServiceServer) GetCountry(context.Context, *GetCountryRequest) (*Countries, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCountry not implemented")
+}
 func (UnimplementedOrganizationServiceServer) ListTimezone(context.Context, *ListTimezoneRequest) (*ListTimezoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTimezone not implemented")
+}
+func (UnimplementedOrganizationServiceServer) GetTimezone(context.Context, *GetTimezoneRequest) (*Timezones, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTimezone not implemented")
 }
 func (UnimplementedOrganizationServiceServer) ListCurrency(context.Context, *ListCurrencyRequest) (*ListCurrencyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCurrency not implemented")
@@ -308,6 +338,24 @@ func _OrganizationService_ListCountry_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrganizationService_GetCountry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCountryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).GetCountry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_GetCountry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).GetCountry(ctx, req.(*GetCountryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrganizationService_ListTimezone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListTimezoneRequest)
 	if err := dec(in); err != nil {
@@ -322,6 +370,24 @@ func _OrganizationService_ListTimezone_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationServiceServer).ListTimezone(ctx, req.(*ListTimezoneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_GetTimezone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTimezoneRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).GetTimezone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_GetTimezone_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).GetTimezone(ctx, req.(*GetTimezoneRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -572,8 +638,16 @@ var OrganizationService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OrganizationService_ListCountry_Handler,
 		},
 		{
+			MethodName: "GetCountry",
+			Handler:    _OrganizationService_GetCountry_Handler,
+		},
+		{
 			MethodName: "ListTimezone",
 			Handler:    _OrganizationService_ListTimezone_Handler,
+		},
+		{
+			MethodName: "GetTimezone",
+			Handler:    _OrganizationService_GetTimezone_Handler,
 		},
 		{
 			MethodName: "ListCurrency",
