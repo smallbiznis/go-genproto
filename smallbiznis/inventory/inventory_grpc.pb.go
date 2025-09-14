@@ -30,7 +30,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type InventoryServiceClient interface {
-	CreateVariantInventory(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error)
+	CreateVariantInventory(ctx context.Context, in *CreateInventoryItemRequest, opts ...grpc.CallOption) (*InventoryItem, error)
 	GetVariantInventory(ctx context.Context, in *GetVariantInventoryRequest, opts ...grpc.CallOption) (*GetVariantInventoryResponse, error)
 	ListLocationInventory(ctx context.Context, in *ListLocationInventoryRequest, opts ...grpc.CallOption) (*ListLocationInventoryResponse, error)
 	UpdateInventory(ctx context.Context, in *UpdateInventoryRequest, opts ...grpc.CallOption) (*UpdateInventoryResponse, error)
@@ -45,7 +45,7 @@ func NewInventoryServiceClient(cc grpc.ClientConnInterface) InventoryServiceClie
 	return &inventoryServiceClient{cc}
 }
 
-func (c *inventoryServiceClient) CreateVariantInventory(ctx context.Context, in *InventoryItem, opts ...grpc.CallOption) (*InventoryItem, error) {
+func (c *inventoryServiceClient) CreateVariantInventory(ctx context.Context, in *CreateInventoryItemRequest, opts ...grpc.CallOption) (*InventoryItem, error) {
 	out := new(InventoryItem)
 	err := c.cc.Invoke(ctx, InventoryService_CreateVariantInventory_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -94,7 +94,7 @@ func (c *inventoryServiceClient) AdjustInventory(ctx context.Context, in *Adjust
 // All implementations must embed UnimplementedInventoryServiceServer
 // for forward compatibility
 type InventoryServiceServer interface {
-	CreateVariantInventory(context.Context, *InventoryItem) (*InventoryItem, error)
+	CreateVariantInventory(context.Context, *CreateInventoryItemRequest) (*InventoryItem, error)
 	GetVariantInventory(context.Context, *GetVariantInventoryRequest) (*GetVariantInventoryResponse, error)
 	ListLocationInventory(context.Context, *ListLocationInventoryRequest) (*ListLocationInventoryResponse, error)
 	UpdateInventory(context.Context, *UpdateInventoryRequest) (*UpdateInventoryResponse, error)
@@ -106,7 +106,7 @@ type InventoryServiceServer interface {
 type UnimplementedInventoryServiceServer struct {
 }
 
-func (UnimplementedInventoryServiceServer) CreateVariantInventory(context.Context, *InventoryItem) (*InventoryItem, error) {
+func (UnimplementedInventoryServiceServer) CreateVariantInventory(context.Context, *CreateInventoryItemRequest) (*InventoryItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateVariantInventory not implemented")
 }
 func (UnimplementedInventoryServiceServer) GetVariantInventory(context.Context, *GetVariantInventoryRequest) (*GetVariantInventoryResponse, error) {
@@ -135,7 +135,7 @@ func RegisterInventoryServiceServer(s grpc.ServiceRegistrar, srv InventoryServic
 }
 
 func _InventoryService_CreateVariantInventory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InventoryItem)
+	in := new(CreateInventoryItemRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func _InventoryService_CreateVariantInventory_Handler(srv interface{}, ctx conte
 		FullMethod: InventoryService_CreateVariantInventory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).CreateVariantInventory(ctx, req.(*InventoryItem))
+		return srv.(InventoryServiceServer).CreateVariantInventory(ctx, req.(*CreateInventoryItemRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
