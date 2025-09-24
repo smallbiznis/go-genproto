@@ -361,16 +361,16 @@ type Product struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ProductId string                 `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
-	Type      ProductType            `protobuf:"varint,3,opt,name=type,proto3,enum=smallbiznis.product.v1.ProductType" json:"type,omitempty"`
-	Slug      string                 `protobuf:"bytes,4,opt,name=slug,proto3" json:"slug,omitempty"`
-	Title     string                 `protobuf:"bytes,5,opt,name=title,proto3" json:"title,omitempty"`
-	BodyHtml  string                 `protobuf:"bytes,6,opt,name=body_html,json=bodyHtml,proto3" json:"body_html,omitempty"`
-	Status    ProductStatus          `protobuf:"varint,7,opt,name=status,proto3,enum=smallbiznis.product.v1.ProductStatus" json:"status,omitempty"`
-	Options   []*Option              `protobuf:"bytes,8,rep,name=options,proto3" json:"options,omitempty"`
-	Variants  []*Variant             `protobuf:"bytes,9,rep,name=variants,proto3" json:"variants,omitempty"`
-	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	ProductId string                   `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	Type      ProductType              `protobuf:"varint,3,opt,name=type,proto3,enum=smallbiznis.product.v1.ProductType" json:"type,omitempty"`
+	Slug      string                   `protobuf:"bytes,4,opt,name=slug,proto3" json:"slug,omitempty"`
+	Title     string                   `protobuf:"bytes,5,opt,name=title,proto3" json:"title,omitempty"`
+	BodyHtml  string                   `protobuf:"bytes,6,opt,name=body_html,json=bodyHtml,proto3" json:"body_html,omitempty"`
+	Status    ProductStatus            `protobuf:"varint,7,opt,name=status,proto3,enum=smallbiznis.product.v1.ProductStatus" json:"status,omitempty"`
+	Options   []*Product_ProductOption `protobuf:"bytes,8,rep,name=options,proto3" json:"options,omitempty"`
+	Variants  []*Variant               `protobuf:"bytes,9,rep,name=variants,proto3" json:"variants,omitempty"`
+	CreatedAt *timestamppb.Timestamp   `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt *timestamppb.Timestamp   `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 }
 
 func (x *Product) Reset() {
@@ -447,7 +447,7 @@ func (x *Product) GetStatus() ProductStatus {
 	return ProductStatus_STATUS_UNSPECIFIED
 }
 
-func (x *Product) GetOptions() []*Option {
+func (x *Product) GetOptions() []*Product_ProductOption {
 	if x != nil {
 		return x.Options
 	}
@@ -480,19 +480,16 @@ type Variant struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	VariantId      string                 `protobuf:"bytes,1,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
-	ProductId      string                 `protobuf:"bytes,2,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
-	Sku            string                 `protobuf:"bytes,3,opt,name=sku,proto3" json:"sku,omitempty"`
-	Title          string                 `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
-	Taxable        bool                   `protobuf:"varint,5,opt,name=taxable,proto3" json:"taxable,omitempty"`
-	Price          float64                `protobuf:"fixed64,6,opt,name=price,proto3" json:"price,omitempty"`
-	Cost           float64                `protobuf:"fixed64,7,opt,name=cost,proto3" json:"cost,omitempty"`
-	CompareAtPrice float64                `protobuf:"fixed64,8,opt,name=compare_at_price,json=compareAtPrice,proto3" json:"compare_at_price,omitempty"`
-	Weight         float64                `protobuf:"fixed64,9,opt,name=weight,proto3" json:"weight,omitempty"`
-	WeightUnit     WeightUnit             `protobuf:"varint,10,opt,name=weight_unit,json=weightUnit,proto3,enum=smallbiznis.product.v1.WeightUnit" json:"weight_unit,omitempty"`
-	Attributes     []*Attribute           `protobuf:"bytes,11,rep,name=attributes,proto3" json:"attributes,omitempty"`
-	CreatedAt      *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt      *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	VariantId  string                 `protobuf:"bytes,1,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
+	ProductId  string                 `protobuf:"bytes,2,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	Sku        string                 `protobuf:"bytes,3,opt,name=sku,proto3" json:"sku,omitempty"`
+	Title      string                 `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
+	Taxable    bool                   `protobuf:"varint,5,opt,name=taxable,proto3" json:"taxable,omitempty"`
+	Prices     *Price                 `protobuf:"bytes,6,opt,name=prices,proto3" json:"prices,omitempty"`
+	Dimension  *Dimension             `protobuf:"bytes,7,opt,name=dimension,proto3" json:"dimension,omitempty"`
+	Attributes []*Attribute           `protobuf:"bytes,8,rep,name=attributes,proto3" json:"attributes,omitempty"`
+	CreatedAt  *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt  *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 }
 
 func (x *Variant) Reset() {
@@ -562,39 +559,18 @@ func (x *Variant) GetTaxable() bool {
 	return false
 }
 
-func (x *Variant) GetPrice() float64 {
+func (x *Variant) GetPrices() *Price {
 	if x != nil {
-		return x.Price
+		return x.Prices
 	}
-	return 0
+	return nil
 }
 
-func (x *Variant) GetCost() float64 {
+func (x *Variant) GetDimension() *Dimension {
 	if x != nil {
-		return x.Cost
+		return x.Dimension
 	}
-	return 0
-}
-
-func (x *Variant) GetCompareAtPrice() float64 {
-	if x != nil {
-		return x.CompareAtPrice
-	}
-	return 0
-}
-
-func (x *Variant) GetWeight() float64 {
-	if x != nil {
-		return x.Weight
-	}
-	return 0
-}
-
-func (x *Variant) GetWeightUnit() WeightUnit {
-	if x != nil {
-		return x.WeightUnit
-	}
-	return WeightUnit_UNIT_UNSPECIFIED
+	return nil
 }
 
 func (x *Variant) GetAttributes() []*Attribute {
@@ -673,6 +649,188 @@ func (x *Attribute) GetValue() string {
 	return ""
 }
 
+type Price struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PriceId        string  `protobuf:"bytes,1,opt,name=price_id,json=priceId,proto3" json:"price_id,omitempty"`
+	VariantId      string  `protobuf:"bytes,2,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
+	Currency       string  `protobuf:"bytes,3,opt,name=currency,proto3" json:"currency,omitempty"`
+	Price          float64 `protobuf:"fixed64,4,opt,name=price,proto3" json:"price,omitempty"`
+	Cost           float64 `protobuf:"fixed64,5,opt,name=cost,proto3" json:"cost,omitempty"`
+	CompareAtPrice float64 `protobuf:"fixed64,6,opt,name=compare_at_price,json=compareAtPrice,proto3" json:"compare_at_price,omitempty"`
+}
+
+func (x *Price) Reset() {
+	*x = Price{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_product_product_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Price) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Price) ProtoMessage() {}
+
+func (x *Price) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_product_product_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Price.ProtoReflect.Descriptor instead.
+func (*Price) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Price) GetPriceId() string {
+	if x != nil {
+		return x.PriceId
+	}
+	return ""
+}
+
+func (x *Price) GetVariantId() string {
+	if x != nil {
+		return x.VariantId
+	}
+	return ""
+}
+
+func (x *Price) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
+func (x *Price) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *Price) GetCost() float64 {
+	if x != nil {
+		return x.Cost
+	}
+	return 0
+}
+
+func (x *Price) GetCompareAtPrice() float64 {
+	if x != nil {
+		return x.CompareAtPrice
+	}
+	return 0
+}
+
+type Dimension struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DimensionId string  `protobuf:"bytes,1,opt,name=dimension_id,json=dimensionId,proto3" json:"dimension_id,omitempty"`
+	VariantId   string  `protobuf:"bytes,2,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
+	Weight      float64 `protobuf:"fixed64,3,opt,name=weight,proto3" json:"weight,omitempty"`
+	WeightUnit  string  `protobuf:"bytes,4,opt,name=weight_unit,json=weightUnit,proto3" json:"weight_unit,omitempty"`
+	Height      float64 `protobuf:"fixed64,5,opt,name=height,proto3" json:"height,omitempty"`
+	HeightUnit  string  `protobuf:"bytes,6,opt,name=height_unit,json=heightUnit,proto3" json:"height_unit,omitempty"`
+	Dept        float64 `protobuf:"fixed64,7,opt,name=dept,proto3" json:"dept,omitempty"`
+}
+
+func (x *Dimension) Reset() {
+	*x = Dimension{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_product_product_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Dimension) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Dimension) ProtoMessage() {}
+
+func (x *Dimension) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_product_product_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Dimension.ProtoReflect.Descriptor instead.
+func (*Dimension) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *Dimension) GetDimensionId() string {
+	if x != nil {
+		return x.DimensionId
+	}
+	return ""
+}
+
+func (x *Dimension) GetVariantId() string {
+	if x != nil {
+		return x.VariantId
+	}
+	return ""
+}
+
+func (x *Dimension) GetWeight() float64 {
+	if x != nil {
+		return x.Weight
+	}
+	return 0
+}
+
+func (x *Dimension) GetWeightUnit() string {
+	if x != nil {
+		return x.WeightUnit
+	}
+	return ""
+}
+
+func (x *Dimension) GetHeight() float64 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+func (x *Dimension) GetHeightUnit() string {
+	if x != nil {
+		return x.HeightUnit
+	}
+	return ""
+}
+
+func (x *Dimension) GetDept() float64 {
+	if x != nil {
+		return x.Dept
+	}
+	return 0
+}
+
 // ----------------------------
 // REQUESTS & RESPONSES
 // ----------------------------
@@ -689,7 +847,7 @@ type ListProductsRequest struct {
 func (x *ListProductsRequest) Reset() {
 	*x = ListProductsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[6]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -702,7 +860,7 @@ func (x *ListProductsRequest) String() string {
 func (*ListProductsRequest) ProtoMessage() {}
 
 func (x *ListProductsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[6]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -715,7 +873,7 @@ func (x *ListProductsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProductsRequest.ProtoReflect.Descriptor instead.
 func (*ListProductsRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{6}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListProductsRequest) GetOrgId() string {
@@ -751,7 +909,7 @@ type ListProductsResponse struct {
 func (x *ListProductsResponse) Reset() {
 	*x = ListProductsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[7]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -764,7 +922,7 @@ func (x *ListProductsResponse) String() string {
 func (*ListProductsResponse) ProtoMessage() {}
 
 func (x *ListProductsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[7]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -777,7 +935,7 @@ func (x *ListProductsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProductsResponse.ProtoReflect.Descriptor instead.
 func (*ListProductsResponse) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{7}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListProductsResponse) GetProducts() []*Product {
@@ -806,7 +964,7 @@ type GetProductRequest struct {
 func (x *GetProductRequest) Reset() {
 	*x = GetProductRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[8]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -819,7 +977,7 @@ func (x *GetProductRequest) String() string {
 func (*GetProductRequest) ProtoMessage() {}
 
 func (x *GetProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[8]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -832,7 +990,7 @@ func (x *GetProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProductRequest.ProtoReflect.Descriptor instead.
 func (*GetProductRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{8}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetProductRequest) GetProductId() string {
@@ -860,7 +1018,7 @@ type GetProductResponse struct {
 func (x *GetProductResponse) Reset() {
 	*x = GetProductResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[9]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -873,7 +1031,7 @@ func (x *GetProductResponse) String() string {
 func (*GetProductResponse) ProtoMessage() {}
 
 func (x *GetProductResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[9]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -886,7 +1044,7 @@ func (x *GetProductResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProductResponse.ProtoReflect.Descriptor instead.
 func (*GetProductResponse) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{9}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GetProductResponse) GetProduct() *Product {
@@ -907,7 +1065,7 @@ type CreateProductRequest struct {
 func (x *CreateProductRequest) Reset() {
 	*x = CreateProductRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[10]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -920,7 +1078,7 @@ func (x *CreateProductRequest) String() string {
 func (*CreateProductRequest) ProtoMessage() {}
 
 func (x *CreateProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[10]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -933,7 +1091,7 @@ func (x *CreateProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateProductRequest.ProtoReflect.Descriptor instead.
 func (*CreateProductRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{10}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *CreateProductRequest) GetProduct() *Product {
@@ -954,7 +1112,7 @@ type UpdateProductRequest struct {
 func (x *UpdateProductRequest) Reset() {
 	*x = UpdateProductRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[11]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -967,7 +1125,7 @@ func (x *UpdateProductRequest) String() string {
 func (*UpdateProductRequest) ProtoMessage() {}
 
 func (x *UpdateProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[11]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -980,7 +1138,7 @@ func (x *UpdateProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateProductRequest.ProtoReflect.Descriptor instead.
 func (*UpdateProductRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{11}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *UpdateProductRequest) GetProduct() *Product {
@@ -1002,7 +1160,7 @@ type DeleteProductRequest struct {
 func (x *DeleteProductRequest) Reset() {
 	*x = DeleteProductRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[12]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1015,7 +1173,7 @@ func (x *DeleteProductRequest) String() string {
 func (*DeleteProductRequest) ProtoMessage() {}
 
 func (x *DeleteProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[12]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1028,7 +1186,7 @@ func (x *DeleteProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteProductRequest.ProtoReflect.Descriptor instead.
 func (*DeleteProductRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{12}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *DeleteProductRequest) GetProductId() string {
@@ -1059,7 +1217,7 @@ type ListOptionsRequest struct {
 func (x *ListOptionsRequest) Reset() {
 	*x = ListOptionsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[13]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1072,7 +1230,7 @@ func (x *ListOptionsRequest) String() string {
 func (*ListOptionsRequest) ProtoMessage() {}
 
 func (x *ListOptionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[13]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1085,7 +1243,7 @@ func (x *ListOptionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOptionsRequest.ProtoReflect.Descriptor instead.
 func (*ListOptionsRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{13}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ListOptionsRequest) GetOrgId() string {
@@ -1121,7 +1279,7 @@ type ListOptionsResponse struct {
 func (x *ListOptionsResponse) Reset() {
 	*x = ListOptionsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[14]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1134,7 +1292,7 @@ func (x *ListOptionsResponse) String() string {
 func (*ListOptionsResponse) ProtoMessage() {}
 
 func (x *ListOptionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[14]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1147,7 +1305,7 @@ func (x *ListOptionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOptionsResponse.ProtoReflect.Descriptor instead.
 func (*ListOptionsResponse) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{14}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ListOptionsResponse) GetData() []*Option {
@@ -1175,7 +1333,7 @@ type GetOptionRequest struct {
 func (x *GetOptionRequest) Reset() {
 	*x = GetOptionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[15]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1188,7 +1346,7 @@ func (x *GetOptionRequest) String() string {
 func (*GetOptionRequest) ProtoMessage() {}
 
 func (x *GetOptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[15]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1201,7 +1359,7 @@ func (x *GetOptionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOptionRequest.ProtoReflect.Descriptor instead.
 func (*GetOptionRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{15}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GetOptionRequest) GetOptionId() string {
@@ -1222,7 +1380,7 @@ type CreateOptionRequest struct {
 func (x *CreateOptionRequest) Reset() {
 	*x = CreateOptionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[16]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1235,7 +1393,7 @@ func (x *CreateOptionRequest) String() string {
 func (*CreateOptionRequest) ProtoMessage() {}
 
 func (x *CreateOptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[16]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1248,7 +1406,7 @@ func (x *CreateOptionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateOptionRequest.ProtoReflect.Descriptor instead.
 func (*CreateOptionRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{16}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *CreateOptionRequest) GetOption() *Option {
@@ -1269,7 +1427,7 @@ type UpdateOptionRequest struct {
 func (x *UpdateOptionRequest) Reset() {
 	*x = UpdateOptionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[17]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1282,7 +1440,7 @@ func (x *UpdateOptionRequest) String() string {
 func (*UpdateOptionRequest) ProtoMessage() {}
 
 func (x *UpdateOptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[17]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1295,7 +1453,7 @@ func (x *UpdateOptionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateOptionRequest.ProtoReflect.Descriptor instead.
 func (*UpdateOptionRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{17}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *UpdateOptionRequest) GetOption() *Option {
@@ -1317,7 +1475,7 @@ type DeleteOptionRequest struct {
 func (x *DeleteOptionRequest) Reset() {
 	*x = DeleteOptionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[18]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1330,7 +1488,7 @@ func (x *DeleteOptionRequest) String() string {
 func (*DeleteOptionRequest) ProtoMessage() {}
 
 func (x *DeleteOptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[18]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1343,7 +1501,7 @@ func (x *DeleteOptionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteOptionRequest.ProtoReflect.Descriptor instead.
 func (*DeleteOptionRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{18}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *DeleteOptionRequest) GetOptionId() string {
@@ -1374,7 +1532,7 @@ type ListVariantsRequest struct {
 func (x *ListVariantsRequest) Reset() {
 	*x = ListVariantsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[19]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1387,7 +1545,7 @@ func (x *ListVariantsRequest) String() string {
 func (*ListVariantsRequest) ProtoMessage() {}
 
 func (x *ListVariantsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[19]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1400,7 +1558,7 @@ func (x *ListVariantsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListVariantsRequest.ProtoReflect.Descriptor instead.
 func (*ListVariantsRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{19}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ListVariantsRequest) GetProductId() string {
@@ -1436,7 +1594,7 @@ type ListVariantsResponse struct {
 func (x *ListVariantsResponse) Reset() {
 	*x = ListVariantsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[20]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1449,7 +1607,7 @@ func (x *ListVariantsResponse) String() string {
 func (*ListVariantsResponse) ProtoMessage() {}
 
 func (x *ListVariantsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[20]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1462,7 +1620,7 @@ func (x *ListVariantsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListVariantsResponse.ProtoReflect.Descriptor instead.
 func (*ListVariantsResponse) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{20}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ListVariantsResponse) GetData() []*Variant {
@@ -1491,7 +1649,7 @@ type GetVariantRequest struct {
 func (x *GetVariantRequest) Reset() {
 	*x = GetVariantRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[21]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1504,7 +1662,7 @@ func (x *GetVariantRequest) String() string {
 func (*GetVariantRequest) ProtoMessage() {}
 
 func (x *GetVariantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[21]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1517,7 +1675,7 @@ func (x *GetVariantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetVariantRequest.ProtoReflect.Descriptor instead.
 func (*GetVariantRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{21}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GetVariantRequest) GetVariantId() string {
@@ -1546,7 +1704,7 @@ type CreateVariantRequest struct {
 func (x *CreateVariantRequest) Reset() {
 	*x = CreateVariantRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[22]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1559,7 +1717,7 @@ func (x *CreateVariantRequest) String() string {
 func (*CreateVariantRequest) ProtoMessage() {}
 
 func (x *CreateVariantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[22]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1572,7 +1730,7 @@ func (x *CreateVariantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateVariantRequest.ProtoReflect.Descriptor instead.
 func (*CreateVariantRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{22}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *CreateVariantRequest) GetProductId() string {
@@ -1600,7 +1758,7 @@ type UpdateVariantRequest struct {
 func (x *UpdateVariantRequest) Reset() {
 	*x = UpdateVariantRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[23]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1613,7 +1771,7 @@ func (x *UpdateVariantRequest) String() string {
 func (*UpdateVariantRequest) ProtoMessage() {}
 
 func (x *UpdateVariantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[23]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1626,7 +1784,7 @@ func (x *UpdateVariantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateVariantRequest.ProtoReflect.Descriptor instead.
 func (*UpdateVariantRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{23}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *UpdateVariantRequest) GetVariant() *Variant {
@@ -1648,7 +1806,7 @@ type DeleteVariantRequest struct {
 func (x *DeleteVariantRequest) Reset() {
 	*x = DeleteVariantRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_smallbiznis_product_product_proto_msgTypes[24]
+		mi := &file_smallbiznis_product_product_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1661,7 +1819,7 @@ func (x *DeleteVariantRequest) String() string {
 func (*DeleteVariantRequest) ProtoMessage() {}
 
 func (x *DeleteVariantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_smallbiznis_product_product_proto_msgTypes[24]
+	mi := &file_smallbiznis_product_product_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1674,7 +1832,7 @@ func (x *DeleteVariantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteVariantRequest.ProtoReflect.Descriptor instead.
 func (*DeleteVariantRequest) Descriptor() ([]byte, []int) {
-	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{24}
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *DeleteVariantRequest) GetVariantId() string {
@@ -1689,6 +1847,124 @@ func (x *DeleteVariantRequest) GetProductId() string {
 		return x.ProductId
 	}
 	return ""
+}
+
+type Product_ProductOption struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OptionName string                                      `protobuf:"bytes,2,opt,name=option_name,json=optionName,proto3" json:"option_name,omitempty"`
+	Values     []*Product_ProductOption_ProductOptionValue `protobuf:"bytes,3,rep,name=values,proto3" json:"values,omitempty"`
+	Position   int32                                       `protobuf:"varint,4,opt,name=position,proto3" json:"position,omitempty"`
+}
+
+func (x *Product_ProductOption) Reset() {
+	*x = Product_ProductOption{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_product_product_proto_msgTypes[27]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Product_ProductOption) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Product_ProductOption) ProtoMessage() {}
+
+func (x *Product_ProductOption) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_product_product_proto_msgTypes[27]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Product_ProductOption.ProtoReflect.Descriptor instead.
+func (*Product_ProductOption) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{3, 0}
+}
+
+func (x *Product_ProductOption) GetOptionName() string {
+	if x != nil {
+		return x.OptionName
+	}
+	return ""
+}
+
+func (x *Product_ProductOption) GetValues() []*Product_ProductOption_ProductOptionValue {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
+func (x *Product_ProductOption) GetPosition() int32 {
+	if x != nil {
+		return x.Position
+	}
+	return 0
+}
+
+type Product_ProductOption_ProductOptionValue struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Value           string  `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+	AdditionalPrice float64 `protobuf:"fixed64,2,opt,name=additional_price,json=additionalPrice,proto3" json:"additional_price,omitempty"`
+}
+
+func (x *Product_ProductOption_ProductOptionValue) Reset() {
+	*x = Product_ProductOption_ProductOptionValue{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_product_product_proto_msgTypes[28]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Product_ProductOption_ProductOptionValue) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Product_ProductOption_ProductOptionValue) ProtoMessage() {}
+
+func (x *Product_ProductOption_ProductOptionValue) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_product_product_proto_msgTypes[28]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Product_ProductOption_ProductOptionValue.ProtoReflect.Descriptor instead.
+func (*Product_ProductOption_ProductOptionValue) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_product_product_proto_rawDescGZIP(), []int{3, 0, 0}
+}
+
+func (x *Product_ProductOption_ProductOptionValue) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *Product_ProductOption_ProductOptionValue) GetAdditionalPrice() float64 {
+	if x != nil {
+		return x.AdditionalPrice
+	}
+	return 0
 }
 
 var File_smallbiznis_product_product_proto protoreflect.FileDescriptor
@@ -1725,7 +2001,7 @@ var file_smallbiznis_product_product_proto_rawDesc = []byte{
 	0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x73, 0x12, 0x21,
 	0x0a, 0x0c, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x73, 0x5f, 0x69, 0x64, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x73, 0x49,
-	0x64, 0x22, 0xd4, 0x03, 0x0a, 0x07, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x1d, 0x0a,
+	0x64, 0x22, 0xe3, 0x05, 0x0a, 0x07, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x1d, 0x0a,
 	0x0a, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x12, 0x37, 0x0a, 0x04,
 	0x74, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x23, 0x2e, 0x73, 0x6d, 0x61,
@@ -1739,57 +2015,95 @@ var file_smallbiznis_product_product_proto_rawDesc = []byte{
 	0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x25, 0x2e, 0x73,
 	0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75,
 	0x63, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x53, 0x74, 0x61,
-	0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x38, 0x0a, 0x07, 0x6f,
-	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x73,
+	0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x47, 0x0a, 0x07, 0x6f,
+	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x73,
 	0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75,
-	0x63, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x07, 0x6f, 0x70,
-	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x3b, 0x0a, 0x08, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74,
-	0x73, 0x18, 0x09, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62,
-	0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x76, 0x31,
-	0x2e, 0x56, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x52, 0x08, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e,
-	0x74, 0x73, 0x12, 0x39, 0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74,
-	0x18, 0x0a, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x52, 0x09, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x39, 0x0a,
-	0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x0b, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x75,
-	0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x22, 0xf3, 0x03, 0x0a, 0x07, 0x56, 0x61, 0x72,
-	0x69, 0x61, 0x6e, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x5f,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e,
-	0x74, 0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x69,
-	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
-	0x49, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x6b, 0x75, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x03, 0x73, 0x6b, 0x75, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x74, 0x61,
-	0x78, 0x61, 0x62, 0x6c, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x74, 0x61, 0x78,
-	0x61, 0x62, 0x6c, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x06, 0x20,
-	0x01, 0x28, 0x01, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f,
-	0x73, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x63, 0x6f, 0x73, 0x74, 0x12, 0x28,
-	0x0a, 0x10, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x72, 0x65, 0x5f, 0x61, 0x74, 0x5f, 0x70, 0x72, 0x69,
-	0x63, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0e, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x72,
-	0x65, 0x41, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x77, 0x65, 0x69, 0x67,
-	0x68, 0x74, 0x18, 0x09, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74,
-	0x12, 0x43, 0x0a, 0x0b, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74, 0x5f, 0x75, 0x6e, 0x69, 0x74, 0x18,
-	0x0a, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x22, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a,
-	0x6e, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x57,
-	0x65, 0x69, 0x67, 0x68, 0x74, 0x55, 0x6e, 0x69, 0x74, 0x52, 0x0a, 0x77, 0x65, 0x69, 0x67, 0x68,
-	0x74, 0x55, 0x6e, 0x69, 0x74, 0x12, 0x41, 0x0a, 0x0a, 0x61, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75,
-	0x74, 0x65, 0x73, 0x18, 0x0b, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x73, 0x6d, 0x61, 0x6c,
-	0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e,
-	0x76, 0x31, 0x2e, 0x41, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x52, 0x0a, 0x61, 0x74,
-	0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x73, 0x12, 0x39, 0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61,
-	0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67,
-	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54,
-	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65,
-	0x64, 0x41, 0x74, 0x12, 0x39, 0x0a, 0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61,
-	0x74, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
-	0x61, 0x6d, 0x70, 0x52, 0x09, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x22, 0x33,
-	0x0a, 0x09, 0x41, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6b,
-	0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a,
-	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61,
-	0x6c, 0x75, 0x65, 0x22, 0x56, 0x0a, 0x13, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75,
+	0x63, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x50, 0x72,
+	0x6f, 0x64, 0x75, 0x63, 0x74, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x07, 0x6f, 0x70, 0x74,
+	0x69, 0x6f, 0x6e, 0x73, 0x12, 0x3b, 0x0a, 0x08, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x73,
+	0x18, 0x09, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69,
+	0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x76, 0x31, 0x2e,
+	0x56, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x52, 0x08, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74,
+	0x73, 0x12, 0x39, 0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18,
+	0x0a, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
+	0x70, 0x52, 0x09, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x39, 0x0a, 0x0a,
+	0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x75, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x1a, 0xfd, 0x01, 0x0a, 0x0d, 0x50, 0x72, 0x6f, 0x64,
+	0x75, 0x63, 0x74, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1f, 0x0a, 0x0b, 0x6f, 0x70, 0x74,
+	0x69, 0x6f, 0x6e, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a,
+	0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x58, 0x0a, 0x06, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x40, 0x2e, 0x73, 0x6d, 0x61,
+	0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x50, 0x72, 0x6f, 0x64,
+	0x75, 0x63, 0x74, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63,
+	0x74, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x06, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e,
+	0x1a, 0x55, 0x0a, 0x12, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x4f, 0x70, 0x74, 0x69, 0x6f,
+	0x6e, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x29, 0x0a, 0x10,
+	0x61, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0f, 0x61, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e,
+	0x61, 0x6c, 0x50, 0x72, 0x69, 0x63, 0x65, 0x22, 0xba, 0x03, 0x0a, 0x07, 0x56, 0x61, 0x72, 0x69,
+	0x61, 0x6e, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74,
+	0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x69, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49,
+	0x64, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x6b, 0x75, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x73, 0x6b, 0x75, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x74, 0x61, 0x78,
+	0x61, 0x62, 0x6c, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x74, 0x61, 0x78, 0x61,
+	0x62, 0x6c, 0x65, 0x12, 0x35, 0x0a, 0x06, 0x70, 0x72, 0x69, 0x63, 0x65, 0x73, 0x18, 0x06, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69,
+	0x73, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x69,
+	0x63, 0x65, 0x52, 0x06, 0x70, 0x72, 0x69, 0x63, 0x65, 0x73, 0x12, 0x3f, 0x0a, 0x09, 0x64, 0x69,
+	0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e,
+	0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x64,
+	0x75, 0x63, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e,
+	0x52, 0x09, 0x64, 0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x41, 0x0a, 0x0a, 0x61,
+	0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x73, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x21, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x70, 0x72,
+	0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75,
+	0x74, 0x65, 0x52, 0x0a, 0x61, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x73, 0x12, 0x39,
+	0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x09, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09,
+	0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x39, 0x0a, 0x0a, 0x75, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x75, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x64, 0x41, 0x74, 0x22, 0x33, 0x0a, 0x09, 0x41, 0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74,
+	0x65, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0xb1, 0x01, 0x0a, 0x05, 0x50, 0x72,
+	0x69, 0x63, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x70, 0x72, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x70, 0x72, 0x69, 0x63, 0x65, 0x49, 0x64, 0x12, 0x1d,
+	0x0a, 0x0a, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x1a, 0x0a,
+	0x08, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69,
+	0x63, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12,
+	0x12, 0x0a, 0x04, 0x63, 0x6f, 0x73, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x63,
+	0x6f, 0x73, 0x74, 0x12, 0x28, 0x0a, 0x10, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x72, 0x65, 0x5f, 0x61,
+	0x74, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0e, 0x63,
+	0x6f, 0x6d, 0x70, 0x61, 0x72, 0x65, 0x41, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x22, 0xd3, 0x01,
+	0x0a, 0x09, 0x44, 0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x21, 0x0a, 0x0c, 0x64,
+	0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x64, 0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x1d,
+	0x0a, 0x0a, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x16, 0x0a,
+	0x06, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x77,
+	0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74, 0x5f,
+	0x75, 0x6e, 0x69, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x77, 0x65, 0x69, 0x67,
+	0x68, 0x74, 0x55, 0x6e, 0x69, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x1f,
+	0x0a, 0x0b, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x5f, 0x75, 0x6e, 0x69, 0x74, 0x18, 0x06, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x55, 0x6e, 0x69, 0x74, 0x12,
+	0x12, 0x0a, 0x04, 0x64, 0x65, 0x70, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x64,
+	0x65, 0x70, 0x74, 0x22, 0x56, 0x0a, 0x13, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75,
 	0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72,
 	0x67, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49,
 	0x64, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52,
@@ -2159,96 +2473,102 @@ func file_smallbiznis_product_product_proto_rawDescGZIP() []byte {
 }
 
 var file_smallbiznis_product_product_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_smallbiznis_product_product_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_smallbiznis_product_product_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_smallbiznis_product_product_proto_goTypes = []interface{}{
-	(ProductType)(0),              // 0: smallbiznis.product.v1.ProductType
-	(ProductStatus)(0),            // 1: smallbiznis.product.v1.ProductStatus
-	(WeightUnit)(0),               // 2: smallbiznis.product.v1.WeightUnit
-	(*Option)(nil),                // 3: smallbiznis.product.v1.Option
-	(*OptionValue)(nil),           // 4: smallbiznis.product.v1.OptionValue
-	(*ProductResources)(nil),      // 5: smallbiznis.product.v1.ProductResources
-	(*Product)(nil),               // 6: smallbiznis.product.v1.Product
-	(*Variant)(nil),               // 7: smallbiznis.product.v1.Variant
-	(*Attribute)(nil),             // 8: smallbiznis.product.v1.Attribute
-	(*ListProductsRequest)(nil),   // 9: smallbiznis.product.v1.ListProductsRequest
-	(*ListProductsResponse)(nil),  // 10: smallbiznis.product.v1.ListProductsResponse
-	(*GetProductRequest)(nil),     // 11: smallbiznis.product.v1.GetProductRequest
-	(*GetProductResponse)(nil),    // 12: smallbiznis.product.v1.GetProductResponse
-	(*CreateProductRequest)(nil),  // 13: smallbiznis.product.v1.CreateProductRequest
-	(*UpdateProductRequest)(nil),  // 14: smallbiznis.product.v1.UpdateProductRequest
-	(*DeleteProductRequest)(nil),  // 15: smallbiznis.product.v1.DeleteProductRequest
-	(*ListOptionsRequest)(nil),    // 16: smallbiznis.product.v1.ListOptionsRequest
-	(*ListOptionsResponse)(nil),   // 17: smallbiznis.product.v1.ListOptionsResponse
-	(*GetOptionRequest)(nil),      // 18: smallbiznis.product.v1.GetOptionRequest
-	(*CreateOptionRequest)(nil),   // 19: smallbiznis.product.v1.CreateOptionRequest
-	(*UpdateOptionRequest)(nil),   // 20: smallbiznis.product.v1.UpdateOptionRequest
-	(*DeleteOptionRequest)(nil),   // 21: smallbiznis.product.v1.DeleteOptionRequest
-	(*ListVariantsRequest)(nil),   // 22: smallbiznis.product.v1.ListVariantsRequest
-	(*ListVariantsResponse)(nil),  // 23: smallbiznis.product.v1.ListVariantsResponse
-	(*GetVariantRequest)(nil),     // 24: smallbiznis.product.v1.GetVariantRequest
-	(*CreateVariantRequest)(nil),  // 25: smallbiznis.product.v1.CreateVariantRequest
-	(*UpdateVariantRequest)(nil),  // 26: smallbiznis.product.v1.UpdateVariantRequest
-	(*DeleteVariantRequest)(nil),  // 27: smallbiznis.product.v1.DeleteVariantRequest
-	(*timestamppb.Timestamp)(nil), // 28: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),         // 29: google.protobuf.Empty
+	(ProductType)(0),                                 // 0: smallbiznis.product.v1.ProductType
+	(ProductStatus)(0),                               // 1: smallbiznis.product.v1.ProductStatus
+	(WeightUnit)(0),                                  // 2: smallbiznis.product.v1.WeightUnit
+	(*Option)(nil),                                   // 3: smallbiznis.product.v1.Option
+	(*OptionValue)(nil),                              // 4: smallbiznis.product.v1.OptionValue
+	(*ProductResources)(nil),                         // 5: smallbiznis.product.v1.ProductResources
+	(*Product)(nil),                                  // 6: smallbiznis.product.v1.Product
+	(*Variant)(nil),                                  // 7: smallbiznis.product.v1.Variant
+	(*Attribute)(nil),                                // 8: smallbiznis.product.v1.Attribute
+	(*Price)(nil),                                    // 9: smallbiznis.product.v1.Price
+	(*Dimension)(nil),                                // 10: smallbiznis.product.v1.Dimension
+	(*ListProductsRequest)(nil),                      // 11: smallbiznis.product.v1.ListProductsRequest
+	(*ListProductsResponse)(nil),                     // 12: smallbiznis.product.v1.ListProductsResponse
+	(*GetProductRequest)(nil),                        // 13: smallbiznis.product.v1.GetProductRequest
+	(*GetProductResponse)(nil),                       // 14: smallbiznis.product.v1.GetProductResponse
+	(*CreateProductRequest)(nil),                     // 15: smallbiznis.product.v1.CreateProductRequest
+	(*UpdateProductRequest)(nil),                     // 16: smallbiznis.product.v1.UpdateProductRequest
+	(*DeleteProductRequest)(nil),                     // 17: smallbiznis.product.v1.DeleteProductRequest
+	(*ListOptionsRequest)(nil),                       // 18: smallbiznis.product.v1.ListOptionsRequest
+	(*ListOptionsResponse)(nil),                      // 19: smallbiznis.product.v1.ListOptionsResponse
+	(*GetOptionRequest)(nil),                         // 20: smallbiznis.product.v1.GetOptionRequest
+	(*CreateOptionRequest)(nil),                      // 21: smallbiznis.product.v1.CreateOptionRequest
+	(*UpdateOptionRequest)(nil),                      // 22: smallbiznis.product.v1.UpdateOptionRequest
+	(*DeleteOptionRequest)(nil),                      // 23: smallbiznis.product.v1.DeleteOptionRequest
+	(*ListVariantsRequest)(nil),                      // 24: smallbiznis.product.v1.ListVariantsRequest
+	(*ListVariantsResponse)(nil),                     // 25: smallbiznis.product.v1.ListVariantsResponse
+	(*GetVariantRequest)(nil),                        // 26: smallbiznis.product.v1.GetVariantRequest
+	(*CreateVariantRequest)(nil),                     // 27: smallbiznis.product.v1.CreateVariantRequest
+	(*UpdateVariantRequest)(nil),                     // 28: smallbiznis.product.v1.UpdateVariantRequest
+	(*DeleteVariantRequest)(nil),                     // 29: smallbiznis.product.v1.DeleteVariantRequest
+	(*Product_ProductOption)(nil),                    // 30: smallbiznis.product.v1.Product.ProductOption
+	(*Product_ProductOption_ProductOptionValue)(nil), // 31: smallbiznis.product.v1.Product.ProductOption.ProductOptionValue
+	(*timestamppb.Timestamp)(nil),                    // 32: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                            // 33: google.protobuf.Empty
 }
 var file_smallbiznis_product_product_proto_depIdxs = []int32{
 	4,  // 0: smallbiznis.product.v1.Option.values:type_name -> smallbiznis.product.v1.OptionValue
 	0,  // 1: smallbiznis.product.v1.Product.type:type_name -> smallbiznis.product.v1.ProductType
 	1,  // 2: smallbiznis.product.v1.Product.status:type_name -> smallbiznis.product.v1.ProductStatus
-	3,  // 3: smallbiznis.product.v1.Product.options:type_name -> smallbiznis.product.v1.Option
+	30, // 3: smallbiznis.product.v1.Product.options:type_name -> smallbiznis.product.v1.Product.ProductOption
 	7,  // 4: smallbiznis.product.v1.Product.variants:type_name -> smallbiznis.product.v1.Variant
-	28, // 5: smallbiznis.product.v1.Product.created_at:type_name -> google.protobuf.Timestamp
-	28, // 6: smallbiznis.product.v1.Product.updated_at:type_name -> google.protobuf.Timestamp
-	2,  // 7: smallbiznis.product.v1.Variant.weight_unit:type_name -> smallbiznis.product.v1.WeightUnit
-	8,  // 8: smallbiznis.product.v1.Variant.attributes:type_name -> smallbiznis.product.v1.Attribute
-	28, // 9: smallbiznis.product.v1.Variant.created_at:type_name -> google.protobuf.Timestamp
-	28, // 10: smallbiznis.product.v1.Variant.updated_at:type_name -> google.protobuf.Timestamp
-	6,  // 11: smallbiznis.product.v1.ListProductsResponse.products:type_name -> smallbiznis.product.v1.Product
-	6,  // 12: smallbiznis.product.v1.GetProductResponse.product:type_name -> smallbiznis.product.v1.Product
-	6,  // 13: smallbiznis.product.v1.CreateProductRequest.product:type_name -> smallbiznis.product.v1.Product
-	6,  // 14: smallbiznis.product.v1.UpdateProductRequest.product:type_name -> smallbiznis.product.v1.Product
-	3,  // 15: smallbiznis.product.v1.ListOptionsResponse.data:type_name -> smallbiznis.product.v1.Option
-	3,  // 16: smallbiznis.product.v1.CreateOptionRequest.option:type_name -> smallbiznis.product.v1.Option
-	3,  // 17: smallbiznis.product.v1.UpdateOptionRequest.option:type_name -> smallbiznis.product.v1.Option
-	7,  // 18: smallbiznis.product.v1.ListVariantsResponse.data:type_name -> smallbiznis.product.v1.Variant
-	7,  // 19: smallbiznis.product.v1.CreateVariantRequest.variant:type_name -> smallbiznis.product.v1.Variant
-	7,  // 20: smallbiznis.product.v1.UpdateVariantRequest.variant:type_name -> smallbiznis.product.v1.Variant
-	9,  // 21: smallbiznis.product.v1.ProductService.ListProducts:input_type -> smallbiznis.product.v1.ListProductsRequest
-	11, // 22: smallbiznis.product.v1.ProductService.GetProduct:input_type -> smallbiznis.product.v1.GetProductRequest
-	13, // 23: smallbiznis.product.v1.ProductService.CreateProduct:input_type -> smallbiznis.product.v1.CreateProductRequest
-	14, // 24: smallbiznis.product.v1.ProductService.UpdateProduct:input_type -> smallbiznis.product.v1.UpdateProductRequest
-	15, // 25: smallbiznis.product.v1.ProductService.DeleteProduct:input_type -> smallbiznis.product.v1.DeleteProductRequest
-	16, // 26: smallbiznis.product.v1.ProductService.ListOptions:input_type -> smallbiznis.product.v1.ListOptionsRequest
-	18, // 27: smallbiznis.product.v1.ProductService.GetOption:input_type -> smallbiznis.product.v1.GetOptionRequest
-	19, // 28: smallbiznis.product.v1.ProductService.CreateOption:input_type -> smallbiznis.product.v1.CreateOptionRequest
-	20, // 29: smallbiznis.product.v1.ProductService.UpdateOption:input_type -> smallbiznis.product.v1.UpdateOptionRequest
-	21, // 30: smallbiznis.product.v1.ProductService.DeleteOption:input_type -> smallbiznis.product.v1.DeleteOptionRequest
-	22, // 31: smallbiznis.product.v1.ProductService.ListVariants:input_type -> smallbiznis.product.v1.ListVariantsRequest
-	24, // 32: smallbiznis.product.v1.ProductService.GetVariant:input_type -> smallbiznis.product.v1.GetVariantRequest
-	25, // 33: smallbiznis.product.v1.ProductService.CreateVariant:input_type -> smallbiznis.product.v1.CreateVariantRequest
-	26, // 34: smallbiznis.product.v1.ProductService.UpdateVariant:input_type -> smallbiznis.product.v1.UpdateVariantRequest
-	27, // 35: smallbiznis.product.v1.ProductService.DeleteVariant:input_type -> smallbiznis.product.v1.DeleteVariantRequest
-	10, // 36: smallbiznis.product.v1.ProductService.ListProducts:output_type -> smallbiznis.product.v1.ListProductsResponse
-	12, // 37: smallbiznis.product.v1.ProductService.GetProduct:output_type -> smallbiznis.product.v1.GetProductResponse
-	6,  // 38: smallbiznis.product.v1.ProductService.CreateProduct:output_type -> smallbiznis.product.v1.Product
-	6,  // 39: smallbiznis.product.v1.ProductService.UpdateProduct:output_type -> smallbiznis.product.v1.Product
-	29, // 40: smallbiznis.product.v1.ProductService.DeleteProduct:output_type -> google.protobuf.Empty
-	17, // 41: smallbiznis.product.v1.ProductService.ListOptions:output_type -> smallbiznis.product.v1.ListOptionsResponse
-	3,  // 42: smallbiznis.product.v1.ProductService.GetOption:output_type -> smallbiznis.product.v1.Option
-	3,  // 43: smallbiznis.product.v1.ProductService.CreateOption:output_type -> smallbiznis.product.v1.Option
-	3,  // 44: smallbiznis.product.v1.ProductService.UpdateOption:output_type -> smallbiznis.product.v1.Option
-	29, // 45: smallbiznis.product.v1.ProductService.DeleteOption:output_type -> google.protobuf.Empty
-	23, // 46: smallbiznis.product.v1.ProductService.ListVariants:output_type -> smallbiznis.product.v1.ListVariantsResponse
-	7,  // 47: smallbiznis.product.v1.ProductService.GetVariant:output_type -> smallbiznis.product.v1.Variant
-	7,  // 48: smallbiznis.product.v1.ProductService.CreateVariant:output_type -> smallbiznis.product.v1.Variant
-	7,  // 49: smallbiznis.product.v1.ProductService.UpdateVariant:output_type -> smallbiznis.product.v1.Variant
-	29, // 50: smallbiznis.product.v1.ProductService.DeleteVariant:output_type -> google.protobuf.Empty
-	36, // [36:51] is the sub-list for method output_type
-	21, // [21:36] is the sub-list for method input_type
-	21, // [21:21] is the sub-list for extension type_name
-	21, // [21:21] is the sub-list for extension extendee
-	0,  // [0:21] is the sub-list for field type_name
+	32, // 5: smallbiznis.product.v1.Product.created_at:type_name -> google.protobuf.Timestamp
+	32, // 6: smallbiznis.product.v1.Product.updated_at:type_name -> google.protobuf.Timestamp
+	9,  // 7: smallbiznis.product.v1.Variant.prices:type_name -> smallbiznis.product.v1.Price
+	10, // 8: smallbiznis.product.v1.Variant.dimension:type_name -> smallbiznis.product.v1.Dimension
+	8,  // 9: smallbiznis.product.v1.Variant.attributes:type_name -> smallbiznis.product.v1.Attribute
+	32, // 10: smallbiznis.product.v1.Variant.created_at:type_name -> google.protobuf.Timestamp
+	32, // 11: smallbiznis.product.v1.Variant.updated_at:type_name -> google.protobuf.Timestamp
+	6,  // 12: smallbiznis.product.v1.ListProductsResponse.products:type_name -> smallbiznis.product.v1.Product
+	6,  // 13: smallbiznis.product.v1.GetProductResponse.product:type_name -> smallbiznis.product.v1.Product
+	6,  // 14: smallbiznis.product.v1.CreateProductRequest.product:type_name -> smallbiznis.product.v1.Product
+	6,  // 15: smallbiznis.product.v1.UpdateProductRequest.product:type_name -> smallbiznis.product.v1.Product
+	3,  // 16: smallbiznis.product.v1.ListOptionsResponse.data:type_name -> smallbiznis.product.v1.Option
+	3,  // 17: smallbiznis.product.v1.CreateOptionRequest.option:type_name -> smallbiznis.product.v1.Option
+	3,  // 18: smallbiznis.product.v1.UpdateOptionRequest.option:type_name -> smallbiznis.product.v1.Option
+	7,  // 19: smallbiznis.product.v1.ListVariantsResponse.data:type_name -> smallbiznis.product.v1.Variant
+	7,  // 20: smallbiznis.product.v1.CreateVariantRequest.variant:type_name -> smallbiznis.product.v1.Variant
+	7,  // 21: smallbiznis.product.v1.UpdateVariantRequest.variant:type_name -> smallbiznis.product.v1.Variant
+	31, // 22: smallbiznis.product.v1.Product.ProductOption.values:type_name -> smallbiznis.product.v1.Product.ProductOption.ProductOptionValue
+	11, // 23: smallbiznis.product.v1.ProductService.ListProducts:input_type -> smallbiznis.product.v1.ListProductsRequest
+	13, // 24: smallbiznis.product.v1.ProductService.GetProduct:input_type -> smallbiznis.product.v1.GetProductRequest
+	15, // 25: smallbiznis.product.v1.ProductService.CreateProduct:input_type -> smallbiznis.product.v1.CreateProductRequest
+	16, // 26: smallbiznis.product.v1.ProductService.UpdateProduct:input_type -> smallbiznis.product.v1.UpdateProductRequest
+	17, // 27: smallbiznis.product.v1.ProductService.DeleteProduct:input_type -> smallbiznis.product.v1.DeleteProductRequest
+	18, // 28: smallbiznis.product.v1.ProductService.ListOptions:input_type -> smallbiznis.product.v1.ListOptionsRequest
+	20, // 29: smallbiznis.product.v1.ProductService.GetOption:input_type -> smallbiznis.product.v1.GetOptionRequest
+	21, // 30: smallbiznis.product.v1.ProductService.CreateOption:input_type -> smallbiznis.product.v1.CreateOptionRequest
+	22, // 31: smallbiznis.product.v1.ProductService.UpdateOption:input_type -> smallbiznis.product.v1.UpdateOptionRequest
+	23, // 32: smallbiznis.product.v1.ProductService.DeleteOption:input_type -> smallbiznis.product.v1.DeleteOptionRequest
+	24, // 33: smallbiznis.product.v1.ProductService.ListVariants:input_type -> smallbiznis.product.v1.ListVariantsRequest
+	26, // 34: smallbiznis.product.v1.ProductService.GetVariant:input_type -> smallbiznis.product.v1.GetVariantRequest
+	27, // 35: smallbiznis.product.v1.ProductService.CreateVariant:input_type -> smallbiznis.product.v1.CreateVariantRequest
+	28, // 36: smallbiznis.product.v1.ProductService.UpdateVariant:input_type -> smallbiznis.product.v1.UpdateVariantRequest
+	29, // 37: smallbiznis.product.v1.ProductService.DeleteVariant:input_type -> smallbiznis.product.v1.DeleteVariantRequest
+	12, // 38: smallbiznis.product.v1.ProductService.ListProducts:output_type -> smallbiznis.product.v1.ListProductsResponse
+	14, // 39: smallbiznis.product.v1.ProductService.GetProduct:output_type -> smallbiznis.product.v1.GetProductResponse
+	6,  // 40: smallbiznis.product.v1.ProductService.CreateProduct:output_type -> smallbiznis.product.v1.Product
+	6,  // 41: smallbiznis.product.v1.ProductService.UpdateProduct:output_type -> smallbiznis.product.v1.Product
+	33, // 42: smallbiznis.product.v1.ProductService.DeleteProduct:output_type -> google.protobuf.Empty
+	19, // 43: smallbiznis.product.v1.ProductService.ListOptions:output_type -> smallbiznis.product.v1.ListOptionsResponse
+	3,  // 44: smallbiznis.product.v1.ProductService.GetOption:output_type -> smallbiznis.product.v1.Option
+	3,  // 45: smallbiznis.product.v1.ProductService.CreateOption:output_type -> smallbiznis.product.v1.Option
+	3,  // 46: smallbiznis.product.v1.ProductService.UpdateOption:output_type -> smallbiznis.product.v1.Option
+	33, // 47: smallbiznis.product.v1.ProductService.DeleteOption:output_type -> google.protobuf.Empty
+	25, // 48: smallbiznis.product.v1.ProductService.ListVariants:output_type -> smallbiznis.product.v1.ListVariantsResponse
+	7,  // 49: smallbiznis.product.v1.ProductService.GetVariant:output_type -> smallbiznis.product.v1.Variant
+	7,  // 50: smallbiznis.product.v1.ProductService.CreateVariant:output_type -> smallbiznis.product.v1.Variant
+	7,  // 51: smallbiznis.product.v1.ProductService.UpdateVariant:output_type -> smallbiznis.product.v1.Variant
+	33, // 52: smallbiznis.product.v1.ProductService.DeleteVariant:output_type -> google.protobuf.Empty
+	38, // [38:53] is the sub-list for method output_type
+	23, // [23:38] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_smallbiznis_product_product_proto_init() }
@@ -2330,7 +2650,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListProductsRequest); i {
+			switch v := v.(*Price); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2342,7 +2662,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListProductsResponse); i {
+			switch v := v.(*Dimension); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2354,7 +2674,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetProductRequest); i {
+			switch v := v.(*ListProductsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2366,7 +2686,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetProductResponse); i {
+			switch v := v.(*ListProductsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2378,7 +2698,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateProductRequest); i {
+			switch v := v.(*GetProductRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2390,7 +2710,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateProductRequest); i {
+			switch v := v.(*GetProductResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2402,7 +2722,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteProductRequest); i {
+			switch v := v.(*CreateProductRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2414,7 +2734,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListOptionsRequest); i {
+			switch v := v.(*UpdateProductRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2426,7 +2746,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListOptionsResponse); i {
+			switch v := v.(*DeleteProductRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2438,7 +2758,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetOptionRequest); i {
+			switch v := v.(*ListOptionsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2450,7 +2770,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateOptionRequest); i {
+			switch v := v.(*ListOptionsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2462,7 +2782,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateOptionRequest); i {
+			switch v := v.(*GetOptionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2474,7 +2794,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteOptionRequest); i {
+			switch v := v.(*CreateOptionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2486,7 +2806,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListVariantsRequest); i {
+			switch v := v.(*UpdateOptionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2498,7 +2818,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListVariantsResponse); i {
+			switch v := v.(*DeleteOptionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2510,7 +2830,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetVariantRequest); i {
+			switch v := v.(*ListVariantsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2522,7 +2842,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateVariantRequest); i {
+			switch v := v.(*ListVariantsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2534,7 +2854,7 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateVariantRequest); i {
+			switch v := v.(*GetVariantRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2546,7 +2866,55 @@ func file_smallbiznis_product_product_proto_init() {
 			}
 		}
 		file_smallbiznis_product_product_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateVariantRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_smallbiznis_product_product_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateVariantRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_smallbiznis_product_product_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteVariantRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_smallbiznis_product_product_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Product_ProductOption); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_smallbiznis_product_product_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Product_ProductOption_ProductOptionValue); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2564,7 +2932,7 @@ func file_smallbiznis_product_product_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_smallbiznis_product_product_proto_rawDesc,
 			NumEnums:      3,
-			NumMessages:   25,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
