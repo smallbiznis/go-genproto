@@ -326,7 +326,7 @@ func RegisterPointServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.loyalty.v1.PointService/Redemption", runtime.WithHTTPPathPattern("/v1/redeemption"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.loyalty.v1.PointService/Redemption", runtime.WithHTTPPathPattern("/v1/redemption"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -481,7 +481,7 @@ func RegisterPointServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.loyalty.v1.PointService/Redemption", runtime.WithHTTPPathPattern("/v1/redeemption"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.loyalty.v1.PointService/Redemption", runtime.WithHTTPPathPattern("/v1/redemption"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -529,7 +529,7 @@ var (
 
 	pattern_PointService_ValidateRedemption_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "redemption", "validate"}, ""))
 
-	pattern_PointService_Redemption_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "redeemption"}, ""))
+	pattern_PointService_Redemption_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "redemption"}, ""))
 
 	pattern_PointService_GetRedemption_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "redemption", "transaction_id"}, ""))
 )

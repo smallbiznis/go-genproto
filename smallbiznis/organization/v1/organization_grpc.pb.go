@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	OrganizationService_ListCountry_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/ListCountry"
+	OrganizationService_ListCountries_FullMethodName      = "/smallbiznis.organization.v1.OrganizationService/ListCountries"
 	OrganizationService_GetCountry_FullMethodName         = "/smallbiznis.organization.v1.OrganizationService/GetCountry"
 	OrganizationService_ListTimezone_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/ListTimezone"
 	OrganizationService_GetTimezone_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/GetTimezone"
@@ -42,7 +42,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrganizationServiceClient interface {
-	ListCountry(ctx context.Context, in *ListContryRequest, opts ...grpc.CallOption) (*ListCountryResponse, error)
+	ListCountries(ctx context.Context, in *ListCountriesRequest, opts ...grpc.CallOption) (*ListCountriesResponse, error)
 	GetCountry(ctx context.Context, in *GetCountryRequest, opts ...grpc.CallOption) (*Countries, error)
 	ListTimezone(ctx context.Context, in *ListTimezoneRequest, opts ...grpc.CallOption) (*ListTimezoneResponse, error)
 	GetTimezone(ctx context.Context, in *GetTimezoneRequest, opts ...grpc.CallOption) (*Timezones, error)
@@ -72,9 +72,9 @@ func NewOrganizationServiceClient(cc grpc.ClientConnInterface) OrganizationServi
 	return &organizationServiceClient{cc}
 }
 
-func (c *organizationServiceClient) ListCountry(ctx context.Context, in *ListContryRequest, opts ...grpc.CallOption) (*ListCountryResponse, error) {
-	out := new(ListCountryResponse)
-	err := c.cc.Invoke(ctx, OrganizationService_ListCountry_FullMethodName, in, out, opts...)
+func (c *organizationServiceClient) ListCountries(ctx context.Context, in *ListCountriesRequest, opts ...grpc.CallOption) (*ListCountriesResponse, error) {
+	out := new(ListCountriesResponse)
+	err := c.cc.Invoke(ctx, OrganizationService_ListCountries_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -229,7 +229,7 @@ func (c *organizationServiceClient) VerifyInvitation(ctx context.Context, in *Ve
 // All implementations must embed UnimplementedOrganizationServiceServer
 // for forward compatibility
 type OrganizationServiceServer interface {
-	ListCountry(context.Context, *ListContryRequest) (*ListCountryResponse, error)
+	ListCountries(context.Context, *ListCountriesRequest) (*ListCountriesResponse, error)
 	GetCountry(context.Context, *GetCountryRequest) (*Countries, error)
 	ListTimezone(context.Context, *ListTimezoneRequest) (*ListTimezoneResponse, error)
 	GetTimezone(context.Context, *GetTimezoneRequest) (*Timezones, error)
@@ -256,8 +256,8 @@ type OrganizationServiceServer interface {
 type UnimplementedOrganizationServiceServer struct {
 }
 
-func (UnimplementedOrganizationServiceServer) ListCountry(context.Context, *ListContryRequest) (*ListCountryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListCountry not implemented")
+func (UnimplementedOrganizationServiceServer) ListCountries(context.Context, *ListCountriesRequest) (*ListCountriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCountries not implemented")
 }
 func (UnimplementedOrganizationServiceServer) GetCountry(context.Context, *GetCountryRequest) (*Countries, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCountry not implemented")
@@ -320,20 +320,20 @@ func RegisterOrganizationServiceServer(s grpc.ServiceRegistrar, srv Organization
 	s.RegisterService(&OrganizationService_ServiceDesc, srv)
 }
 
-func _OrganizationService_ListCountry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListContryRequest)
+func _OrganizationService_ListCountries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCountriesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrganizationServiceServer).ListCountry(ctx, in)
+		return srv.(OrganizationServiceServer).ListCountries(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: OrganizationService_ListCountry_FullMethodName,
+		FullMethod: OrganizationService_ListCountries_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrganizationServiceServer).ListCountry(ctx, req.(*ListContryRequest))
+		return srv.(OrganizationServiceServer).ListCountries(ctx, req.(*ListCountriesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -634,8 +634,8 @@ var OrganizationService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*OrganizationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListCountry",
-			Handler:    _OrganizationService_ListCountry_Handler,
+			MethodName: "ListCountries",
+			Handler:    _OrganizationService_ListCountries_Handler,
 		},
 		{
 			MethodName: "GetCountry",
