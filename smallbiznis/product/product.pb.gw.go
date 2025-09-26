@@ -153,6 +153,10 @@ func local_request_ProductService_CreateProduct_0(ctx context.Context, marshaler
 
 }
 
+var (
+	filter_ProductService_UpdateProduct_0 = &utilities.DoubleArray{Encoding: map[string]int{"product": 0, "product_id": 1, "productId": 2}, Base: []int{1, 3, 1, 4, 0, 0, 0, 0}, Check: []int{0, 1, 2, 1, 3, 2, 2, 4}}
+)
+
 func request_ProductService_UpdateProduct_0(ctx context.Context, marshaler runtime.Marshaler, client ProductServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateProductRequest
 	var metadata runtime.ServerMetadata
@@ -180,6 +184,13 @@ func request_ProductService_UpdateProduct_0(ctx context.Context, marshaler runti
 	err = runtime.PopulateFieldFromPath(&protoReq, "product.product_id", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product.product_id", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProductService_UpdateProduct_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.UpdateProduct(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -214,6 +225,13 @@ func local_request_ProductService_UpdateProduct_0(ctx context.Context, marshaler
 	err = runtime.PopulateFieldFromPath(&protoReq, "product.product_id", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product.product_id", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProductService_UpdateProduct_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.UpdateProduct(ctx, &protoReq)
@@ -413,6 +431,10 @@ func local_request_ProductService_CreateOption_0(ctx context.Context, marshaler 
 
 }
 
+var (
+	filter_ProductService_UpdateOption_0 = &utilities.DoubleArray{Encoding: map[string]int{"option": 0, "option_id": 1, "optionId": 2}, Base: []int{1, 3, 1, 4, 0, 0, 0, 0}, Check: []int{0, 1, 2, 1, 3, 2, 2, 4}}
+)
+
 func request_ProductService_UpdateOption_0(ctx context.Context, marshaler runtime.Marshaler, client ProductServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateOptionRequest
 	var metadata runtime.ServerMetadata
@@ -440,6 +462,13 @@ func request_ProductService_UpdateOption_0(ctx context.Context, marshaler runtim
 	err = runtime.PopulateFieldFromPath(&protoReq, "option.option_id", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "option.option_id", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProductService_UpdateOption_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.UpdateOption(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -474,6 +503,13 @@ func local_request_ProductService_UpdateOption_0(ctx context.Context, marshaler 
 	err = runtime.PopulateFieldFromPath(&protoReq, "option.option_id", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "option.option_id", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProductService_UpdateOption_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.UpdateOption(ctx, &protoReq)
@@ -761,6 +797,10 @@ func local_request_ProductService_CreateVariant_0(ctx context.Context, marshaler
 
 }
 
+var (
+	filter_ProductService_UpdateVariant_0 = &utilities.DoubleArray{Encoding: map[string]int{"variant": 0, "product_id": 1, "productId": 2, "variant_id": 3, "variantId": 4}, Base: []int{1, 4, 1, 5, 2, 6, 0, 0, 0, 0, 0, 0}, Check: []int{0, 1, 2, 1, 2, 1, 3, 5, 2, 2, 4, 6}}
+)
+
 func request_ProductService_UpdateVariant_0(ctx context.Context, marshaler runtime.Marshaler, client ProductServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateVariantRequest
 	var metadata runtime.ServerMetadata
@@ -798,6 +838,13 @@ func request_ProductService_UpdateVariant_0(ctx context.Context, marshaler runti
 	err = runtime.PopulateFieldFromPath(&protoReq, "variant.variant_id", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "variant.variant_id", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProductService_UpdateVariant_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.UpdateVariant(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -842,6 +889,13 @@ func local_request_ProductService_UpdateVariant_0(ctx context.Context, marshaler
 	err = runtime.PopulateFieldFromPath(&protoReq, "variant.variant_id", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "variant.variant_id", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProductService_UpdateVariant_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.UpdateVariant(ctx, &protoReq)
