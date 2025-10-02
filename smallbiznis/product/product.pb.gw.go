@@ -127,7 +127,7 @@ func request_ProductService_CreateProduct_0(ctx context.Context, marshaler runti
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Product); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -144,7 +144,7 @@ func local_request_ProductService_CreateProduct_0(ctx context.Context, marshaler
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Product); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -737,7 +737,7 @@ func request_ProductService_CreateVariant_0(ctx context.Context, marshaler runti
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Variant); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -771,7 +771,7 @@ func local_request_ProductService_CreateVariant_0(ctx context.Context, marshaler
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Variant); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -798,7 +798,7 @@ func local_request_ProductService_CreateVariant_0(ctx context.Context, marshaler
 }
 
 var (
-	filter_ProductService_UpdateVariant_0 = &utilities.DoubleArray{Encoding: map[string]int{"variant": 0, "product_id": 1, "productId": 2, "variant_id": 3, "variantId": 4}, Base: []int{1, 4, 1, 5, 2, 6, 0, 0, 0, 0, 0, 0}, Check: []int{0, 1, 2, 1, 2, 1, 3, 5, 2, 2, 4, 6}}
+	filter_ProductService_UpdateVariant_0 = &utilities.DoubleArray{Encoding: map[string]int{"variant": 0, "product_id": 1, "productId": 2, "id": 3}, Base: []int{1, 5, 1, 6, 7, 0, 3, 0, 0, 0, 0, 0}, Check: []int{0, 1, 2, 1, 1, 3, 2, 7, 2, 2, 4, 5}}
 )
 
 func request_ProductService_UpdateVariant_0(ctx context.Context, marshaler runtime.Marshaler, client ProductServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -830,14 +830,14 @@ func request_ProductService_UpdateVariant_0(ctx context.Context, marshaler runti
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "variant.product_id", err)
 	}
 
-	val, ok = pathParams["variant.variant_id"]
+	val, ok = pathParams["variant.id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "variant.variant_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "variant.id")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "variant.variant_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "variant.id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "variant.variant_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "variant.id", err)
 	}
 
 	if err := req.ParseForm(); err != nil {
@@ -881,14 +881,14 @@ func local_request_ProductService_UpdateVariant_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "variant.product_id", err)
 	}
 
-	val, ok = pathParams["variant.variant_id"]
+	val, ok = pathParams["variant.id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "variant.variant_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "variant.id")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "variant.variant_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "variant.id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "variant.variant_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "variant.id", err)
 	}
 
 	if err := req.ParseForm(); err != nil {
@@ -1314,7 +1314,7 @@ func RegisterProductServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.product.v1.ProductService/UpdateVariant", runtime.WithHTTPPathPattern("/v1/products/{variant.product_id}/variants/{variant.variant_id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.product.v1.ProductService/UpdateVariant", runtime.WithHTTPPathPattern("/v1/products/{variant.product_id}/variants/{variant.id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1689,7 +1689,7 @@ func RegisterProductServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.product.v1.ProductService/UpdateVariant", runtime.WithHTTPPathPattern("/v1/products/{variant.product_id}/variants/{variant.variant_id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.product.v1.ProductService/UpdateVariant", runtime.WithHTTPPathPattern("/v1/products/{variant.product_id}/variants/{variant.id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1757,7 +1757,7 @@ var (
 
 	pattern_ProductService_CreateVariant_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "products", "product_id", "variants"}, ""))
 
-	pattern_ProductService_UpdateVariant_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "products", "variant.product_id", "variants", "variant.variant_id"}, ""))
+	pattern_ProductService_UpdateVariant_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "products", "variant.product_id", "variants", "variant.id"}, ""))
 
 	pattern_ProductService_DeleteVariant_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "products", "product_id", "variants", "variant_id"}, ""))
 )

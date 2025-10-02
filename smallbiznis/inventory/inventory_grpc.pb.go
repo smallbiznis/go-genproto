@@ -23,7 +23,9 @@ const (
 	InventoryService_GetVariantInventory_FullMethodName    = "/smallbiznis.inventory.v1.InventoryService/GetVariantInventory"
 	InventoryService_ListLocationInventory_FullMethodName  = "/smallbiznis.inventory.v1.InventoryService/ListLocationInventory"
 	InventoryService_UpdateInventory_FullMethodName        = "/smallbiznis.inventory.v1.InventoryService/UpdateInventory"
+	InventoryService_TransferInventory_FullMethodName      = "/smallbiznis.inventory.v1.InventoryService/TransferInventory"
 	InventoryService_AdjustInventory_FullMethodName        = "/smallbiznis.inventory.v1.InventoryService/AdjustInventory"
+	InventoryService_ListInventoryMovements_FullMethodName = "/smallbiznis.inventory.v1.InventoryService/ListInventoryMovements"
 )
 
 // InventoryServiceClient is the client API for InventoryService service.
@@ -34,7 +36,9 @@ type InventoryServiceClient interface {
 	GetVariantInventory(ctx context.Context, in *GetVariantInventoryRequest, opts ...grpc.CallOption) (*GetVariantInventoryResponse, error)
 	ListLocationInventory(ctx context.Context, in *ListLocationInventoryRequest, opts ...grpc.CallOption) (*ListLocationInventoryResponse, error)
 	UpdateInventory(ctx context.Context, in *UpdateInventoryRequest, opts ...grpc.CallOption) (*UpdateInventoryResponse, error)
+	TransferInventory(ctx context.Context, in *TransferInventoryRequest, opts ...grpc.CallOption) (*TransferInventoryResponse, error)
 	AdjustInventory(ctx context.Context, in *AdjustInventoryRequest, opts ...grpc.CallOption) (*AdjustInventoryResponse, error)
+	ListInventoryMovements(ctx context.Context, in *ListInventoryMovementsRequest, opts ...grpc.CallOption) (*ListInventoryMovementsResponse, error)
 }
 
 type inventoryServiceClient struct {
@@ -81,9 +85,27 @@ func (c *inventoryServiceClient) UpdateInventory(ctx context.Context, in *Update
 	return out, nil
 }
 
+func (c *inventoryServiceClient) TransferInventory(ctx context.Context, in *TransferInventoryRequest, opts ...grpc.CallOption) (*TransferInventoryResponse, error) {
+	out := new(TransferInventoryResponse)
+	err := c.cc.Invoke(ctx, InventoryService_TransferInventory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *inventoryServiceClient) AdjustInventory(ctx context.Context, in *AdjustInventoryRequest, opts ...grpc.CallOption) (*AdjustInventoryResponse, error) {
 	out := new(AdjustInventoryResponse)
 	err := c.cc.Invoke(ctx, InventoryService_AdjustInventory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *inventoryServiceClient) ListInventoryMovements(ctx context.Context, in *ListInventoryMovementsRequest, opts ...grpc.CallOption) (*ListInventoryMovementsResponse, error) {
+	out := new(ListInventoryMovementsResponse)
+	err := c.cc.Invoke(ctx, InventoryService_ListInventoryMovements_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +120,9 @@ type InventoryServiceServer interface {
 	GetVariantInventory(context.Context, *GetVariantInventoryRequest) (*GetVariantInventoryResponse, error)
 	ListLocationInventory(context.Context, *ListLocationInventoryRequest) (*ListLocationInventoryResponse, error)
 	UpdateInventory(context.Context, *UpdateInventoryRequest) (*UpdateInventoryResponse, error)
+	TransferInventory(context.Context, *TransferInventoryRequest) (*TransferInventoryResponse, error)
 	AdjustInventory(context.Context, *AdjustInventoryRequest) (*AdjustInventoryResponse, error)
+	ListInventoryMovements(context.Context, *ListInventoryMovementsRequest) (*ListInventoryMovementsResponse, error)
 	mustEmbedUnimplementedInventoryServiceServer()
 }
 
@@ -118,8 +142,14 @@ func (UnimplementedInventoryServiceServer) ListLocationInventory(context.Context
 func (UnimplementedInventoryServiceServer) UpdateInventory(context.Context, *UpdateInventoryRequest) (*UpdateInventoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateInventory not implemented")
 }
+func (UnimplementedInventoryServiceServer) TransferInventory(context.Context, *TransferInventoryRequest) (*TransferInventoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TransferInventory not implemented")
+}
 func (UnimplementedInventoryServiceServer) AdjustInventory(context.Context, *AdjustInventoryRequest) (*AdjustInventoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AdjustInventory not implemented")
+}
+func (UnimplementedInventoryServiceServer) ListInventoryMovements(context.Context, *ListInventoryMovementsRequest) (*ListInventoryMovementsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInventoryMovements not implemented")
 }
 func (UnimplementedInventoryServiceServer) mustEmbedUnimplementedInventoryServiceServer() {}
 
@@ -206,6 +236,24 @@ func _InventoryService_UpdateInventory_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InventoryService_TransferInventory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TransferInventoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).TransferInventory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InventoryService_TransferInventory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).TransferInventory(ctx, req.(*TransferInventoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _InventoryService_AdjustInventory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AdjustInventoryRequest)
 	if err := dec(in); err != nil {
@@ -220,6 +268,24 @@ func _InventoryService_AdjustInventory_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(InventoryServiceServer).AdjustInventory(ctx, req.(*AdjustInventoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InventoryService_ListInventoryMovements_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListInventoryMovementsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).ListInventoryMovements(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InventoryService_ListInventoryMovements_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).ListInventoryMovements(ctx, req.(*ListInventoryMovementsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -248,8 +314,16 @@ var InventoryService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _InventoryService_UpdateInventory_Handler,
 		},
 		{
+			MethodName: "TransferInventory",
+			Handler:    _InventoryService_TransferInventory_Handler,
+		},
+		{
 			MethodName: "AdjustInventory",
 			Handler:    _InventoryService_AdjustInventory_Handler,
+		},
+		{
+			MethodName: "ListInventoryMovements",
+			Handler:    _InventoryService_ListInventoryMovements_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
