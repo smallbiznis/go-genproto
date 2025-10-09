@@ -19,26 +19,27 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	OrganizationService_ListCountries_FullMethodName      = "/smallbiznis.organization.v1.OrganizationService/ListCountries"
-	OrganizationService_GetCountry_FullMethodName         = "/smallbiznis.organization.v1.OrganizationService/GetCountry"
-	OrganizationService_ListTimezone_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/ListTimezone"
-	OrganizationService_GetTimezone_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/GetTimezone"
-	OrganizationService_ListCurrency_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/ListCurrency"
-	OrganizationService_LookupOrganization_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/LookupOrganization"
-	OrganizationService_CreateOrganization_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/CreateOrganization"
-	OrganizationService_GetOrganization_FullMethodName    = "/smallbiznis.organization.v1.OrganizationService/GetOrganization"
-	OrganizationService_ListOrganization_FullMethodName   = "/smallbiznis.organization.v1.OrganizationService/ListOrganization"
-	OrganizationService_UpdateOrganization_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/UpdateOrganization"
-	OrganizationService_ListMember_FullMethodName         = "/smallbiznis.organization.v1.OrganizationService/ListMember"
-	OrganizationService_CreateMember_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/CreateMember"
-	OrganizationService_GetMember_FullMethodName          = "/smallbiznis.organization.v1.OrganizationService/GetMember"
-	OrganizationService_ListLocation_FullMethodName       = "/smallbiznis.organization.v1.OrganizationService/ListLocation"
-	OrganizationService_CreateLocation_FullMethodName     = "/smallbiznis.organization.v1.OrganizationService/CreateLocation"
-	OrganizationService_GetLocation_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/GetLocation"
-	OrganizationService_CreateInvitation_FullMethodName   = "/smallbiznis.organization.v1.OrganizationService/CreateInvitation"
-	OrganizationService_GetInvitation_FullMethodName      = "/smallbiznis.organization.v1.OrganizationService/GetInvitation"
-	OrganizationService_RevokeInvitation_FullMethodName   = "/smallbiznis.organization.v1.OrganizationService/RevokeInvitation"
-	OrganizationService_VerifyInvitation_FullMethodName   = "/smallbiznis.organization.v1.OrganizationService/VerifyInvitation"
+	OrganizationService_ListCountries_FullMethodName           = "/smallbiznis.organization.v1.OrganizationService/ListCountries"
+	OrganizationService_GetCountry_FullMethodName              = "/smallbiznis.organization.v1.OrganizationService/GetCountry"
+	OrganizationService_ListTimezone_FullMethodName            = "/smallbiznis.organization.v1.OrganizationService/ListTimezone"
+	OrganizationService_GetTimezone_FullMethodName             = "/smallbiznis.organization.v1.OrganizationService/GetTimezone"
+	OrganizationService_ListCurrency_FullMethodName            = "/smallbiznis.organization.v1.OrganizationService/ListCurrency"
+	OrganizationService_GetOrganizationByDomain_FullMethodName = "/smallbiznis.organization.v1.OrganizationService/GetOrganizationByDomain"
+	OrganizationService_LookupOrganization_FullMethodName      = "/smallbiznis.organization.v1.OrganizationService/LookupOrganization"
+	OrganizationService_CreateOrganization_FullMethodName      = "/smallbiznis.organization.v1.OrganizationService/CreateOrganization"
+	OrganizationService_GetOrganization_FullMethodName         = "/smallbiznis.organization.v1.OrganizationService/GetOrganization"
+	OrganizationService_ListOrganization_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/ListOrganization"
+	OrganizationService_UpdateOrganization_FullMethodName      = "/smallbiznis.organization.v1.OrganizationService/UpdateOrganization"
+	OrganizationService_ListMember_FullMethodName              = "/smallbiznis.organization.v1.OrganizationService/ListMember"
+	OrganizationService_CreateMember_FullMethodName            = "/smallbiznis.organization.v1.OrganizationService/CreateMember"
+	OrganizationService_GetMember_FullMethodName               = "/smallbiznis.organization.v1.OrganizationService/GetMember"
+	OrganizationService_ListLocation_FullMethodName            = "/smallbiznis.organization.v1.OrganizationService/ListLocation"
+	OrganizationService_CreateLocation_FullMethodName          = "/smallbiznis.organization.v1.OrganizationService/CreateLocation"
+	OrganizationService_GetLocation_FullMethodName             = "/smallbiznis.organization.v1.OrganizationService/GetLocation"
+	OrganizationService_CreateInvitation_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/CreateInvitation"
+	OrganizationService_GetInvitation_FullMethodName           = "/smallbiznis.organization.v1.OrganizationService/GetInvitation"
+	OrganizationService_RevokeInvitation_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/RevokeInvitation"
+	OrganizationService_VerifyInvitation_FullMethodName        = "/smallbiznis.organization.v1.OrganizationService/VerifyInvitation"
 )
 
 // OrganizationServiceClient is the client API for OrganizationService service.
@@ -50,6 +51,7 @@ type OrganizationServiceClient interface {
 	ListTimezone(ctx context.Context, in *ListTimezoneRequest, opts ...grpc.CallOption) (*ListTimezoneResponse, error)
 	GetTimezone(ctx context.Context, in *GetTimezoneRequest, opts ...grpc.CallOption) (*Timezones, error)
 	ListCurrency(ctx context.Context, in *ListCurrencyRequest, opts ...grpc.CallOption) (*ListCurrencyResponse, error)
+	GetOrganizationByDomain(ctx context.Context, in *LookupDomainRequest, opts ...grpc.CallOption) (*Domain, error)
 	// Organization
 	LookupOrganization(ctx context.Context, in *LookupOrganizationRequest, opts ...grpc.CallOption) (*LookupOrganizationResponse, error)
 	CreateOrganization(ctx context.Context, in *CreateOrganizationRequest, opts ...grpc.CallOption) (*Organization, error)
@@ -118,6 +120,15 @@ func (c *organizationServiceClient) GetTimezone(ctx context.Context, in *GetTime
 func (c *organizationServiceClient) ListCurrency(ctx context.Context, in *ListCurrencyRequest, opts ...grpc.CallOption) (*ListCurrencyResponse, error) {
 	out := new(ListCurrencyResponse)
 	err := c.cc.Invoke(ctx, OrganizationService_ListCurrency_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationServiceClient) GetOrganizationByDomain(ctx context.Context, in *LookupDomainRequest, opts ...grpc.CallOption) (*Domain, error) {
+	out := new(Domain)
+	err := c.cc.Invoke(ctx, OrganizationService_GetOrganizationByDomain_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -268,6 +279,7 @@ type OrganizationServiceServer interface {
 	ListTimezone(context.Context, *ListTimezoneRequest) (*ListTimezoneResponse, error)
 	GetTimezone(context.Context, *GetTimezoneRequest) (*Timezones, error)
 	ListCurrency(context.Context, *ListCurrencyRequest) (*ListCurrencyResponse, error)
+	GetOrganizationByDomain(context.Context, *LookupDomainRequest) (*Domain, error)
 	// Organization
 	LookupOrganization(context.Context, *LookupOrganizationRequest) (*LookupOrganizationResponse, error)
 	CreateOrganization(context.Context, *CreateOrganizationRequest) (*Organization, error)
@@ -308,6 +320,9 @@ func (UnimplementedOrganizationServiceServer) GetTimezone(context.Context, *GetT
 }
 func (UnimplementedOrganizationServiceServer) ListCurrency(context.Context, *ListCurrencyRequest) (*ListCurrencyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCurrency not implemented")
+}
+func (UnimplementedOrganizationServiceServer) GetOrganizationByDomain(context.Context, *LookupDomainRequest) (*Domain, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrganizationByDomain not implemented")
 }
 func (UnimplementedOrganizationServiceServer) LookupOrganization(context.Context, *LookupOrganizationRequest) (*LookupOrganizationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LookupOrganization not implemented")
@@ -453,6 +468,24 @@ func _OrganizationService_ListCurrency_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationServiceServer).ListCurrency(ctx, req.(*ListCurrencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrganizationService_GetOrganizationByDomain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LookupDomainRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServiceServer).GetOrganizationByDomain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrganizationService_GetOrganizationByDomain_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServiceServer).GetOrganizationByDomain(ctx, req.(*LookupDomainRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -753,6 +786,10 @@ var OrganizationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListCurrency",
 			Handler:    _OrganizationService_ListCurrency_Handler,
+		},
+		{
+			MethodName: "GetOrganizationByDomain",
+			Handler:    _OrganizationService_GetOrganizationByDomain_Handler,
 		},
 		{
 			MethodName: "LookupOrganization",
