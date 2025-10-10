@@ -81,7 +81,7 @@ func request_DomainService_GetDomain_0(ctx context.Context, marshaler runtime.Ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "domain_id")
 	}
 
-	protoReq.DomainId, err = runtime.String(val)
+	protoReq.DomainId, err = runtime.Int32(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "domain_id", err)
 	}
@@ -107,7 +107,7 @@ func local_request_DomainService_GetDomain_0(ctx context.Context, marshaler runt
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "domain_id")
 	}
 
-	protoReq.DomainId, err = runtime.String(val)
+	protoReq.DomainId, err = runtime.Int32(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "domain_id", err)
 	}
