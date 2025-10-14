@@ -19,13 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RuleService_EvaluateRule_FullMethodName   = "/smallbiznis.rule.v1.RuleService/EvaluateRule"
-	RuleService_EvaluateRules_FullMethodName  = "/smallbiznis.rule.v1.RuleService/EvaluateRules"
 	RuleService_ListRules_FullMethodName      = "/smallbiznis.rule.v1.RuleService/ListRules"
 	RuleService_GetRule_FullMethodName        = "/smallbiznis.rule.v1.RuleService/GetRule"
 	RuleService_CreateRule_FullMethodName     = "/smallbiznis.rule.v1.RuleService/CreateRule"
 	RuleService_UpdateRule_FullMethodName     = "/smallbiznis.rule.v1.RuleService/UpdateRule"
 	RuleService_DeleteRule_FullMethodName     = "/smallbiznis.rule.v1.RuleService/DeleteRule"
+	RuleService_EvaluateRule_FullMethodName   = "/smallbiznis.rule.v1.RuleService/EvaluateRule"
 	RuleService_BatchEvaluate_FullMethodName  = "/smallbiznis.rule.v1.RuleService/BatchEvaluate"
 	RuleService_StreamEvaluate_FullMethodName = "/smallbiznis.rule.v1.RuleService/StreamEvaluate"
 )
@@ -34,16 +33,19 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RuleServiceClient interface {
+	// List all rules for a tenant with pagination
+	ListRules(ctx context.Context, in *ListRulesRequest, opts ...grpc.CallOption) (*ListRulesResponse, error)
+	// Get a single rule by ID
+	GetRule(ctx context.Context, in *GetRuleRequest, opts ...grpc.CallOption) (*GetRuleResponse, error)
+	// Create a new rule
+	CreateRule(ctx context.Context, in *CreateRuleRequest, opts ...grpc.CallOption) (*CreateRuleResponse, error)
+	// Update a rule by ID
+	UpdateRule(ctx context.Context, in *UpdateRuleRequest, opts ...grpc.CallOption) (*UpdateRuleResponse, error)
+	// Delete a rule by ID
+	DeleteRule(ctx context.Context, in *DeleteRuleRequest, opts ...grpc.CallOption) (*DeleteRuleResponse, error)
 	// Evaluate a single rule by ID
 	EvaluateRule(ctx context.Context, in *EvaluateRuleRequest, opts ...grpc.CallOption) (*EvaluateRuleResponse, error)
-	// Evaluate multiple rules in one call
-	EvaluateRules(ctx context.Context, in *EvaluateRulesRequest, opts ...grpc.CallOption) (*EvaluateRulesResponse, error)
-	// CRUD ops (optional for management UI)
-	ListRules(ctx context.Context, in *ListRulesRequest, opts ...grpc.CallOption) (*ListRulesResponse, error)
-	GetRule(ctx context.Context, in *GetRuleRequest, opts ...grpc.CallOption) (*GetRuleResponse, error)
-	CreateRule(ctx context.Context, in *CreateRuleRequest, opts ...grpc.CallOption) (*CreateRuleResponse, error)
-	UpdateRule(ctx context.Context, in *UpdateRuleRequest, opts ...grpc.CallOption) (*UpdateRuleResponse, error)
-	DeleteRule(ctx context.Context, in *DeleteRuleRequest, opts ...grpc.CallOption) (*DeleteRuleResponse, error)
+	// Evaluate multiple rules
 	BatchEvaluate(ctx context.Context, in *BatchEvaluateRequest, opts ...grpc.CallOption) (*BatchEvaluateResponse, error)
 	// Evaluasi batch rules secara streaming (gRPC streaming)
 	StreamEvaluate(ctx context.Context, opts ...grpc.CallOption) (RuleService_StreamEvaluateClient, error)
@@ -55,24 +57,6 @@ type ruleServiceClient struct {
 
 func NewRuleServiceClient(cc grpc.ClientConnInterface) RuleServiceClient {
 	return &ruleServiceClient{cc}
-}
-
-func (c *ruleServiceClient) EvaluateRule(ctx context.Context, in *EvaluateRuleRequest, opts ...grpc.CallOption) (*EvaluateRuleResponse, error) {
-	out := new(EvaluateRuleResponse)
-	err := c.cc.Invoke(ctx, RuleService_EvaluateRule_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *ruleServiceClient) EvaluateRules(ctx context.Context, in *EvaluateRulesRequest, opts ...grpc.CallOption) (*EvaluateRulesResponse, error) {
-	out := new(EvaluateRulesResponse)
-	err := c.cc.Invoke(ctx, RuleService_EvaluateRules_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *ruleServiceClient) ListRules(ctx context.Context, in *ListRulesRequest, opts ...grpc.CallOption) (*ListRulesResponse, error) {
@@ -114,6 +98,15 @@ func (c *ruleServiceClient) UpdateRule(ctx context.Context, in *UpdateRuleReques
 func (c *ruleServiceClient) DeleteRule(ctx context.Context, in *DeleteRuleRequest, opts ...grpc.CallOption) (*DeleteRuleResponse, error) {
 	out := new(DeleteRuleResponse)
 	err := c.cc.Invoke(ctx, RuleService_DeleteRule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ruleServiceClient) EvaluateRule(ctx context.Context, in *EvaluateRuleRequest, opts ...grpc.CallOption) (*EvaluateRuleResponse, error) {
+	out := new(EvaluateRuleResponse)
+	err := c.cc.Invoke(ctx, RuleService_EvaluateRule_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -164,16 +157,19 @@ func (x *ruleServiceStreamEvaluateClient) Recv() (*StreamEvaluateResponse, error
 // All implementations must embed UnimplementedRuleServiceServer
 // for forward compatibility
 type RuleServiceServer interface {
+	// List all rules for a tenant with pagination
+	ListRules(context.Context, *ListRulesRequest) (*ListRulesResponse, error)
+	// Get a single rule by ID
+	GetRule(context.Context, *GetRuleRequest) (*GetRuleResponse, error)
+	// Create a new rule
+	CreateRule(context.Context, *CreateRuleRequest) (*CreateRuleResponse, error)
+	// Update a rule by ID
+	UpdateRule(context.Context, *UpdateRuleRequest) (*UpdateRuleResponse, error)
+	// Delete a rule by ID
+	DeleteRule(context.Context, *DeleteRuleRequest) (*DeleteRuleResponse, error)
 	// Evaluate a single rule by ID
 	EvaluateRule(context.Context, *EvaluateRuleRequest) (*EvaluateRuleResponse, error)
-	// Evaluate multiple rules in one call
-	EvaluateRules(context.Context, *EvaluateRulesRequest) (*EvaluateRulesResponse, error)
-	// CRUD ops (optional for management UI)
-	ListRules(context.Context, *ListRulesRequest) (*ListRulesResponse, error)
-	GetRule(context.Context, *GetRuleRequest) (*GetRuleResponse, error)
-	CreateRule(context.Context, *CreateRuleRequest) (*CreateRuleResponse, error)
-	UpdateRule(context.Context, *UpdateRuleRequest) (*UpdateRuleResponse, error)
-	DeleteRule(context.Context, *DeleteRuleRequest) (*DeleteRuleResponse, error)
+	// Evaluate multiple rules
 	BatchEvaluate(context.Context, *BatchEvaluateRequest) (*BatchEvaluateResponse, error)
 	// Evaluasi batch rules secara streaming (gRPC streaming)
 	StreamEvaluate(RuleService_StreamEvaluateServer) error
@@ -184,12 +180,6 @@ type RuleServiceServer interface {
 type UnimplementedRuleServiceServer struct {
 }
 
-func (UnimplementedRuleServiceServer) EvaluateRule(context.Context, *EvaluateRuleRequest) (*EvaluateRuleResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method EvaluateRule not implemented")
-}
-func (UnimplementedRuleServiceServer) EvaluateRules(context.Context, *EvaluateRulesRequest) (*EvaluateRulesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method EvaluateRules not implemented")
-}
 func (UnimplementedRuleServiceServer) ListRules(context.Context, *ListRulesRequest) (*ListRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRules not implemented")
 }
@@ -204,6 +194,9 @@ func (UnimplementedRuleServiceServer) UpdateRule(context.Context, *UpdateRuleReq
 }
 func (UnimplementedRuleServiceServer) DeleteRule(context.Context, *DeleteRuleRequest) (*DeleteRuleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRule not implemented")
+}
+func (UnimplementedRuleServiceServer) EvaluateRule(context.Context, *EvaluateRuleRequest) (*EvaluateRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EvaluateRule not implemented")
 }
 func (UnimplementedRuleServiceServer) BatchEvaluate(context.Context, *BatchEvaluateRequest) (*BatchEvaluateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchEvaluate not implemented")
@@ -222,42 +215,6 @@ type UnsafeRuleServiceServer interface {
 
 func RegisterRuleServiceServer(s grpc.ServiceRegistrar, srv RuleServiceServer) {
 	s.RegisterService(&RuleService_ServiceDesc, srv)
-}
-
-func _RuleService_EvaluateRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EvaluateRuleRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RuleServiceServer).EvaluateRule(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RuleService_EvaluateRule_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RuleServiceServer).EvaluateRule(ctx, req.(*EvaluateRuleRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RuleService_EvaluateRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EvaluateRulesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RuleServiceServer).EvaluateRules(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RuleService_EvaluateRules_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RuleServiceServer).EvaluateRules(ctx, req.(*EvaluateRulesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _RuleService_ListRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -350,6 +307,24 @@ func _RuleService_DeleteRule_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RuleService_EvaluateRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EvaluateRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RuleServiceServer).EvaluateRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RuleService_EvaluateRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RuleServiceServer).EvaluateRule(ctx, req.(*EvaluateRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RuleService_BatchEvaluate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BatchEvaluateRequest)
 	if err := dec(in); err != nil {
@@ -402,14 +377,6 @@ var RuleService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*RuleServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "EvaluateRule",
-			Handler:    _RuleService_EvaluateRule_Handler,
-		},
-		{
-			MethodName: "EvaluateRules",
-			Handler:    _RuleService_EvaluateRules_Handler,
-		},
-		{
 			MethodName: "ListRules",
 			Handler:    _RuleService_ListRules_Handler,
 		},
@@ -428,6 +395,10 @@ var RuleService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteRule",
 			Handler:    _RuleService_DeleteRule_Handler,
+		},
+		{
+			MethodName: "EvaluateRule",
+			Handler:    _RuleService_EvaluateRule_Handler,
 		},
 		{
 			MethodName: "BatchEvaluate",
