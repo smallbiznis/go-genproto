@@ -19,24 +19,30 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	VoucherService_CreateVoucher_FullMethodName = "/smallbiznis.voucher.v1.VoucherService/CreateVoucher"
-	VoucherService_GetVoucher_FullMethodName    = "/smallbiznis.voucher.v1.VoucherService/GetVoucher"
-	VoucherService_ListVouchers_FullMethodName  = "/smallbiznis.voucher.v1.VoucherService/ListVouchers"
-	VoucherService_UpdateVoucher_FullMethodName = "/smallbiznis.voucher.v1.VoucherService/UpdateVoucher"
-	VoucherService_DeleteVoucher_FullMethodName = "/smallbiznis.voucher.v1.VoucherService/DeleteVoucher"
-	VoucherService_RedeemVoucher_FullMethodName = "/smallbiznis.voucher.v1.VoucherService/RedeemVoucher"
+	VoucherService_CreateVoucher_FullMethodName    = "/smallbiznis.voucher.v1.VoucherService/CreateVoucher"
+	VoucherService_GetVoucher_FullMethodName       = "/smallbiznis.voucher.v1.VoucherService/GetVoucher"
+	VoucherService_ListVouchers_FullMethodName     = "/smallbiznis.voucher.v1.VoucherService/ListVouchers"
+	VoucherService_EvaluateVouchers_FullMethodName = "/smallbiznis.voucher.v1.VoucherService/EvaluateVouchers"
+	VoucherService_IssueVoucher_FullMethodName     = "/smallbiznis.voucher.v1.VoucherService/IssueVoucher"
+	VoucherService_RedeemVoucher_FullMethodName    = "/smallbiznis.voucher.v1.VoucherService/RedeemVoucher"
 )
 
 // VoucherServiceClient is the client API for VoucherService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VoucherServiceClient interface {
+	// Create a new voucher.
 	CreateVoucher(ctx context.Context, in *CreateVoucherRequest, opts ...grpc.CallOption) (*Voucher, error)
+	// Get a voucher by code.
 	GetVoucher(ctx context.Context, in *GetVoucherRequest, opts ...grpc.CallOption) (*Voucher, error)
+	// List vouchers (with optional filters)
 	ListVouchers(ctx context.Context, in *ListVouchersRequest, opts ...grpc.CallOption) (*ListVouchersResponse, error)
-	UpdateVoucher(ctx context.Context, in *UpdateVoucherRequest, opts ...grpc.CallOption) (*Voucher, error)
-	DeleteVoucher(ctx context.Context, in *DeleteVoucherRequest, opts ...grpc.CallOption) (*DeleteVoucherResponse, error)
-	RedeemVoucher(ctx context.Context, in *RedeemVoucherRequest, opts ...grpc.CallOption) (*RedeemVoucherResponse, error)
+	// Evaluate eligibility of vouchers based on DSL expression.
+	EvaluateVouchers(ctx context.Context, in *EvaluateVouchersRequest, opts ...grpc.CallOption) (*EvaluateVouchersResponse, error)
+	// Issue voucher to a user (atomic issuance).
+	IssueVoucher(ctx context.Context, in *IssueVoucherRequest, opts ...grpc.CallOption) (*VoucherIssuance, error)
+	// Redeem a voucher (mark as used).
+	RedeemVoucher(ctx context.Context, in *RedeemVoucherRequest, opts ...grpc.CallOption) (*VoucherIssuance, error)
 }
 
 type voucherServiceClient struct {
@@ -74,26 +80,26 @@ func (c *voucherServiceClient) ListVouchers(ctx context.Context, in *ListVoucher
 	return out, nil
 }
 
-func (c *voucherServiceClient) UpdateVoucher(ctx context.Context, in *UpdateVoucherRequest, opts ...grpc.CallOption) (*Voucher, error) {
-	out := new(Voucher)
-	err := c.cc.Invoke(ctx, VoucherService_UpdateVoucher_FullMethodName, in, out, opts...)
+func (c *voucherServiceClient) EvaluateVouchers(ctx context.Context, in *EvaluateVouchersRequest, opts ...grpc.CallOption) (*EvaluateVouchersResponse, error) {
+	out := new(EvaluateVouchersResponse)
+	err := c.cc.Invoke(ctx, VoucherService_EvaluateVouchers_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *voucherServiceClient) DeleteVoucher(ctx context.Context, in *DeleteVoucherRequest, opts ...grpc.CallOption) (*DeleteVoucherResponse, error) {
-	out := new(DeleteVoucherResponse)
-	err := c.cc.Invoke(ctx, VoucherService_DeleteVoucher_FullMethodName, in, out, opts...)
+func (c *voucherServiceClient) IssueVoucher(ctx context.Context, in *IssueVoucherRequest, opts ...grpc.CallOption) (*VoucherIssuance, error) {
+	out := new(VoucherIssuance)
+	err := c.cc.Invoke(ctx, VoucherService_IssueVoucher_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *voucherServiceClient) RedeemVoucher(ctx context.Context, in *RedeemVoucherRequest, opts ...grpc.CallOption) (*RedeemVoucherResponse, error) {
-	out := new(RedeemVoucherResponse)
+func (c *voucherServiceClient) RedeemVoucher(ctx context.Context, in *RedeemVoucherRequest, opts ...grpc.CallOption) (*VoucherIssuance, error) {
+	out := new(VoucherIssuance)
 	err := c.cc.Invoke(ctx, VoucherService_RedeemVoucher_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -105,12 +111,18 @@ func (c *voucherServiceClient) RedeemVoucher(ctx context.Context, in *RedeemVouc
 // All implementations must embed UnimplementedVoucherServiceServer
 // for forward compatibility
 type VoucherServiceServer interface {
+	// Create a new voucher.
 	CreateVoucher(context.Context, *CreateVoucherRequest) (*Voucher, error)
+	// Get a voucher by code.
 	GetVoucher(context.Context, *GetVoucherRequest) (*Voucher, error)
+	// List vouchers (with optional filters)
 	ListVouchers(context.Context, *ListVouchersRequest) (*ListVouchersResponse, error)
-	UpdateVoucher(context.Context, *UpdateVoucherRequest) (*Voucher, error)
-	DeleteVoucher(context.Context, *DeleteVoucherRequest) (*DeleteVoucherResponse, error)
-	RedeemVoucher(context.Context, *RedeemVoucherRequest) (*RedeemVoucherResponse, error)
+	// Evaluate eligibility of vouchers based on DSL expression.
+	EvaluateVouchers(context.Context, *EvaluateVouchersRequest) (*EvaluateVouchersResponse, error)
+	// Issue voucher to a user (atomic issuance).
+	IssueVoucher(context.Context, *IssueVoucherRequest) (*VoucherIssuance, error)
+	// Redeem a voucher (mark as used).
+	RedeemVoucher(context.Context, *RedeemVoucherRequest) (*VoucherIssuance, error)
 	mustEmbedUnimplementedVoucherServiceServer()
 }
 
@@ -127,13 +139,13 @@ func (UnimplementedVoucherServiceServer) GetVoucher(context.Context, *GetVoucher
 func (UnimplementedVoucherServiceServer) ListVouchers(context.Context, *ListVouchersRequest) (*ListVouchersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListVouchers not implemented")
 }
-func (UnimplementedVoucherServiceServer) UpdateVoucher(context.Context, *UpdateVoucherRequest) (*Voucher, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateVoucher not implemented")
+func (UnimplementedVoucherServiceServer) EvaluateVouchers(context.Context, *EvaluateVouchersRequest) (*EvaluateVouchersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EvaluateVouchers not implemented")
 }
-func (UnimplementedVoucherServiceServer) DeleteVoucher(context.Context, *DeleteVoucherRequest) (*DeleteVoucherResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteVoucher not implemented")
+func (UnimplementedVoucherServiceServer) IssueVoucher(context.Context, *IssueVoucherRequest) (*VoucherIssuance, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IssueVoucher not implemented")
 }
-func (UnimplementedVoucherServiceServer) RedeemVoucher(context.Context, *RedeemVoucherRequest) (*RedeemVoucherResponse, error) {
+func (UnimplementedVoucherServiceServer) RedeemVoucher(context.Context, *RedeemVoucherRequest) (*VoucherIssuance, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RedeemVoucher not implemented")
 }
 func (UnimplementedVoucherServiceServer) mustEmbedUnimplementedVoucherServiceServer() {}
@@ -203,38 +215,38 @@ func _VoucherService_ListVouchers_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VoucherService_UpdateVoucher_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateVoucherRequest)
+func _VoucherService_EvaluateVouchers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EvaluateVouchersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VoucherServiceServer).UpdateVoucher(ctx, in)
+		return srv.(VoucherServiceServer).EvaluateVouchers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VoucherService_UpdateVoucher_FullMethodName,
+		FullMethod: VoucherService_EvaluateVouchers_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VoucherServiceServer).UpdateVoucher(ctx, req.(*UpdateVoucherRequest))
+		return srv.(VoucherServiceServer).EvaluateVouchers(ctx, req.(*EvaluateVouchersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VoucherService_DeleteVoucher_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteVoucherRequest)
+func _VoucherService_IssueVoucher_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IssueVoucherRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VoucherServiceServer).DeleteVoucher(ctx, in)
+		return srv.(VoucherServiceServer).IssueVoucher(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VoucherService_DeleteVoucher_FullMethodName,
+		FullMethod: VoucherService_IssueVoucher_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VoucherServiceServer).DeleteVoucher(ctx, req.(*DeleteVoucherRequest))
+		return srv.(VoucherServiceServer).IssueVoucher(ctx, req.(*IssueVoucherRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -277,12 +289,12 @@ var VoucherService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _VoucherService_ListVouchers_Handler,
 		},
 		{
-			MethodName: "UpdateVoucher",
-			Handler:    _VoucherService_UpdateVoucher_Handler,
+			MethodName: "EvaluateVouchers",
+			Handler:    _VoucherService_EvaluateVouchers_Handler,
 		},
 		{
-			MethodName: "DeleteVoucher",
-			Handler:    _VoucherService_DeleteVoucher_Handler,
+			MethodName: "IssueVoucher",
+			Handler:    _VoucherService_IssueVoucher_Handler,
 		},
 		{
 			MethodName: "RedeemVoucher",
