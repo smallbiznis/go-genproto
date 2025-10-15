@@ -25,24 +25,27 @@ const (
 	VoucherService_EvaluateVouchers_FullMethodName = "/smallbiznis.voucher.v1.VoucherService/EvaluateVouchers"
 	VoucherService_IssueVoucher_FullMethodName     = "/smallbiznis.voucher.v1.VoucherService/IssueVoucher"
 	VoucherService_RedeemVoucher_FullMethodName    = "/smallbiznis.voucher.v1.VoucherService/RedeemVoucher"
+	VoucherService_ListMyVouchers_FullMethodName   = "/smallbiznis.voucher.v1.VoucherService/ListMyVouchers"
 )
 
 // VoucherServiceClient is the client API for VoucherService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VoucherServiceClient interface {
-	// Create a new voucher.
+	// Create a new voucher (admin only)
 	CreateVoucher(ctx context.Context, in *CreateVoucherRequest, opts ...grpc.CallOption) (*Voucher, error)
-	// Get a voucher by code.
+	// Get a voucher by its unique code
 	GetVoucher(ctx context.Context, in *GetVoucherRequest, opts ...grpc.CallOption) (*Voucher, error)
-	// List vouchers (with optional filters)
+	// List vouchers for tenant (with optional filters)
 	ListVouchers(ctx context.Context, in *ListVouchersRequest, opts ...grpc.CallOption) (*ListVouchersResponse, error)
-	// Evaluate eligibility of vouchers based on DSL expression.
+	// Evaluate voucher eligibility using DSL/CEL
 	EvaluateVouchers(ctx context.Context, in *EvaluateVouchersRequest, opts ...grpc.CallOption) (*EvaluateVouchersResponse, error)
-	// Issue voucher to a user (atomic issuance).
+	// Issue voucher to a specific user (manual or auto)
 	IssueVoucher(ctx context.Context, in *IssueVoucherRequest, opts ...grpc.CallOption) (*VoucherIssuance, error)
-	// Redeem a voucher (mark as used).
+	// Redeem voucher (mark as used)
 	RedeemVoucher(ctx context.Context, in *RedeemVoucherRequest, opts ...grpc.CallOption) (*VoucherIssuance, error)
+	// List all vouchers issued to a user
+	ListMyVouchers(ctx context.Context, in *ListMyVouchersRequest, opts ...grpc.CallOption) (*ListMyVouchersResponse, error)
 }
 
 type voucherServiceClient struct {
@@ -107,22 +110,33 @@ func (c *voucherServiceClient) RedeemVoucher(ctx context.Context, in *RedeemVouc
 	return out, nil
 }
 
+func (c *voucherServiceClient) ListMyVouchers(ctx context.Context, in *ListMyVouchersRequest, opts ...grpc.CallOption) (*ListMyVouchersResponse, error) {
+	out := new(ListMyVouchersResponse)
+	err := c.cc.Invoke(ctx, VoucherService_ListMyVouchers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VoucherServiceServer is the server API for VoucherService service.
 // All implementations must embed UnimplementedVoucherServiceServer
 // for forward compatibility
 type VoucherServiceServer interface {
-	// Create a new voucher.
+	// Create a new voucher (admin only)
 	CreateVoucher(context.Context, *CreateVoucherRequest) (*Voucher, error)
-	// Get a voucher by code.
+	// Get a voucher by its unique code
 	GetVoucher(context.Context, *GetVoucherRequest) (*Voucher, error)
-	// List vouchers (with optional filters)
+	// List vouchers for tenant (with optional filters)
 	ListVouchers(context.Context, *ListVouchersRequest) (*ListVouchersResponse, error)
-	// Evaluate eligibility of vouchers based on DSL expression.
+	// Evaluate voucher eligibility using DSL/CEL
 	EvaluateVouchers(context.Context, *EvaluateVouchersRequest) (*EvaluateVouchersResponse, error)
-	// Issue voucher to a user (atomic issuance).
+	// Issue voucher to a specific user (manual or auto)
 	IssueVoucher(context.Context, *IssueVoucherRequest) (*VoucherIssuance, error)
-	// Redeem a voucher (mark as used).
+	// Redeem voucher (mark as used)
 	RedeemVoucher(context.Context, *RedeemVoucherRequest) (*VoucherIssuance, error)
+	// List all vouchers issued to a user
+	ListMyVouchers(context.Context, *ListMyVouchersRequest) (*ListMyVouchersResponse, error)
 	mustEmbedUnimplementedVoucherServiceServer()
 }
 
@@ -147,6 +161,9 @@ func (UnimplementedVoucherServiceServer) IssueVoucher(context.Context, *IssueVou
 }
 func (UnimplementedVoucherServiceServer) RedeemVoucher(context.Context, *RedeemVoucherRequest) (*VoucherIssuance, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RedeemVoucher not implemented")
+}
+func (UnimplementedVoucherServiceServer) ListMyVouchers(context.Context, *ListMyVouchersRequest) (*ListMyVouchersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListMyVouchers not implemented")
 }
 func (UnimplementedVoucherServiceServer) mustEmbedUnimplementedVoucherServiceServer() {}
 
@@ -269,6 +286,24 @@ func _VoucherService_RedeemVoucher_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VoucherService_ListMyVouchers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMyVouchersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VoucherServiceServer).ListMyVouchers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VoucherService_ListMyVouchers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VoucherServiceServer).ListMyVouchers(ctx, req.(*ListMyVouchersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VoucherService_ServiceDesc is the grpc.ServiceDesc for VoucherService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -299,6 +334,10 @@ var VoucherService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RedeemVoucher",
 			Handler:    _VoucherService_RedeemVoucher_Handler,
+		},
+		{
+			MethodName: "ListMyVouchers",
+			Handler:    _VoucherService_ListMyVouchers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
