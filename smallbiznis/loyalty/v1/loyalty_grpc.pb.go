@@ -21,10 +21,10 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	PointService_Earning_FullMethodName            = "/smallbiznis.loyalty.v1.PointService/Earning"
 	PointService_GetEarning_FullMethodName         = "/smallbiznis.loyalty.v1.PointService/GetEarning"
+	PointService_EarningPreview_FullMethodName     = "/smallbiznis.loyalty.v1.PointService/EarningPreview"
 	PointService_ValidateRedemption_FullMethodName = "/smallbiznis.loyalty.v1.PointService/ValidateRedemption"
 	PointService_Redemption_FullMethodName         = "/smallbiznis.loyalty.v1.PointService/Redemption"
 	PointService_GetRedemption_FullMethodName      = "/smallbiznis.loyalty.v1.PointService/GetRedemption"
-	PointService_EarningPreview_FullMethodName     = "/smallbiznis.loyalty.v1.PointService/EarningPreview"
 )
 
 // PointServiceClient is the client API for PointService service.
@@ -33,10 +33,10 @@ const (
 type PointServiceClient interface {
 	Earning(ctx context.Context, in *EarningRequest, opts ...grpc.CallOption) (*EarningResponse, error)
 	GetEarning(ctx context.Context, in *StatusEarningRequest, opts ...grpc.CallOption) (*StatusEarningResponse, error)
+	EarningPreview(ctx context.Context, in *EarningPreviewRequest, opts ...grpc.CallOption) (*EarningPreviewResponse, error)
 	ValidateRedemption(ctx context.Context, in *RedeemValidationRequest, opts ...grpc.CallOption) (*RedeemValidationResponse, error)
 	Redemption(ctx context.Context, in *RedeemRequest, opts ...grpc.CallOption) (*RedeemResponse, error)
 	GetRedemption(ctx context.Context, in *StatusRedeemRequest, opts ...grpc.CallOption) (*StatusRedeemResponse, error)
-	EarningPreview(ctx context.Context, in *EarningPreviewRequest, opts ...grpc.CallOption) (*EarningPreviewResponse, error)
 }
 
 type pointServiceClient struct {
@@ -59,6 +59,15 @@ func (c *pointServiceClient) Earning(ctx context.Context, in *EarningRequest, op
 func (c *pointServiceClient) GetEarning(ctx context.Context, in *StatusEarningRequest, opts ...grpc.CallOption) (*StatusEarningResponse, error) {
 	out := new(StatusEarningResponse)
 	err := c.cc.Invoke(ctx, PointService_GetEarning_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pointServiceClient) EarningPreview(ctx context.Context, in *EarningPreviewRequest, opts ...grpc.CallOption) (*EarningPreviewResponse, error) {
+	out := new(EarningPreviewResponse)
+	err := c.cc.Invoke(ctx, PointService_EarningPreview_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -92,25 +101,16 @@ func (c *pointServiceClient) GetRedemption(ctx context.Context, in *StatusRedeem
 	return out, nil
 }
 
-func (c *pointServiceClient) EarningPreview(ctx context.Context, in *EarningPreviewRequest, opts ...grpc.CallOption) (*EarningPreviewResponse, error) {
-	out := new(EarningPreviewResponse)
-	err := c.cc.Invoke(ctx, PointService_EarningPreview_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // PointServiceServer is the server API for PointService service.
 // All implementations must embed UnimplementedPointServiceServer
 // for forward compatibility
 type PointServiceServer interface {
 	Earning(context.Context, *EarningRequest) (*EarningResponse, error)
 	GetEarning(context.Context, *StatusEarningRequest) (*StatusEarningResponse, error)
+	EarningPreview(context.Context, *EarningPreviewRequest) (*EarningPreviewResponse, error)
 	ValidateRedemption(context.Context, *RedeemValidationRequest) (*RedeemValidationResponse, error)
 	Redemption(context.Context, *RedeemRequest) (*RedeemResponse, error)
 	GetRedemption(context.Context, *StatusRedeemRequest) (*StatusRedeemResponse, error)
-	EarningPreview(context.Context, *EarningPreviewRequest) (*EarningPreviewResponse, error)
 	mustEmbedUnimplementedPointServiceServer()
 }
 
@@ -124,6 +124,9 @@ func (UnimplementedPointServiceServer) Earning(context.Context, *EarningRequest)
 func (UnimplementedPointServiceServer) GetEarning(context.Context, *StatusEarningRequest) (*StatusEarningResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEarning not implemented")
 }
+func (UnimplementedPointServiceServer) EarningPreview(context.Context, *EarningPreviewRequest) (*EarningPreviewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EarningPreview not implemented")
+}
 func (UnimplementedPointServiceServer) ValidateRedemption(context.Context, *RedeemValidationRequest) (*RedeemValidationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateRedemption not implemented")
 }
@@ -132,9 +135,6 @@ func (UnimplementedPointServiceServer) Redemption(context.Context, *RedeemReques
 }
 func (UnimplementedPointServiceServer) GetRedemption(context.Context, *StatusRedeemRequest) (*StatusRedeemResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRedemption not implemented")
-}
-func (UnimplementedPointServiceServer) EarningPreview(context.Context, *EarningPreviewRequest) (*EarningPreviewResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method EarningPreview not implemented")
 }
 func (UnimplementedPointServiceServer) mustEmbedUnimplementedPointServiceServer() {}
 
@@ -181,6 +181,24 @@ func _PointService_GetEarning_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PointServiceServer).GetEarning(ctx, req.(*StatusEarningRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PointService_EarningPreview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EarningPreviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PointServiceServer).EarningPreview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PointService_EarningPreview_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PointServiceServer).EarningPreview(ctx, req.(*EarningPreviewRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -239,24 +257,6 @@ func _PointService_GetRedemption_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PointService_EarningPreview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EarningPreviewRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PointServiceServer).EarningPreview(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PointService_EarningPreview_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PointServiceServer).EarningPreview(ctx, req.(*EarningPreviewRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // PointService_ServiceDesc is the grpc.ServiceDesc for PointService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -273,6 +273,10 @@ var PointService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PointService_GetEarning_Handler,
 		},
 		{
+			MethodName: "EarningPreview",
+			Handler:    _PointService_EarningPreview_Handler,
+		},
+		{
 			MethodName: "ValidateRedemption",
 			Handler:    _PointService_ValidateRedemption_Handler,
 		},
@@ -283,10 +287,6 @@ var PointService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRedemption",
 			Handler:    _PointService_GetRedemption_Handler,
-		},
-		{
-			MethodName: "EarningPreview",
-			Handler:    _PointService_EarningPreview_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
