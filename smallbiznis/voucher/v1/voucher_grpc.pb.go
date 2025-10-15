@@ -19,6 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	VoucherService_ListCampaigns_FullMethodName    = "/smallbiznis.voucher.v1.VoucherService/ListCampaigns"
+	VoucherService_GetCampaign_FullMethodName      = "/smallbiznis.voucher.v1.VoucherService/GetCampaign"
 	VoucherService_CreateVoucher_FullMethodName    = "/smallbiznis.voucher.v1.VoucherService/CreateVoucher"
 	VoucherService_GetVoucher_FullMethodName       = "/smallbiznis.voucher.v1.VoucherService/GetVoucher"
 	VoucherService_ListVouchers_FullMethodName     = "/smallbiznis.voucher.v1.VoucherService/ListVouchers"
@@ -32,6 +34,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VoucherServiceClient interface {
+	// List voucher campaigns (for evaluation or admin)
+	ListCampaigns(ctx context.Context, in *ListCampaignsRequest, opts ...grpc.CallOption) (*ListCampaignsResponse, error)
+	// Get single campaign details by code or id
+	GetCampaign(ctx context.Context, in *GetCampaignRequest, opts ...grpc.CallOption) (*VoucherCampaign, error)
 	// Create a new voucher (admin only)
 	CreateVoucher(ctx context.Context, in *CreateVoucherRequest, opts ...grpc.CallOption) (*Voucher, error)
 	// Get a voucher by its unique code
@@ -54,6 +60,24 @@ type voucherServiceClient struct {
 
 func NewVoucherServiceClient(cc grpc.ClientConnInterface) VoucherServiceClient {
 	return &voucherServiceClient{cc}
+}
+
+func (c *voucherServiceClient) ListCampaigns(ctx context.Context, in *ListCampaignsRequest, opts ...grpc.CallOption) (*ListCampaignsResponse, error) {
+	out := new(ListCampaignsResponse)
+	err := c.cc.Invoke(ctx, VoucherService_ListCampaigns_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *voucherServiceClient) GetCampaign(ctx context.Context, in *GetCampaignRequest, opts ...grpc.CallOption) (*VoucherCampaign, error) {
+	out := new(VoucherCampaign)
+	err := c.cc.Invoke(ctx, VoucherService_GetCampaign_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *voucherServiceClient) CreateVoucher(ctx context.Context, in *CreateVoucherRequest, opts ...grpc.CallOption) (*Voucher, error) {
@@ -123,6 +147,10 @@ func (c *voucherServiceClient) ListMyVouchers(ctx context.Context, in *ListMyVou
 // All implementations must embed UnimplementedVoucherServiceServer
 // for forward compatibility
 type VoucherServiceServer interface {
+	// List voucher campaigns (for evaluation or admin)
+	ListCampaigns(context.Context, *ListCampaignsRequest) (*ListCampaignsResponse, error)
+	// Get single campaign details by code or id
+	GetCampaign(context.Context, *GetCampaignRequest) (*VoucherCampaign, error)
 	// Create a new voucher (admin only)
 	CreateVoucher(context.Context, *CreateVoucherRequest) (*Voucher, error)
 	// Get a voucher by its unique code
@@ -144,6 +172,12 @@ type VoucherServiceServer interface {
 type UnimplementedVoucherServiceServer struct {
 }
 
+func (UnimplementedVoucherServiceServer) ListCampaigns(context.Context, *ListCampaignsRequest) (*ListCampaignsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCampaigns not implemented")
+}
+func (UnimplementedVoucherServiceServer) GetCampaign(context.Context, *GetCampaignRequest) (*VoucherCampaign, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCampaign not implemented")
+}
 func (UnimplementedVoucherServiceServer) CreateVoucher(context.Context, *CreateVoucherRequest) (*Voucher, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateVoucher not implemented")
 }
@@ -176,6 +210,42 @@ type UnsafeVoucherServiceServer interface {
 
 func RegisterVoucherServiceServer(s grpc.ServiceRegistrar, srv VoucherServiceServer) {
 	s.RegisterService(&VoucherService_ServiceDesc, srv)
+}
+
+func _VoucherService_ListCampaigns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCampaignsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VoucherServiceServer).ListCampaigns(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VoucherService_ListCampaigns_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VoucherServiceServer).ListCampaigns(ctx, req.(*ListCampaignsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VoucherService_GetCampaign_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCampaignRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VoucherServiceServer).GetCampaign(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VoucherService_GetCampaign_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VoucherServiceServer).GetCampaign(ctx, req.(*GetCampaignRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _VoucherService_CreateVoucher_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -311,6 +381,14 @@ var VoucherService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.voucher.v1.VoucherService",
 	HandlerType: (*VoucherServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListCampaigns",
+			Handler:    _VoucherService_ListCampaigns_Handler,
+		},
+		{
+			MethodName: "GetCampaign",
+			Handler:    _VoucherService_GetCampaign_Handler,
+		},
 		{
 			MethodName: "CreateVoucher",
 			Handler:    _VoucherService_CreateVoucher_Handler,
