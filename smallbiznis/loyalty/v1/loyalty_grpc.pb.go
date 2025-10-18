@@ -19,6 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	PointService_GetBalance_FullMethodName         = "/smallbiznis.loyalty.v1.PointService/GetBalance"
+	PointService_GetExpiringPoints_FullMethodName  = "/smallbiznis.loyalty.v1.PointService/GetExpiringPoints"
 	PointService_Earning_FullMethodName            = "/smallbiznis.loyalty.v1.PointService/Earning"
 	PointService_GetEarning_FullMethodName         = "/smallbiznis.loyalty.v1.PointService/GetEarning"
 	PointService_EarningPreview_FullMethodName     = "/smallbiznis.loyalty.v1.PointService/EarningPreview"
@@ -31,6 +33,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PointServiceClient interface {
+	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error)
+	GetExpiringPoints(ctx context.Context, in *GetExpiringPointsRequest, opts ...grpc.CallOption) (*GetExpiringPointsResponse, error)
 	Earning(ctx context.Context, in *EarningRequest, opts ...grpc.CallOption) (*EarningResponse, error)
 	GetEarning(ctx context.Context, in *StatusEarningRequest, opts ...grpc.CallOption) (*StatusEarningResponse, error)
 	EarningPreview(ctx context.Context, in *EarningPreviewRequest, opts ...grpc.CallOption) (*EarningPreviewResponse, error)
@@ -45,6 +49,24 @@ type pointServiceClient struct {
 
 func NewPointServiceClient(cc grpc.ClientConnInterface) PointServiceClient {
 	return &pointServiceClient{cc}
+}
+
+func (c *pointServiceClient) GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error) {
+	out := new(GetBalanceResponse)
+	err := c.cc.Invoke(ctx, PointService_GetBalance_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pointServiceClient) GetExpiringPoints(ctx context.Context, in *GetExpiringPointsRequest, opts ...grpc.CallOption) (*GetExpiringPointsResponse, error) {
+	out := new(GetExpiringPointsResponse)
+	err := c.cc.Invoke(ctx, PointService_GetExpiringPoints_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *pointServiceClient) Earning(ctx context.Context, in *EarningRequest, opts ...grpc.CallOption) (*EarningResponse, error) {
@@ -105,6 +127,8 @@ func (c *pointServiceClient) GetRedemption(ctx context.Context, in *StatusRedeem
 // All implementations must embed UnimplementedPointServiceServer
 // for forward compatibility
 type PointServiceServer interface {
+	GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error)
+	GetExpiringPoints(context.Context, *GetExpiringPointsRequest) (*GetExpiringPointsResponse, error)
 	Earning(context.Context, *EarningRequest) (*EarningResponse, error)
 	GetEarning(context.Context, *StatusEarningRequest) (*StatusEarningResponse, error)
 	EarningPreview(context.Context, *EarningPreviewRequest) (*EarningPreviewResponse, error)
@@ -118,6 +142,12 @@ type PointServiceServer interface {
 type UnimplementedPointServiceServer struct {
 }
 
+func (UnimplementedPointServiceServer) GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBalance not implemented")
+}
+func (UnimplementedPointServiceServer) GetExpiringPoints(context.Context, *GetExpiringPointsRequest) (*GetExpiringPointsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetExpiringPoints not implemented")
+}
 func (UnimplementedPointServiceServer) Earning(context.Context, *EarningRequest) (*EarningResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Earning not implemented")
 }
@@ -147,6 +177,42 @@ type UnsafePointServiceServer interface {
 
 func RegisterPointServiceServer(s grpc.ServiceRegistrar, srv PointServiceServer) {
 	s.RegisterService(&PointService_ServiceDesc, srv)
+}
+
+func _PointService_GetBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBalanceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PointServiceServer).GetBalance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PointService_GetBalance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PointServiceServer).GetBalance(ctx, req.(*GetBalanceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PointService_GetExpiringPoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetExpiringPointsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PointServiceServer).GetExpiringPoints(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PointService_GetExpiringPoints_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PointServiceServer).GetExpiringPoints(ctx, req.(*GetExpiringPointsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _PointService_Earning_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -264,6 +330,14 @@ var PointService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.loyalty.v1.PointService",
 	HandlerType: (*PointServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetBalance",
+			Handler:    _PointService_GetBalance_Handler,
+		},
+		{
+			MethodName: "GetExpiringPoints",
+			Handler:    _PointService_GetExpiringPoints_Handler,
+		},
 		{
 			MethodName: "Earning",
 			Handler:    _PointService_Earning_Handler,
