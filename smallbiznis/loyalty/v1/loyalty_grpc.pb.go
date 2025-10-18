@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	PointService_GetBalance_FullMethodName         = "/smallbiznis.loyalty.v1.PointService/GetBalance"
+	PointService_RunExpiryJob_FullMethodName       = "/smallbiznis.loyalty.v1.PointService/RunExpiryJob"
 	PointService_GetExpiringPoints_FullMethodName  = "/smallbiznis.loyalty.v1.PointService/GetExpiringPoints"
 	PointService_Earning_FullMethodName            = "/smallbiznis.loyalty.v1.PointService/Earning"
 	PointService_GetEarning_FullMethodName         = "/smallbiznis.loyalty.v1.PointService/GetEarning"
@@ -34,6 +35,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PointServiceClient interface {
 	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error)
+	RunExpiryJob(ctx context.Context, in *RunExpiryJobRequest, opts ...grpc.CallOption) (*RunExpiryJobResponse, error)
 	GetExpiringPoints(ctx context.Context, in *GetExpiringPointsRequest, opts ...grpc.CallOption) (*GetExpiringPointsResponse, error)
 	Earning(ctx context.Context, in *EarningRequest, opts ...grpc.CallOption) (*EarningResponse, error)
 	GetEarning(ctx context.Context, in *StatusEarningRequest, opts ...grpc.CallOption) (*StatusEarningResponse, error)
@@ -54,6 +56,15 @@ func NewPointServiceClient(cc grpc.ClientConnInterface) PointServiceClient {
 func (c *pointServiceClient) GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error) {
 	out := new(GetBalanceResponse)
 	err := c.cc.Invoke(ctx, PointService_GetBalance_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pointServiceClient) RunExpiryJob(ctx context.Context, in *RunExpiryJobRequest, opts ...grpc.CallOption) (*RunExpiryJobResponse, error) {
+	out := new(RunExpiryJobResponse)
+	err := c.cc.Invoke(ctx, PointService_RunExpiryJob_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -128,6 +139,7 @@ func (c *pointServiceClient) GetRedemption(ctx context.Context, in *StatusRedeem
 // for forward compatibility
 type PointServiceServer interface {
 	GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error)
+	RunExpiryJob(context.Context, *RunExpiryJobRequest) (*RunExpiryJobResponse, error)
 	GetExpiringPoints(context.Context, *GetExpiringPointsRequest) (*GetExpiringPointsResponse, error)
 	Earning(context.Context, *EarningRequest) (*EarningResponse, error)
 	GetEarning(context.Context, *StatusEarningRequest) (*StatusEarningResponse, error)
@@ -144,6 +156,9 @@ type UnimplementedPointServiceServer struct {
 
 func (UnimplementedPointServiceServer) GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBalance not implemented")
+}
+func (UnimplementedPointServiceServer) RunExpiryJob(context.Context, *RunExpiryJobRequest) (*RunExpiryJobResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RunExpiryJob not implemented")
 }
 func (UnimplementedPointServiceServer) GetExpiringPoints(context.Context, *GetExpiringPointsRequest) (*GetExpiringPointsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetExpiringPoints not implemented")
@@ -193,6 +208,24 @@ func _PointService_GetBalance_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PointServiceServer).GetBalance(ctx, req.(*GetBalanceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PointService_RunExpiryJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunExpiryJobRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PointServiceServer).RunExpiryJob(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PointService_RunExpiryJob_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PointServiceServer).RunExpiryJob(ctx, req.(*RunExpiryJobRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -333,6 +366,10 @@ var PointService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBalance",
 			Handler:    _PointService_GetBalance_Handler,
+		},
+		{
+			MethodName: "RunExpiryJob",
+			Handler:    _PointService_RunExpiryJob_Handler,
 		},
 		{
 			MethodName: "GetExpiringPoints",

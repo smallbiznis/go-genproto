@@ -1525,6 +1525,214 @@ func (x *ExpiringPointBatch) GetTotalPoints() int64 {
 	return 0
 }
 
+// Request untuk menjalankan proses expiry poin per tenant
+type RunExpiryJobRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TenantId string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"` // wajib: ID tenant
+	RunAt    *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=run_at,json=runAt,proto3" json:"run_at,omitempty"`          // optional: waktu eksekusi manual, default now
+	DryRun   bool                   `protobuf:"varint,3,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`      // kalau true → hanya simulasi (tanpa update ledger)
+}
+
+func (x *RunExpiryJobRequest) Reset() {
+	*x = RunExpiryJobRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RunExpiryJobRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RunExpiryJobRequest) ProtoMessage() {}
+
+func (x *RunExpiryJobRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RunExpiryJobRequest.ProtoReflect.Descriptor instead.
+func (*RunExpiryJobRequest) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_loyalty_v1_loyalty_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *RunExpiryJobRequest) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+func (x *RunExpiryJobRequest) GetRunAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RunAt
+	}
+	return nil
+}
+
+func (x *RunExpiryJobRequest) GetDryRun() bool {
+	if x != nil {
+		return x.DryRun
+	}
+	return false
+}
+
+// Response hasil dari expiry job
+type RunExpiryJobResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	JobId                string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`                                                 // ID job untuk audit/log
+	TotalExpiredPoints   int64                  `protobuf:"varint,2,opt,name=total_expired_points,json=totalExpiredPoints,proto3" json:"total_expired_points,omitempty"`       // total poin yang dihapus
+	TotalMembersAffected int64                  `protobuf:"varint,3,opt,name=total_members_affected,json=totalMembersAffected,proto3" json:"total_members_affected,omitempty"` // berapa member yang kena expiry
+	Status               string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`                                                            // success / failed / partial
+	CompletedAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	Members              []*ExpiredMember       `protobuf:"bytes,6,rep,name=members,proto3" json:"members,omitempty"` // daftar member yang kena expiry (opsional)
+}
+
+func (x *RunExpiryJobResponse) Reset() {
+	*x = RunExpiryJobResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RunExpiryJobResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RunExpiryJobResponse) ProtoMessage() {}
+
+func (x *RunExpiryJobResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RunExpiryJobResponse.ProtoReflect.Descriptor instead.
+func (*RunExpiryJobResponse) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_loyalty_v1_loyalty_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *RunExpiryJobResponse) GetJobId() string {
+	if x != nil {
+		return x.JobId
+	}
+	return ""
+}
+
+func (x *RunExpiryJobResponse) GetTotalExpiredPoints() int64 {
+	if x != nil {
+		return x.TotalExpiredPoints
+	}
+	return 0
+}
+
+func (x *RunExpiryJobResponse) GetTotalMembersAffected() int64 {
+	if x != nil {
+		return x.TotalMembersAffected
+	}
+	return 0
+}
+
+func (x *RunExpiryJobResponse) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *RunExpiryJobResponse) GetCompletedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CompletedAt
+	}
+	return nil
+}
+
+func (x *RunExpiryJobResponse) GetMembers() []*ExpiredMember {
+	if x != nil {
+		return x.Members
+	}
+	return nil
+}
+
+// Data member yang poinnya expired
+type ExpiredMember struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	MemberId      string `protobuf:"bytes,1,opt,name=member_id,json=memberId,proto3" json:"member_id,omitempty"`
+	ExpiredPoints int64  `protobuf:"varint,2,opt,name=expired_points,json=expiredPoints,proto3" json:"expired_points,omitempty"`
+}
+
+func (x *ExpiredMember) Reset() {
+	*x = ExpiredMember{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExpiredMember) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpiredMember) ProtoMessage() {}
+
+func (x *ExpiredMember) ProtoReflect() protoreflect.Message {
+	mi := &file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpiredMember.ProtoReflect.Descriptor instead.
+func (*ExpiredMember) Descriptor() ([]byte, []int) {
+	return file_smallbiznis_loyalty_v1_loyalty_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ExpiredMember) GetMemberId() string {
+	if x != nil {
+		return x.MemberId
+	}
+	return ""
+}
+
+func (x *ExpiredMember) GetExpiredPoints() int64 {
+	if x != nil {
+		return x.ExpiredPoints
+	}
+	return 0
+}
+
 var File_smallbiznis_loyalty_v1_loyalty_proto protoreflect.FileDescriptor
 
 var file_smallbiznis_loyalty_v1_loyalty_proto_rawDesc = []byte{
@@ -1769,26 +1977,65 @@ var file_smallbiznis_loyalty_v1_loyalty_proto_rawDesc = []byte{
 	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x44,
 	0x61, 0x74, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x70, 0x6f, 0x69,
 	0x6e, 0x74, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c,
-	0x50, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x2a, 0x46, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
-	0x12, 0x16, 0x0a, 0x12, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45,
-	0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x50, 0x45, 0x4e, 0x44,
-	0x49, 0x4e, 0x47, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x53, 0x55, 0x43, 0x43, 0x45, 0x53, 0x53,
-	0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x46, 0x41, 0x49, 0x4c, 0x45, 0x44, 0x10, 0x03, 0x2a, 0x5d,
-	0x0a, 0x0a, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1b, 0x0a, 0x17,
-	0x52, 0x45, 0x57, 0x41, 0x52, 0x44, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50,
-	0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x56, 0x4f, 0x55,
-	0x43, 0x48, 0x45, 0x52, 0x10, 0x01, 0x12, 0x0c, 0x0a, 0x08, 0x50, 0x48, 0x59, 0x53, 0x49, 0x43,
-	0x41, 0x4c, 0x10, 0x02, 0x12, 0x0c, 0x0a, 0x08, 0x43, 0x41, 0x53, 0x48, 0x42, 0x41, 0x43, 0x4b,
-	0x10, 0x03, 0x12, 0x09, 0x0a, 0x05, 0x50, 0x4f, 0x49, 0x4e, 0x54, 0x10, 0x04, 0x32, 0xb1, 0x09,
-	0x0a, 0x0c, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x7f,
-	0x0a, 0x0a, 0x47, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x29, 0x2e, 0x73,
+	0x50, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x22, 0x7e, 0x0a, 0x13, 0x52, 0x75, 0x6e, 0x45, 0x78, 0x70,
+	0x69, 0x72, 0x79, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a,
+	0x09, 0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x31, 0x0a, 0x06, 0x72, 0x75,
+	0x6e, 0x5f, 0x61, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
+	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d,
+	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x05, 0x72, 0x75, 0x6e, 0x41, 0x74, 0x12, 0x17, 0x0a,
+	0x07, 0x64, 0x72, 0x79, 0x5f, 0x72, 0x75, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06,
+	0x64, 0x72, 0x79, 0x52, 0x75, 0x6e, 0x22, 0xad, 0x02, 0x0a, 0x14, 0x52, 0x75, 0x6e, 0x45, 0x78,
+	0x70, 0x69, 0x72, 0x79, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x15, 0x0a, 0x06, 0x6a, 0x6f, 0x62, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x6a, 0x6f, 0x62, 0x49, 0x64, 0x12, 0x30, 0x0a, 0x14, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f,
+	0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x5f, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x12, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x45, 0x78, 0x70, 0x69, 0x72,
+	0x65, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x12, 0x34, 0x0a, 0x16, 0x74, 0x6f, 0x74, 0x61,
+	0x6c, 0x5f, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x5f, 0x61, 0x66, 0x66, 0x65, 0x63, 0x74,
+	0x65, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x14, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x4d,
+	0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x41, 0x66, 0x66, 0x65, 0x63, 0x74, 0x65, 0x64, 0x12, 0x16,
+	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x3d, 0x0a, 0x0c, 0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65,
+	0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67,
+	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54,
+	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0b, 0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65,
+	0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x3f, 0x0a, 0x07, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73,
+	0x18, 0x06, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69,
+	0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6c, 0x6f, 0x79, 0x61, 0x6c, 0x74, 0x79, 0x2e, 0x76, 0x31, 0x2e,
+	0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x07, 0x6d,
+	0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x22, 0x53, 0x0a, 0x0d, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65,
+	0x64, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x1b, 0x0a, 0x09, 0x6d, 0x65, 0x6d, 0x62, 0x65,
+	0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6d, 0x65, 0x6d, 0x62,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x25, 0x0a, 0x0e, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x5f,
+	0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x65, 0x78,
+	0x70, 0x69, 0x72, 0x65, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x2a, 0x46, 0x0a, 0x06, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x16, 0x0a, 0x12, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f,
+	0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0b, 0x0a,
+	0x07, 0x50, 0x45, 0x4e, 0x44, 0x49, 0x4e, 0x47, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x53, 0x55,
+	0x43, 0x43, 0x45, 0x53, 0x53, 0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x46, 0x41, 0x49, 0x4c, 0x45,
+	0x44, 0x10, 0x03, 0x2a, 0x5d, 0x0a, 0x0a, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x54, 0x79, 0x70,
+	0x65, 0x12, 0x1b, 0x0a, 0x17, 0x52, 0x45, 0x57, 0x41, 0x52, 0x44, 0x5f, 0x54, 0x59, 0x50, 0x45,
+	0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0b,
+	0x0a, 0x07, 0x56, 0x4f, 0x55, 0x43, 0x48, 0x45, 0x52, 0x10, 0x01, 0x12, 0x0c, 0x0a, 0x08, 0x50,
+	0x48, 0x59, 0x53, 0x49, 0x43, 0x41, 0x4c, 0x10, 0x02, 0x12, 0x0c, 0x0a, 0x08, 0x43, 0x41, 0x53,
+	0x48, 0x42, 0x41, 0x43, 0x4b, 0x10, 0x03, 0x12, 0x09, 0x0a, 0x05, 0x50, 0x4f, 0x49, 0x4e, 0x54,
+	0x10, 0x04, 0x32, 0x9c, 0x0a, 0x0a, 0x0c, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76,
+	0x69, 0x63, 0x65, 0x12, 0x7f, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63,
+	0x65, 0x12, 0x29, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e,
+	0x6c, 0x6f, 0x79, 0x61, 0x6c, 0x74, 0x79, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x42, 0x61,
+	0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x73,
 	0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6c, 0x6f, 0x79, 0x61, 0x6c,
 	0x74, 0x79, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62,
-	0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x6c, 0x6f, 0x79, 0x61, 0x6c, 0x74, 0x79, 0x2e, 0x76, 0x31,
-	0x2e, 0x47, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x1a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x14, 0x12, 0x12, 0x2f, 0x76, 0x31,
-	0x2f, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x3a, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x14,
+	0x12, 0x12, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x3a, 0x62, 0x61, 0x6c,
+	0x61, 0x6e, 0x63, 0x65, 0x12, 0x69, 0x0a, 0x0c, 0x52, 0x75, 0x6e, 0x45, 0x78, 0x70, 0x69, 0x72,
+	0x79, 0x4a, 0x6f, 0x62, 0x12, 0x2b, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e,
+	0x69, 0x73, 0x2e, 0x6c, 0x6f, 0x79, 0x61, 0x6c, 0x74, 0x79, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x75,
+	0x6e, 0x45, 0x78, 0x70, 0x69, 0x72, 0x79, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x2c, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e,
+	0x6c, 0x6f, 0x79, 0x61, 0x6c, 0x74, 0x79, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x75, 0x6e, 0x45, 0x78,
+	0x70, 0x69, 0x72, 0x79, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
 	0x95, 0x01, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x45, 0x78, 0x70, 0x69, 0x72, 0x69, 0x6e, 0x67, 0x50,
 	0x6f, 0x69, 0x6e, 0x74, 0x73, 0x12, 0x30, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a,
 	0x6e, 0x69, 0x73, 0x2e, 0x6c, 0x6f, 0x79, 0x61, 0x6c, 0x74, 0x79, 0x2e, 0x76, 0x31, 0x2e, 0x47,
@@ -1890,7 +2137,7 @@ func file_smallbiznis_loyalty_v1_loyalty_proto_rawDescGZIP() []byte {
 }
 
 var file_smallbiznis_loyalty_v1_loyalty_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_smallbiznis_loyalty_v1_loyalty_proto_goTypes = []interface{}{
 	(Status)(0),                       // 0: smallbiznis.loyalty.v1.Status
 	(RewardType)(0),                   // 1: smallbiznis.loyalty.v1.RewardType
@@ -1913,56 +2160,64 @@ var file_smallbiznis_loyalty_v1_loyalty_proto_goTypes = []interface{}{
 	(*GetExpiringPointsRequest)(nil),  // 18: smallbiznis.loyalty.v1.GetExpiringPointsRequest
 	(*GetExpiringPointsResponse)(nil), // 19: smallbiznis.loyalty.v1.GetExpiringPointsResponse
 	(*ExpiringPointBatch)(nil),        // 20: smallbiznis.loyalty.v1.ExpiringPointBatch
-	(*common.Money)(nil),              // 21: smallbiznis.common.Money
-	(*structpb.Struct)(nil),           // 22: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),     // 23: google.protobuf.Timestamp
+	(*RunExpiryJobRequest)(nil),       // 21: smallbiznis.loyalty.v1.RunExpiryJobRequest
+	(*RunExpiryJobResponse)(nil),      // 22: smallbiznis.loyalty.v1.RunExpiryJobResponse
+	(*ExpiredMember)(nil),             // 23: smallbiznis.loyalty.v1.ExpiredMember
+	(*common.Money)(nil),              // 24: smallbiznis.common.Money
+	(*structpb.Struct)(nil),           // 25: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),     // 26: google.protobuf.Timestamp
 }
 var file_smallbiznis_loyalty_v1_loyalty_proto_depIdxs = []int32{
-	21, // 0: smallbiznis.loyalty.v1.TransactionAttributes.amount:type_name -> smallbiznis.common.Money
+	24, // 0: smallbiznis.loyalty.v1.TransactionAttributes.amount:type_name -> smallbiznis.common.Money
 	3,  // 1: smallbiznis.loyalty.v1.TransactionAttributes.items:type_name -> smallbiznis.loyalty.v1.TransactionItem
-	22, // 2: smallbiznis.loyalty.v1.TransactionAttributes.metadata:type_name -> google.protobuf.Struct
-	21, // 3: smallbiznis.loyalty.v1.TransactionItem.price:type_name -> smallbiznis.common.Money
-	21, // 4: smallbiznis.loyalty.v1.TransactionItem.total:type_name -> smallbiznis.common.Money
-	22, // 5: smallbiznis.loyalty.v1.EarningPreviewRequest.attributes:type_name -> google.protobuf.Struct
+	25, // 2: smallbiznis.loyalty.v1.TransactionAttributes.metadata:type_name -> google.protobuf.Struct
+	24, // 3: smallbiznis.loyalty.v1.TransactionItem.price:type_name -> smallbiznis.common.Money
+	24, // 4: smallbiznis.loyalty.v1.TransactionItem.total:type_name -> smallbiznis.common.Money
+	25, // 5: smallbiznis.loyalty.v1.EarningPreviewRequest.attributes:type_name -> google.protobuf.Struct
 	2,  // 6: smallbiznis.loyalty.v1.EarningRequest.transaction:type_name -> smallbiznis.loyalty.v1.TransactionAttributes
 	0,  // 7: smallbiznis.loyalty.v1.EarningResponse.status:type_name -> smallbiznis.loyalty.v1.Status
-	23, // 8: smallbiznis.loyalty.v1.EarningResponse.created_at:type_name -> google.protobuf.Timestamp
+	26, // 8: smallbiznis.loyalty.v1.EarningResponse.created_at:type_name -> google.protobuf.Timestamp
 	0,  // 9: smallbiznis.loyalty.v1.StatusEarningResponse.status:type_name -> smallbiznis.loyalty.v1.Status
-	23, // 10: smallbiznis.loyalty.v1.StatusEarningResponse.created_at:type_name -> google.protobuf.Timestamp
-	22, // 11: smallbiznis.loyalty.v1.RedeemValidationRequest.attributes:type_name -> google.protobuf.Struct
-	21, // 12: smallbiznis.loyalty.v1.RedeemValidationResponse.reward_value:type_name -> smallbiznis.common.Money
+	26, // 10: smallbiznis.loyalty.v1.StatusEarningResponse.created_at:type_name -> google.protobuf.Timestamp
+	25, // 11: smallbiznis.loyalty.v1.RedeemValidationRequest.attributes:type_name -> google.protobuf.Struct
+	24, // 12: smallbiznis.loyalty.v1.RedeemValidationResponse.reward_value:type_name -> smallbiznis.common.Money
 	1,  // 13: smallbiznis.loyalty.v1.RedeemRequest.reward_type:type_name -> smallbiznis.loyalty.v1.RewardType
-	22, // 14: smallbiznis.loyalty.v1.RedeemRequest.attributes:type_name -> google.protobuf.Struct
+	25, // 14: smallbiznis.loyalty.v1.RedeemRequest.attributes:type_name -> google.protobuf.Struct
 	0,  // 15: smallbiznis.loyalty.v1.RedeemResponse.status:type_name -> smallbiznis.loyalty.v1.Status
-	23, // 16: smallbiznis.loyalty.v1.RedeemResponse.redeemed_at:type_name -> google.protobuf.Timestamp
+	26, // 16: smallbiznis.loyalty.v1.RedeemResponse.redeemed_at:type_name -> google.protobuf.Timestamp
 	0,  // 17: smallbiznis.loyalty.v1.StatusRedeemResponse.status:type_name -> smallbiznis.loyalty.v1.Status
 	1,  // 18: smallbiznis.loyalty.v1.StatusRedeemResponse.reward_type:type_name -> smallbiznis.loyalty.v1.RewardType
-	21, // 19: smallbiznis.loyalty.v1.StatusRedeemResponse.reward_value:type_name -> smallbiznis.common.Money
-	23, // 20: smallbiznis.loyalty.v1.StatusRedeemResponse.redeemed_at:type_name -> google.protobuf.Timestamp
-	22, // 21: smallbiznis.loyalty.v1.StatusRedeemResponse.data:type_name -> google.protobuf.Struct
-	23, // 22: smallbiznis.loyalty.v1.GetBalanceResponse.last_updated_at:type_name -> google.protobuf.Timestamp
+	24, // 19: smallbiznis.loyalty.v1.StatusRedeemResponse.reward_value:type_name -> smallbiznis.common.Money
+	26, // 20: smallbiznis.loyalty.v1.StatusRedeemResponse.redeemed_at:type_name -> google.protobuf.Timestamp
+	25, // 21: smallbiznis.loyalty.v1.StatusRedeemResponse.data:type_name -> google.protobuf.Struct
+	26, // 22: smallbiznis.loyalty.v1.GetBalanceResponse.last_updated_at:type_name -> google.protobuf.Timestamp
 	20, // 23: smallbiznis.loyalty.v1.GetExpiringPointsResponse.batches:type_name -> smallbiznis.loyalty.v1.ExpiringPointBatch
-	16, // 24: smallbiznis.loyalty.v1.PointService.GetBalance:input_type -> smallbiznis.loyalty.v1.GetBalanceRequest
-	18, // 25: smallbiznis.loyalty.v1.PointService.GetExpiringPoints:input_type -> smallbiznis.loyalty.v1.GetExpiringPointsRequest
-	6,  // 26: smallbiznis.loyalty.v1.PointService.Earning:input_type -> smallbiznis.loyalty.v1.EarningRequest
-	8,  // 27: smallbiznis.loyalty.v1.PointService.GetEarning:input_type -> smallbiznis.loyalty.v1.StatusEarningRequest
-	4,  // 28: smallbiznis.loyalty.v1.PointService.EarningPreview:input_type -> smallbiznis.loyalty.v1.EarningPreviewRequest
-	10, // 29: smallbiznis.loyalty.v1.PointService.ValidateRedemption:input_type -> smallbiznis.loyalty.v1.RedeemValidationRequest
-	12, // 30: smallbiznis.loyalty.v1.PointService.Redemption:input_type -> smallbiznis.loyalty.v1.RedeemRequest
-	14, // 31: smallbiznis.loyalty.v1.PointService.GetRedemption:input_type -> smallbiznis.loyalty.v1.StatusRedeemRequest
-	17, // 32: smallbiznis.loyalty.v1.PointService.GetBalance:output_type -> smallbiznis.loyalty.v1.GetBalanceResponse
-	19, // 33: smallbiznis.loyalty.v1.PointService.GetExpiringPoints:output_type -> smallbiznis.loyalty.v1.GetExpiringPointsResponse
-	7,  // 34: smallbiznis.loyalty.v1.PointService.Earning:output_type -> smallbiznis.loyalty.v1.EarningResponse
-	9,  // 35: smallbiznis.loyalty.v1.PointService.GetEarning:output_type -> smallbiznis.loyalty.v1.StatusEarningResponse
-	5,  // 36: smallbiznis.loyalty.v1.PointService.EarningPreview:output_type -> smallbiznis.loyalty.v1.EarningPreviewResponse
-	11, // 37: smallbiznis.loyalty.v1.PointService.ValidateRedemption:output_type -> smallbiznis.loyalty.v1.RedeemValidationResponse
-	13, // 38: smallbiznis.loyalty.v1.PointService.Redemption:output_type -> smallbiznis.loyalty.v1.RedeemResponse
-	15, // 39: smallbiznis.loyalty.v1.PointService.GetRedemption:output_type -> smallbiznis.loyalty.v1.StatusRedeemResponse
-	32, // [32:40] is the sub-list for method output_type
-	24, // [24:32] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	26, // 24: smallbiznis.loyalty.v1.RunExpiryJobRequest.run_at:type_name -> google.protobuf.Timestamp
+	26, // 25: smallbiznis.loyalty.v1.RunExpiryJobResponse.completed_at:type_name -> google.protobuf.Timestamp
+	23, // 26: smallbiznis.loyalty.v1.RunExpiryJobResponse.members:type_name -> smallbiznis.loyalty.v1.ExpiredMember
+	16, // 27: smallbiznis.loyalty.v1.PointService.GetBalance:input_type -> smallbiznis.loyalty.v1.GetBalanceRequest
+	21, // 28: smallbiznis.loyalty.v1.PointService.RunExpiryJob:input_type -> smallbiznis.loyalty.v1.RunExpiryJobRequest
+	18, // 29: smallbiznis.loyalty.v1.PointService.GetExpiringPoints:input_type -> smallbiznis.loyalty.v1.GetExpiringPointsRequest
+	6,  // 30: smallbiznis.loyalty.v1.PointService.Earning:input_type -> smallbiznis.loyalty.v1.EarningRequest
+	8,  // 31: smallbiznis.loyalty.v1.PointService.GetEarning:input_type -> smallbiznis.loyalty.v1.StatusEarningRequest
+	4,  // 32: smallbiznis.loyalty.v1.PointService.EarningPreview:input_type -> smallbiznis.loyalty.v1.EarningPreviewRequest
+	10, // 33: smallbiznis.loyalty.v1.PointService.ValidateRedemption:input_type -> smallbiznis.loyalty.v1.RedeemValidationRequest
+	12, // 34: smallbiznis.loyalty.v1.PointService.Redemption:input_type -> smallbiznis.loyalty.v1.RedeemRequest
+	14, // 35: smallbiznis.loyalty.v1.PointService.GetRedemption:input_type -> smallbiznis.loyalty.v1.StatusRedeemRequest
+	17, // 36: smallbiznis.loyalty.v1.PointService.GetBalance:output_type -> smallbiznis.loyalty.v1.GetBalanceResponse
+	22, // 37: smallbiznis.loyalty.v1.PointService.RunExpiryJob:output_type -> smallbiznis.loyalty.v1.RunExpiryJobResponse
+	19, // 38: smallbiznis.loyalty.v1.PointService.GetExpiringPoints:output_type -> smallbiznis.loyalty.v1.GetExpiringPointsResponse
+	7,  // 39: smallbiznis.loyalty.v1.PointService.Earning:output_type -> smallbiznis.loyalty.v1.EarningResponse
+	9,  // 40: smallbiznis.loyalty.v1.PointService.GetEarning:output_type -> smallbiznis.loyalty.v1.StatusEarningResponse
+	5,  // 41: smallbiznis.loyalty.v1.PointService.EarningPreview:output_type -> smallbiznis.loyalty.v1.EarningPreviewResponse
+	11, // 42: smallbiznis.loyalty.v1.PointService.ValidateRedemption:output_type -> smallbiznis.loyalty.v1.RedeemValidationResponse
+	13, // 43: smallbiznis.loyalty.v1.PointService.Redemption:output_type -> smallbiznis.loyalty.v1.RedeemResponse
+	15, // 44: smallbiznis.loyalty.v1.PointService.GetRedemption:output_type -> smallbiznis.loyalty.v1.StatusRedeemResponse
+	36, // [36:45] is the sub-list for method output_type
+	27, // [27:36] is the sub-list for method input_type
+	27, // [27:27] is the sub-list for extension type_name
+	27, // [27:27] is the sub-list for extension extendee
+	0,  // [0:27] is the sub-list for field type_name
 }
 
 func init() { file_smallbiznis_loyalty_v1_loyalty_proto_init() }
@@ -2199,6 +2454,42 @@ func file_smallbiznis_loyalty_v1_loyalty_proto_init() {
 				return nil
 			}
 		}
+		file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RunExpiryJobRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RunExpiryJobResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ExpiredMember); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_smallbiznis_loyalty_v1_loyalty_proto_msgTypes[4].OneofWrappers = []interface{}{
 		(*EarningRequest_Transaction)(nil),
@@ -2209,7 +2500,7 @@ func file_smallbiznis_loyalty_v1_loyalty_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_smallbiznis_loyalty_v1_loyalty_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   19,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
