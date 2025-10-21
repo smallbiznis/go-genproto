@@ -9,7 +9,7 @@ package loyaltyv1
 import (
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options"
 	common "github.com/smallbiznis/go-genproto/smallbiznis/common"
-	v1 "github.com/smallbiznis/smallbiznisapis/smallbiznis/transaction/v1"
+	v1 "github.com/smallbiznis/go-genproto/smallbiznis/transaction/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
