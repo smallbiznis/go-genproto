@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	PointService_AddPoint_FullMethodName           = "/smallbiznis.loyalty.v1.PointService/AddPoint"
 	PointService_GetBalance_FullMethodName         = "/smallbiznis.loyalty.v1.PointService/GetBalance"
 	PointService_RunExpiryJob_FullMethodName       = "/smallbiznis.loyalty.v1.PointService/RunExpiryJob"
 	PointService_GetExpiringPoints_FullMethodName  = "/smallbiznis.loyalty.v1.PointService/GetExpiringPoints"
@@ -34,6 +35,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PointServiceClient interface {
+	AddPoint(ctx context.Context, in *AddPointsRequest, opts ...grpc.CallOption) (*AddPointsResponse, error)
 	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error)
 	RunExpiryJob(ctx context.Context, in *RunExpiryJobRequest, opts ...grpc.CallOption) (*RunExpiryJobResponse, error)
 	GetExpiringPoints(ctx context.Context, in *GetExpiringPointsRequest, opts ...grpc.CallOption) (*GetExpiringPointsResponse, error)
@@ -51,6 +53,15 @@ type pointServiceClient struct {
 
 func NewPointServiceClient(cc grpc.ClientConnInterface) PointServiceClient {
 	return &pointServiceClient{cc}
+}
+
+func (c *pointServiceClient) AddPoint(ctx context.Context, in *AddPointsRequest, opts ...grpc.CallOption) (*AddPointsResponse, error) {
+	out := new(AddPointsResponse)
+	err := c.cc.Invoke(ctx, PointService_AddPoint_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *pointServiceClient) GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error) {
@@ -138,6 +149,7 @@ func (c *pointServiceClient) GetRedemption(ctx context.Context, in *StatusRedeem
 // All implementations must embed UnimplementedPointServiceServer
 // for forward compatibility
 type PointServiceServer interface {
+	AddPoint(context.Context, *AddPointsRequest) (*AddPointsResponse, error)
 	GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error)
 	RunExpiryJob(context.Context, *RunExpiryJobRequest) (*RunExpiryJobResponse, error)
 	GetExpiringPoints(context.Context, *GetExpiringPointsRequest) (*GetExpiringPointsResponse, error)
@@ -154,6 +166,9 @@ type PointServiceServer interface {
 type UnimplementedPointServiceServer struct {
 }
 
+func (UnimplementedPointServiceServer) AddPoint(context.Context, *AddPointsRequest) (*AddPointsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddPoint not implemented")
+}
 func (UnimplementedPointServiceServer) GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBalance not implemented")
 }
@@ -192,6 +207,24 @@ type UnsafePointServiceServer interface {
 
 func RegisterPointServiceServer(s grpc.ServiceRegistrar, srv PointServiceServer) {
 	s.RegisterService(&PointService_ServiceDesc, srv)
+}
+
+func _PointService_AddPoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddPointsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PointServiceServer).AddPoint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PointService_AddPoint_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PointServiceServer).AddPoint(ctx, req.(*AddPointsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _PointService_GetBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -363,6 +396,10 @@ var PointService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.loyalty.v1.PointService",
 	HandlerType: (*PointServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "AddPoint",
+			Handler:    _PointService_AddPoint_Handler,
+		},
 		{
 			MethodName: "GetBalance",
 			Handler:    _PointService_GetBalance_Handler,
