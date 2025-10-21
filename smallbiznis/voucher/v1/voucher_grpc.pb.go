@@ -47,7 +47,7 @@ type VoucherServiceClient interface {
 	// Evaluate voucher eligibility using DSL/CEL
 	EvaluateVouchers(ctx context.Context, in *EvaluateVouchersRequest, opts ...grpc.CallOption) (*EvaluateVouchersResponse, error)
 	// Issue voucher to a specific user (manual or auto)
-	IssueVoucher(ctx context.Context, in *IssueVoucherRequest, opts ...grpc.CallOption) (*VoucherIssuance, error)
+	IssueVoucher(ctx context.Context, in *IssueVoucherRequest, opts ...grpc.CallOption) (*IssueVoucherResponse, error)
 	// Redeem voucher (mark as used)
 	RedeemVoucher(ctx context.Context, in *RedeemVoucherRequest, opts ...grpc.CallOption) (*VoucherIssuance, error)
 	// List all vouchers issued to a user
@@ -116,8 +116,8 @@ func (c *voucherServiceClient) EvaluateVouchers(ctx context.Context, in *Evaluat
 	return out, nil
 }
 
-func (c *voucherServiceClient) IssueVoucher(ctx context.Context, in *IssueVoucherRequest, opts ...grpc.CallOption) (*VoucherIssuance, error) {
-	out := new(VoucherIssuance)
+func (c *voucherServiceClient) IssueVoucher(ctx context.Context, in *IssueVoucherRequest, opts ...grpc.CallOption) (*IssueVoucherResponse, error) {
+	out := new(IssueVoucherResponse)
 	err := c.cc.Invoke(ctx, VoucherService_IssueVoucher_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -160,7 +160,7 @@ type VoucherServiceServer interface {
 	// Evaluate voucher eligibility using DSL/CEL
 	EvaluateVouchers(context.Context, *EvaluateVouchersRequest) (*EvaluateVouchersResponse, error)
 	// Issue voucher to a specific user (manual or auto)
-	IssueVoucher(context.Context, *IssueVoucherRequest) (*VoucherIssuance, error)
+	IssueVoucher(context.Context, *IssueVoucherRequest) (*IssueVoucherResponse, error)
 	// Redeem voucher (mark as used)
 	RedeemVoucher(context.Context, *RedeemVoucherRequest) (*VoucherIssuance, error)
 	// List all vouchers issued to a user
@@ -190,7 +190,7 @@ func (UnimplementedVoucherServiceServer) ListVouchers(context.Context, *ListVouc
 func (UnimplementedVoucherServiceServer) EvaluateVouchers(context.Context, *EvaluateVouchersRequest) (*EvaluateVouchersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EvaluateVouchers not implemented")
 }
-func (UnimplementedVoucherServiceServer) IssueVoucher(context.Context, *IssueVoucherRequest) (*VoucherIssuance, error) {
+func (UnimplementedVoucherServiceServer) IssueVoucher(context.Context, *IssueVoucherRequest) (*IssueVoucherResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IssueVoucher not implemented")
 }
 func (UnimplementedVoucherServiceServer) RedeemVoucher(context.Context, *RedeemVoucherRequest) (*VoucherIssuance, error) {
