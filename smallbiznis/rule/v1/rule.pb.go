@@ -1728,9 +1728,10 @@ type BatchEvaluateRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	TenantId        string           `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	RuleIds         []string         `protobuf:"bytes,2,rep,name=rule_ids,json=ruleIds,proto3" json:"rule_ids,omitempty"`                          // optional: hanya rule tertentu
-	Context         *structpb.Struct `protobuf:"bytes,3,opt,name=context,proto3" json:"context,omitempty"`                                         // contoh: {"user_id": "123", "total_spent": 150000}
-	IncludeDisabled bool             `protobuf:"varint,4,opt,name=include_disabled,json=includeDisabled,proto3" json:"include_disabled,omitempty"` // jika true, evaluasi rule non-aktif juga (untuk testing)
+	RuleIds         []string         `protobuf:"bytes,2,rep,name=rule_ids,json=ruleIds,proto3" json:"rule_ids,omitempty"` // optional: hanya rule tertentu
+	Trigger         RuleTriggerType  `protobuf:"varint,3,opt,name=trigger,proto3,enum=smallbiznis.rule.v1.RuleTriggerType" json:"trigger,omitempty"`
+	Context         *structpb.Struct `protobuf:"bytes,4,opt,name=context,proto3" json:"context,omitempty"`                                         // contoh: {"user_id": "123", "total_spent": 150000}
+	IncludeDisabled bool             `protobuf:"varint,5,opt,name=include_disabled,json=includeDisabled,proto3" json:"include_disabled,omitempty"` // jika true, evaluasi rule non-aktif juga (untuk testing)
 }
 
 func (x *BatchEvaluateRequest) Reset() {
@@ -1777,6 +1778,13 @@ func (x *BatchEvaluateRequest) GetRuleIds() []string {
 		return x.RuleIds
 	}
 	return nil
+}
+
+func (x *BatchEvaluateRequest) GetTrigger() RuleTriggerType {
+	if x != nil {
+		return x.Trigger
+	}
+	return RuleTriggerType_RULE_TRIGGER_TYPE_UNSPECIFIED
 }
 
 func (x *BatchEvaluateRequest) GetContext() *structpb.Struct {
@@ -2249,17 +2257,21 @@ var file_smallbiznis_rule_v1_rule_proto_rawDesc = []byte{
 	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x25,
 	0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x72, 0x75, 0x6c,
 	0x65, 0x2e, 0x76, 0x31, 0x2e, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53,
-	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0xac, 0x01,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0xec, 0x01,
 	0x0a, 0x14, 0x42, 0x61, 0x74, 0x63, 0x68, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x65, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74,
 	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x74, 0x65, 0x6e, 0x61, 0x6e,
 	0x74, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x72, 0x75, 0x6c, 0x65, 0x5f, 0x69, 0x64, 0x73, 0x18,
-	0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x72, 0x75, 0x6c, 0x65, 0x49, 0x64, 0x73, 0x12, 0x31,
-	0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x72, 0x75, 0x6c, 0x65, 0x49, 0x64, 0x73, 0x12, 0x3e,
+	0x0a, 0x07, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0e, 0x32,
+	0x24, 0x2e, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x62, 0x69, 0x7a, 0x6e, 0x69, 0x73, 0x2e, 0x72, 0x75,
+	0x6c, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x75, 0x6c, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65,
+	0x72, 0x54, 0x79, 0x70, 0x65, 0x52, 0x07, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x31,
+	0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32,
 	0x17, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
 	0x66, 0x2e, 0x53, 0x74, 0x72, 0x75, 0x63, 0x74, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78,
 	0x74, 0x12, 0x29, 0x0a, 0x10, 0x69, 0x6e, 0x63, 0x6c, 0x75, 0x64, 0x65, 0x5f, 0x64, 0x69, 0x73,
-	0x61, 0x62, 0x6c, 0x65, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0f, 0x69, 0x6e, 0x63,
+	0x61, 0x62, 0x6c, 0x65, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0f, 0x69, 0x6e, 0x63,
 	0x6c, 0x75, 0x64, 0x65, 0x44, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x22, 0xe2, 0x01, 0x0a,
 	0x15, 0x42, 0x61, 0x74, 0x63, 0x68, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x65, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x43, 0x0a, 0x07, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74,
@@ -2557,31 +2569,32 @@ var file_smallbiznis_rule_v1_rule_proto_depIdxs = []int32{
 	22, // 29: smallbiznis.rule.v1.EvaluateRulesResponse.results:type_name -> smallbiznis.rule.v1.EvaluateRuleResponse
 	35, // 30: smallbiznis.rule.v1.RuleEvaluationResult.action_value:type_name -> google.protobuf.Struct
 	3,  // 31: smallbiznis.rule.v1.RuleEvaluationResult.status:type_name -> smallbiznis.rule.v1.EvaluationStatus
-	35, // 32: smallbiznis.rule.v1.BatchEvaluateRequest.context:type_name -> google.protobuf.Struct
-	25, // 33: smallbiznis.rule.v1.BatchEvaluateResponse.results:type_name -> smallbiznis.rule.v1.RuleEvaluationResult
-	35, // 34: smallbiznis.rule.v1.StreamEvaluateRequest.context:type_name -> google.protobuf.Struct
-	25, // 35: smallbiznis.rule.v1.StreamEvaluateResponse.result:type_name -> smallbiznis.rule.v1.RuleEvaluationResult
-	15, // 36: smallbiznis.rule.v1.RuleService.ListRules:input_type -> smallbiznis.rule.v1.ListRulesRequest
-	13, // 37: smallbiznis.rule.v1.RuleService.GetRule:input_type -> smallbiznis.rule.v1.GetRuleRequest
-	11, // 38: smallbiznis.rule.v1.RuleService.CreateRule:input_type -> smallbiznis.rule.v1.CreateRuleRequest
-	17, // 39: smallbiznis.rule.v1.RuleService.UpdateRule:input_type -> smallbiznis.rule.v1.UpdateRuleRequest
-	19, // 40: smallbiznis.rule.v1.RuleService.DeleteRule:input_type -> smallbiznis.rule.v1.DeleteRuleRequest
-	21, // 41: smallbiznis.rule.v1.RuleService.EvaluateRule:input_type -> smallbiznis.rule.v1.EvaluateRuleRequest
-	26, // 42: smallbiznis.rule.v1.RuleService.BatchEvaluate:input_type -> smallbiznis.rule.v1.BatchEvaluateRequest
-	28, // 43: smallbiznis.rule.v1.RuleService.StreamEvaluate:input_type -> smallbiznis.rule.v1.StreamEvaluateRequest
-	16, // 44: smallbiznis.rule.v1.RuleService.ListRules:output_type -> smallbiznis.rule.v1.ListRulesResponse
-	14, // 45: smallbiznis.rule.v1.RuleService.GetRule:output_type -> smallbiznis.rule.v1.GetRuleResponse
-	12, // 46: smallbiznis.rule.v1.RuleService.CreateRule:output_type -> smallbiznis.rule.v1.CreateRuleResponse
-	18, // 47: smallbiznis.rule.v1.RuleService.UpdateRule:output_type -> smallbiznis.rule.v1.UpdateRuleResponse
-	20, // 48: smallbiznis.rule.v1.RuleService.DeleteRule:output_type -> smallbiznis.rule.v1.DeleteRuleResponse
-	22, // 49: smallbiznis.rule.v1.RuleService.EvaluateRule:output_type -> smallbiznis.rule.v1.EvaluateRuleResponse
-	27, // 50: smallbiznis.rule.v1.RuleService.BatchEvaluate:output_type -> smallbiznis.rule.v1.BatchEvaluateResponse
-	29, // 51: smallbiznis.rule.v1.RuleService.StreamEvaluate:output_type -> smallbiznis.rule.v1.StreamEvaluateResponse
-	44, // [44:52] is the sub-list for method output_type
-	36, // [36:44] is the sub-list for method input_type
-	36, // [36:36] is the sub-list for extension type_name
-	36, // [36:36] is the sub-list for extension extendee
-	0,  // [0:36] is the sub-list for field type_name
+	1,  // 32: smallbiznis.rule.v1.BatchEvaluateRequest.trigger:type_name -> smallbiznis.rule.v1.RuleTriggerType
+	35, // 33: smallbiznis.rule.v1.BatchEvaluateRequest.context:type_name -> google.protobuf.Struct
+	25, // 34: smallbiznis.rule.v1.BatchEvaluateResponse.results:type_name -> smallbiznis.rule.v1.RuleEvaluationResult
+	35, // 35: smallbiznis.rule.v1.StreamEvaluateRequest.context:type_name -> google.protobuf.Struct
+	25, // 36: smallbiznis.rule.v1.StreamEvaluateResponse.result:type_name -> smallbiznis.rule.v1.RuleEvaluationResult
+	15, // 37: smallbiznis.rule.v1.RuleService.ListRules:input_type -> smallbiznis.rule.v1.ListRulesRequest
+	13, // 38: smallbiznis.rule.v1.RuleService.GetRule:input_type -> smallbiznis.rule.v1.GetRuleRequest
+	11, // 39: smallbiznis.rule.v1.RuleService.CreateRule:input_type -> smallbiznis.rule.v1.CreateRuleRequest
+	17, // 40: smallbiznis.rule.v1.RuleService.UpdateRule:input_type -> smallbiznis.rule.v1.UpdateRuleRequest
+	19, // 41: smallbiznis.rule.v1.RuleService.DeleteRule:input_type -> smallbiznis.rule.v1.DeleteRuleRequest
+	21, // 42: smallbiznis.rule.v1.RuleService.EvaluateRule:input_type -> smallbiznis.rule.v1.EvaluateRuleRequest
+	26, // 43: smallbiznis.rule.v1.RuleService.BatchEvaluate:input_type -> smallbiznis.rule.v1.BatchEvaluateRequest
+	28, // 44: smallbiznis.rule.v1.RuleService.StreamEvaluate:input_type -> smallbiznis.rule.v1.StreamEvaluateRequest
+	16, // 45: smallbiznis.rule.v1.RuleService.ListRules:output_type -> smallbiznis.rule.v1.ListRulesResponse
+	14, // 46: smallbiznis.rule.v1.RuleService.GetRule:output_type -> smallbiznis.rule.v1.GetRuleResponse
+	12, // 47: smallbiznis.rule.v1.RuleService.CreateRule:output_type -> smallbiznis.rule.v1.CreateRuleResponse
+	18, // 48: smallbiznis.rule.v1.RuleService.UpdateRule:output_type -> smallbiznis.rule.v1.UpdateRuleResponse
+	20, // 49: smallbiznis.rule.v1.RuleService.DeleteRule:output_type -> smallbiznis.rule.v1.DeleteRuleResponse
+	22, // 50: smallbiznis.rule.v1.RuleService.EvaluateRule:output_type -> smallbiznis.rule.v1.EvaluateRuleResponse
+	27, // 51: smallbiznis.rule.v1.RuleService.BatchEvaluate:output_type -> smallbiznis.rule.v1.BatchEvaluateResponse
+	29, // 52: smallbiznis.rule.v1.RuleService.StreamEvaluate:output_type -> smallbiznis.rule.v1.StreamEvaluateResponse
+	45, // [45:53] is the sub-list for method output_type
+	37, // [37:45] is the sub-list for method input_type
+	37, // [37:37] is the sub-list for extension type_name
+	37, // [37:37] is the sub-list for extension extendee
+	0,  // [0:37] is the sub-list for field type_name
 }
 
 func init() { file_smallbiznis_rule_v1_rule_proto_init() }
