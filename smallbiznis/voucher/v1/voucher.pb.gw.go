@@ -31,8 +31,8 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_VoucherService_CreateVoucher_0(ctx context.Context, marshaler runtime.Marshaler, client VoucherServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateVoucherRequest
+func request_VoucherService_CreateVoucherPool_0(ctx context.Context, marshaler runtime.Marshaler, client VoucherServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateVoucherPoolRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -43,13 +43,13 @@ func request_VoucherService_CreateVoucher_0(ctx context.Context, marshaler runti
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.CreateVoucher(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateVoucherPool(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_VoucherService_CreateVoucher_0(ctx context.Context, marshaler runtime.Marshaler, server VoucherServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateVoucherRequest
+func local_request_VoucherService_CreateVoucherPool_0(ctx context.Context, marshaler runtime.Marshaler, server VoucherServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateVoucherPoolRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -60,17 +60,121 @@ func local_request_VoucherService_CreateVoucher_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.CreateVoucher(ctx, &protoReq)
+	msg, err := server.CreateVoucherPool(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_VoucherService_ImportVoucherPoolItems_0(ctx context.Context, marshaler runtime.Marshaler, client VoucherServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ImportVoucherPoolItemsRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["pool_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pool_id")
+	}
+
+	protoReq.PoolId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pool_id", err)
+	}
+
+	msg, err := client.ImportVoucherPoolItems(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_VoucherService_ImportVoucherPoolItems_0(ctx context.Context, marshaler runtime.Marshaler, server VoucherServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ImportVoucherPoolItemsRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["pool_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pool_id")
+	}
+
+	protoReq.PoolId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pool_id", err)
+	}
+
+	msg, err := server.ImportVoucherPoolItems(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
 var (
-	filter_VoucherService_GetVoucher_0 = &utilities.DoubleArray{Encoding: map[string]int{"code": 0}, Base: []int{1, 2, 0, 0}, Check: []int{0, 1, 2, 2}}
+	filter_VoucherService_ListVoucherPools_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_VoucherService_GetVoucher_0(ctx context.Context, marshaler runtime.Marshaler, client VoucherServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetVoucherRequest
+func request_VoucherService_ListVoucherPools_0(ctx context.Context, marshaler runtime.Marshaler, client VoucherServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListVoucherPoolsRequest
+	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_ListVoucherPools_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListVoucherPools(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_VoucherService_ListVoucherPools_0(ctx context.Context, marshaler runtime.Marshaler, server VoucherServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListVoucherPoolsRequest
+	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_ListVoucherPools_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListVoucherPools(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_VoucherService_GetVoucherPoolStock_0 = &utilities.DoubleArray{Encoding: map[string]int{"pool_id": 0, "poolId": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+)
+
+func request_VoucherService_GetVoucherPoolStock_0(ctx context.Context, marshaler runtime.Marshaler, client VoucherServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetVoucherPoolStockRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -80,30 +184,30 @@ func request_VoucherService_GetVoucher_0(ctx context.Context, marshaler runtime.
 		_   = err
 	)
 
-	val, ok = pathParams["code"]
+	val, ok = pathParams["pool_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "code")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pool_id")
 	}
 
-	protoReq.Code, err = runtime.String(val)
+	protoReq.PoolId, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "code", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pool_id", err)
 	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_GetVoucher_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_GetVoucherPoolStock_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.GetVoucher(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetVoucherPoolStock(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_VoucherService_GetVoucher_0(ctx context.Context, marshaler runtime.Marshaler, server VoucherServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetVoucherRequest
+func local_request_VoucherService_GetVoucherPoolStock_0(ctx context.Context, marshaler runtime.Marshaler, server VoucherServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetVoucherPoolStockRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -113,60 +217,94 @@ func local_request_VoucherService_GetVoucher_0(ctx context.Context, marshaler ru
 		_   = err
 	)
 
-	val, ok = pathParams["code"]
+	val, ok = pathParams["pool_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "code")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pool_id")
 	}
 
-	protoReq.Code, err = runtime.String(val)
+	protoReq.PoolId, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "code", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pool_id", err)
 	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_GetVoucher_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_GetVoucherPoolStock_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.GetVoucher(ctx, &protoReq)
+	msg, err := server.GetVoucherPoolStock(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
 var (
-	filter_VoucherService_ListVouchers_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_VoucherService_ListVoucherPoolItems_0 = &utilities.DoubleArray{Encoding: map[string]int{"pool_id": 0, "poolId": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
-func request_VoucherService_ListVouchers_0(ctx context.Context, marshaler runtime.Marshaler, client VoucherServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListVouchersRequest
+func request_VoucherService_ListVoucherPoolItems_0(ctx context.Context, marshaler runtime.Marshaler, client VoucherServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListVoucherPoolItemsRequest
 	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["pool_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pool_id")
+	}
+
+	protoReq.PoolId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pool_id", err)
+	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_ListVouchers_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_ListVoucherPoolItems_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListVouchers(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListVoucherPoolItems(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_VoucherService_ListVouchers_0(ctx context.Context, marshaler runtime.Marshaler, server VoucherServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListVouchersRequest
+func local_request_VoucherService_ListVoucherPoolItems_0(ctx context.Context, marshaler runtime.Marshaler, server VoucherServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListVoucherPoolItemsRequest
 	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["pool_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pool_id")
+	}
+
+	protoReq.PoolId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pool_id", err)
+	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_ListVouchers_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_VoucherService_ListVoucherPoolItems_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListVouchers(ctx, &protoReq)
+	msg, err := server.ListVoucherPoolItems(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -315,7 +453,7 @@ func local_request_VoucherService_ListMyVouchers_0(ctx context.Context, marshale
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterVoucherServiceHandlerFromEndpoint instead.
 func RegisterVoucherServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server VoucherServiceServer) error {
 
-	mux.Handle("POST", pattern_VoucherService_CreateVoucher_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_VoucherService_CreateVoucherPool_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -323,12 +461,12 @@ func RegisterVoucherServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/CreateVoucher", runtime.WithHTTPPathPattern("/v1/vouchers"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/CreateVoucherPool", runtime.WithHTTPPathPattern("/v1/voucherpools"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_VoucherService_CreateVoucher_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_VoucherService_CreateVoucherPool_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -336,11 +474,11 @@ func RegisterVoucherServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			return
 		}
 
-		forward_VoucherService_CreateVoucher_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VoucherService_CreateVoucherPool_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_VoucherService_GetVoucher_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_VoucherService_ImportVoucherPoolItems_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -348,12 +486,12 @@ func RegisterVoucherServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/GetVoucher", runtime.WithHTTPPathPattern("/v1/vouchers/{code}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/ImportVoucherPoolItems", runtime.WithHTTPPathPattern("/v1/voucherpools/{pool_id}/items:import"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_VoucherService_GetVoucher_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_VoucherService_ImportVoucherPoolItems_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -361,11 +499,11 @@ func RegisterVoucherServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			return
 		}
 
-		forward_VoucherService_GetVoucher_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VoucherService_ImportVoucherPoolItems_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_VoucherService_ListVouchers_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_VoucherService_ListVoucherPools_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -373,12 +511,12 @@ func RegisterVoucherServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/ListVouchers", runtime.WithHTTPPathPattern("/v1/vouchers"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/ListVoucherPools", runtime.WithHTTPPathPattern("/v1/voucherpools"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_VoucherService_ListVouchers_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_VoucherService_ListVoucherPools_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -386,7 +524,57 @@ func RegisterVoucherServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			return
 		}
 
-		forward_VoucherService_ListVouchers_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VoucherService_ListVoucherPools_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_VoucherService_GetVoucherPoolStock_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/GetVoucherPoolStock", runtime.WithHTTPPathPattern("/v1/voucherpools/{pool_id}:stock"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_VoucherService_GetVoucherPoolStock_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_VoucherService_GetVoucherPoolStock_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_VoucherService_ListVoucherPoolItems_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/ListVoucherPoolItems", runtime.WithHTTPPathPattern("/v1/voucherpools/{pool_id}/items"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_VoucherService_ListVoucherPoolItems_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_VoucherService_ListVoucherPoolItems_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -531,69 +719,113 @@ func RegisterVoucherServiceHandler(ctx context.Context, mux *runtime.ServeMux, c
 // "VoucherServiceClient" to call the correct interceptors.
 func RegisterVoucherServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client VoucherServiceClient) error {
 
-	mux.Handle("POST", pattern_VoucherService_CreateVoucher_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_VoucherService_CreateVoucherPool_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/CreateVoucher", runtime.WithHTTPPathPattern("/v1/vouchers"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/CreateVoucherPool", runtime.WithHTTPPathPattern("/v1/voucherpools"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_VoucherService_CreateVoucher_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_VoucherService_CreateVoucherPool_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_VoucherService_CreateVoucher_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VoucherService_CreateVoucherPool_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_VoucherService_GetVoucher_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_VoucherService_ImportVoucherPoolItems_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/GetVoucher", runtime.WithHTTPPathPattern("/v1/vouchers/{code}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/ImportVoucherPoolItems", runtime.WithHTTPPathPattern("/v1/voucherpools/{pool_id}/items:import"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_VoucherService_GetVoucher_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_VoucherService_ImportVoucherPoolItems_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_VoucherService_GetVoucher_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VoucherService_ImportVoucherPoolItems_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_VoucherService_ListVouchers_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_VoucherService_ListVoucherPools_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/ListVouchers", runtime.WithHTTPPathPattern("/v1/vouchers"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/ListVoucherPools", runtime.WithHTTPPathPattern("/v1/voucherpools"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_VoucherService_ListVouchers_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_VoucherService_ListVoucherPools_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_VoucherService_ListVouchers_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VoucherService_ListVoucherPools_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_VoucherService_GetVoucherPoolStock_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/GetVoucherPoolStock", runtime.WithHTTPPathPattern("/v1/voucherpools/{pool_id}:stock"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_VoucherService_GetVoucherPoolStock_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_VoucherService_GetVoucherPoolStock_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_VoucherService_ListVoucherPoolItems_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.voucher.v1.VoucherService/ListVoucherPoolItems", runtime.WithHTTPPathPattern("/v1/voucherpools/{pool_id}/items"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_VoucherService_ListVoucherPoolItems_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_VoucherService_ListVoucherPoolItems_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -689,11 +921,15 @@ func RegisterVoucherServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 }
 
 var (
-	pattern_VoucherService_CreateVoucher_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "vouchers"}, ""))
+	pattern_VoucherService_CreateVoucherPool_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "voucherpools"}, ""))
 
-	pattern_VoucherService_GetVoucher_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "vouchers", "code"}, ""))
+	pattern_VoucherService_ImportVoucherPoolItems_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "voucherpools", "pool_id", "items"}, "import"))
 
-	pattern_VoucherService_ListVouchers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "vouchers"}, ""))
+	pattern_VoucherService_ListVoucherPools_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "voucherpools"}, ""))
+
+	pattern_VoucherService_GetVoucherPoolStock_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "voucherpools", "pool_id"}, "stock"))
+
+	pattern_VoucherService_ListVoucherPoolItems_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "voucherpools", "pool_id", "items"}, ""))
 
 	pattern_VoucherService_EvaluateVouchers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "vouchers"}, "evaluate"))
 
@@ -705,11 +941,15 @@ var (
 )
 
 var (
-	forward_VoucherService_CreateVoucher_0 = runtime.ForwardResponseMessage
+	forward_VoucherService_CreateVoucherPool_0 = runtime.ForwardResponseMessage
 
-	forward_VoucherService_GetVoucher_0 = runtime.ForwardResponseMessage
+	forward_VoucherService_ImportVoucherPoolItems_0 = runtime.ForwardResponseMessage
 
-	forward_VoucherService_ListVouchers_0 = runtime.ForwardResponseMessage
+	forward_VoucherService_ListVoucherPools_0 = runtime.ForwardResponseMessage
+
+	forward_VoucherService_GetVoucherPoolStock_0 = runtime.ForwardResponseMessage
+
+	forward_VoucherService_ListVoucherPoolItems_0 = runtime.ForwardResponseMessage
 
 	forward_VoucherService_EvaluateVouchers_0 = runtime.ForwardResponseMessage
 

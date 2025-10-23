@@ -19,25 +19,29 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	VoucherService_CreateVoucher_FullMethodName    = "/smallbiznis.voucher.v1.VoucherService/CreateVoucher"
-	VoucherService_GetVoucher_FullMethodName       = "/smallbiznis.voucher.v1.VoucherService/GetVoucher"
-	VoucherService_ListVouchers_FullMethodName     = "/smallbiznis.voucher.v1.VoucherService/ListVouchers"
-	VoucherService_EvaluateVouchers_FullMethodName = "/smallbiznis.voucher.v1.VoucherService/EvaluateVouchers"
-	VoucherService_IssueVoucher_FullMethodName     = "/smallbiznis.voucher.v1.VoucherService/IssueVoucher"
-	VoucherService_RedeemVoucher_FullMethodName    = "/smallbiznis.voucher.v1.VoucherService/RedeemVoucher"
-	VoucherService_ListMyVouchers_FullMethodName   = "/smallbiznis.voucher.v1.VoucherService/ListMyVouchers"
+	VoucherService_CreateVoucherPool_FullMethodName      = "/smallbiznis.voucher.v1.VoucherService/CreateVoucherPool"
+	VoucherService_ImportVoucherPoolItems_FullMethodName = "/smallbiznis.voucher.v1.VoucherService/ImportVoucherPoolItems"
+	VoucherService_ListVoucherPools_FullMethodName       = "/smallbiznis.voucher.v1.VoucherService/ListVoucherPools"
+	VoucherService_GetVoucherPoolStock_FullMethodName    = "/smallbiznis.voucher.v1.VoucherService/GetVoucherPoolStock"
+	VoucherService_ListVoucherPoolItems_FullMethodName   = "/smallbiznis.voucher.v1.VoucherService/ListVoucherPoolItems"
+	VoucherService_EvaluateVouchers_FullMethodName       = "/smallbiznis.voucher.v1.VoucherService/EvaluateVouchers"
+	VoucherService_IssueVoucher_FullMethodName           = "/smallbiznis.voucher.v1.VoucherService/IssueVoucher"
+	VoucherService_RedeemVoucher_FullMethodName          = "/smallbiznis.voucher.v1.VoucherService/RedeemVoucher"
+	VoucherService_ListMyVouchers_FullMethodName         = "/smallbiznis.voucher.v1.VoucherService/ListMyVouchers"
 )
 
 // VoucherServiceClient is the client API for VoucherService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VoucherServiceClient interface {
-	// Create a new voucher (admin only)
-	CreateVoucher(ctx context.Context, in *CreateVoucherRequest, opts ...grpc.CallOption) (*Voucher, error)
-	// Get a voucher by its unique code
-	GetVoucher(ctx context.Context, in *GetVoucherRequest, opts ...grpc.CallOption) (*Voucher, error)
-	// List vouchers for tenant (with optional filters)
-	ListVouchers(ctx context.Context, in *ListVouchersRequest, opts ...grpc.CallOption) (*ListVouchersResponse, error)
+	// Admin: create voucher pool
+	CreateVoucherPool(ctx context.Context, in *CreateVoucherPoolRequest, opts ...grpc.CallOption) (*VoucherPool, error)
+	// Admin: bulk import voucher codes to pool
+	ImportVoucherPoolItems(ctx context.Context, in *ImportVoucherPoolItemsRequest, opts ...grpc.CallOption) (*ImportVoucherPoolItemsResponse, error)
+	// Admin: list voucher pool and items
+	ListVoucherPools(ctx context.Context, in *ListVoucherPoolsRequest, opts ...grpc.CallOption) (*ListVoucherPoolsResponse, error)
+	GetVoucherPoolStock(ctx context.Context, in *GetVoucherPoolStockRequest, opts ...grpc.CallOption) (*GetVoucherPoolStockResponse, error)
+	ListVoucherPoolItems(ctx context.Context, in *ListVoucherPoolItemsRequest, opts ...grpc.CallOption) (*ListVoucherPoolItemsResponse, error)
 	// Evaluate voucher eligibility using DSL/CEL
 	EvaluateVouchers(ctx context.Context, in *EvaluateVouchersRequest, opts ...grpc.CallOption) (*EvaluateVouchersResponse, error)
 	// Issue voucher to a specific user (manual or auto)
@@ -56,27 +60,45 @@ func NewVoucherServiceClient(cc grpc.ClientConnInterface) VoucherServiceClient {
 	return &voucherServiceClient{cc}
 }
 
-func (c *voucherServiceClient) CreateVoucher(ctx context.Context, in *CreateVoucherRequest, opts ...grpc.CallOption) (*Voucher, error) {
-	out := new(Voucher)
-	err := c.cc.Invoke(ctx, VoucherService_CreateVoucher_FullMethodName, in, out, opts...)
+func (c *voucherServiceClient) CreateVoucherPool(ctx context.Context, in *CreateVoucherPoolRequest, opts ...grpc.CallOption) (*VoucherPool, error) {
+	out := new(VoucherPool)
+	err := c.cc.Invoke(ctx, VoucherService_CreateVoucherPool_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *voucherServiceClient) GetVoucher(ctx context.Context, in *GetVoucherRequest, opts ...grpc.CallOption) (*Voucher, error) {
-	out := new(Voucher)
-	err := c.cc.Invoke(ctx, VoucherService_GetVoucher_FullMethodName, in, out, opts...)
+func (c *voucherServiceClient) ImportVoucherPoolItems(ctx context.Context, in *ImportVoucherPoolItemsRequest, opts ...grpc.CallOption) (*ImportVoucherPoolItemsResponse, error) {
+	out := new(ImportVoucherPoolItemsResponse)
+	err := c.cc.Invoke(ctx, VoucherService_ImportVoucherPoolItems_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *voucherServiceClient) ListVouchers(ctx context.Context, in *ListVouchersRequest, opts ...grpc.CallOption) (*ListVouchersResponse, error) {
-	out := new(ListVouchersResponse)
-	err := c.cc.Invoke(ctx, VoucherService_ListVouchers_FullMethodName, in, out, opts...)
+func (c *voucherServiceClient) ListVoucherPools(ctx context.Context, in *ListVoucherPoolsRequest, opts ...grpc.CallOption) (*ListVoucherPoolsResponse, error) {
+	out := new(ListVoucherPoolsResponse)
+	err := c.cc.Invoke(ctx, VoucherService_ListVoucherPools_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *voucherServiceClient) GetVoucherPoolStock(ctx context.Context, in *GetVoucherPoolStockRequest, opts ...grpc.CallOption) (*GetVoucherPoolStockResponse, error) {
+	out := new(GetVoucherPoolStockResponse)
+	err := c.cc.Invoke(ctx, VoucherService_GetVoucherPoolStock_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *voucherServiceClient) ListVoucherPoolItems(ctx context.Context, in *ListVoucherPoolItemsRequest, opts ...grpc.CallOption) (*ListVoucherPoolItemsResponse, error) {
+	out := new(ListVoucherPoolItemsResponse)
+	err := c.cc.Invoke(ctx, VoucherService_ListVoucherPoolItems_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -123,12 +145,14 @@ func (c *voucherServiceClient) ListMyVouchers(ctx context.Context, in *ListMyVou
 // All implementations must embed UnimplementedVoucherServiceServer
 // for forward compatibility
 type VoucherServiceServer interface {
-	// Create a new voucher (admin only)
-	CreateVoucher(context.Context, *CreateVoucherRequest) (*Voucher, error)
-	// Get a voucher by its unique code
-	GetVoucher(context.Context, *GetVoucherRequest) (*Voucher, error)
-	// List vouchers for tenant (with optional filters)
-	ListVouchers(context.Context, *ListVouchersRequest) (*ListVouchersResponse, error)
+	// Admin: create voucher pool
+	CreateVoucherPool(context.Context, *CreateVoucherPoolRequest) (*VoucherPool, error)
+	// Admin: bulk import voucher codes to pool
+	ImportVoucherPoolItems(context.Context, *ImportVoucherPoolItemsRequest) (*ImportVoucherPoolItemsResponse, error)
+	// Admin: list voucher pool and items
+	ListVoucherPools(context.Context, *ListVoucherPoolsRequest) (*ListVoucherPoolsResponse, error)
+	GetVoucherPoolStock(context.Context, *GetVoucherPoolStockRequest) (*GetVoucherPoolStockResponse, error)
+	ListVoucherPoolItems(context.Context, *ListVoucherPoolItemsRequest) (*ListVoucherPoolItemsResponse, error)
 	// Evaluate voucher eligibility using DSL/CEL
 	EvaluateVouchers(context.Context, *EvaluateVouchersRequest) (*EvaluateVouchersResponse, error)
 	// Issue voucher to a specific user (manual or auto)
@@ -144,14 +168,20 @@ type VoucherServiceServer interface {
 type UnimplementedVoucherServiceServer struct {
 }
 
-func (UnimplementedVoucherServiceServer) CreateVoucher(context.Context, *CreateVoucherRequest) (*Voucher, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateVoucher not implemented")
+func (UnimplementedVoucherServiceServer) CreateVoucherPool(context.Context, *CreateVoucherPoolRequest) (*VoucherPool, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateVoucherPool not implemented")
 }
-func (UnimplementedVoucherServiceServer) GetVoucher(context.Context, *GetVoucherRequest) (*Voucher, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetVoucher not implemented")
+func (UnimplementedVoucherServiceServer) ImportVoucherPoolItems(context.Context, *ImportVoucherPoolItemsRequest) (*ImportVoucherPoolItemsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportVoucherPoolItems not implemented")
 }
-func (UnimplementedVoucherServiceServer) ListVouchers(context.Context, *ListVouchersRequest) (*ListVouchersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListVouchers not implemented")
+func (UnimplementedVoucherServiceServer) ListVoucherPools(context.Context, *ListVoucherPoolsRequest) (*ListVoucherPoolsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListVoucherPools not implemented")
+}
+func (UnimplementedVoucherServiceServer) GetVoucherPoolStock(context.Context, *GetVoucherPoolStockRequest) (*GetVoucherPoolStockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVoucherPoolStock not implemented")
+}
+func (UnimplementedVoucherServiceServer) ListVoucherPoolItems(context.Context, *ListVoucherPoolItemsRequest) (*ListVoucherPoolItemsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListVoucherPoolItems not implemented")
 }
 func (UnimplementedVoucherServiceServer) EvaluateVouchers(context.Context, *EvaluateVouchersRequest) (*EvaluateVouchersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EvaluateVouchers not implemented")
@@ -178,56 +208,92 @@ func RegisterVoucherServiceServer(s grpc.ServiceRegistrar, srv VoucherServiceSer
 	s.RegisterService(&VoucherService_ServiceDesc, srv)
 }
 
-func _VoucherService_CreateVoucher_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateVoucherRequest)
+func _VoucherService_CreateVoucherPool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateVoucherPoolRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VoucherServiceServer).CreateVoucher(ctx, in)
+		return srv.(VoucherServiceServer).CreateVoucherPool(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VoucherService_CreateVoucher_FullMethodName,
+		FullMethod: VoucherService_CreateVoucherPool_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VoucherServiceServer).CreateVoucher(ctx, req.(*CreateVoucherRequest))
+		return srv.(VoucherServiceServer).CreateVoucherPool(ctx, req.(*CreateVoucherPoolRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VoucherService_GetVoucher_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetVoucherRequest)
+func _VoucherService_ImportVoucherPoolItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportVoucherPoolItemsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VoucherServiceServer).GetVoucher(ctx, in)
+		return srv.(VoucherServiceServer).ImportVoucherPoolItems(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VoucherService_GetVoucher_FullMethodName,
+		FullMethod: VoucherService_ImportVoucherPoolItems_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VoucherServiceServer).GetVoucher(ctx, req.(*GetVoucherRequest))
+		return srv.(VoucherServiceServer).ImportVoucherPoolItems(ctx, req.(*ImportVoucherPoolItemsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VoucherService_ListVouchers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListVouchersRequest)
+func _VoucherService_ListVoucherPools_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListVoucherPoolsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VoucherServiceServer).ListVouchers(ctx, in)
+		return srv.(VoucherServiceServer).ListVoucherPools(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VoucherService_ListVouchers_FullMethodName,
+		FullMethod: VoucherService_ListVoucherPools_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VoucherServiceServer).ListVouchers(ctx, req.(*ListVouchersRequest))
+		return srv.(VoucherServiceServer).ListVoucherPools(ctx, req.(*ListVoucherPoolsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VoucherService_GetVoucherPoolStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVoucherPoolStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VoucherServiceServer).GetVoucherPoolStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VoucherService_GetVoucherPoolStock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VoucherServiceServer).GetVoucherPoolStock(ctx, req.(*GetVoucherPoolStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VoucherService_ListVoucherPoolItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListVoucherPoolItemsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VoucherServiceServer).ListVoucherPoolItems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VoucherService_ListVoucherPoolItems_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VoucherServiceServer).ListVoucherPoolItems(ctx, req.(*ListVoucherPoolItemsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -312,16 +378,24 @@ var VoucherService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*VoucherServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateVoucher",
-			Handler:    _VoucherService_CreateVoucher_Handler,
+			MethodName: "CreateVoucherPool",
+			Handler:    _VoucherService_CreateVoucherPool_Handler,
 		},
 		{
-			MethodName: "GetVoucher",
-			Handler:    _VoucherService_GetVoucher_Handler,
+			MethodName: "ImportVoucherPoolItems",
+			Handler:    _VoucherService_ImportVoucherPoolItems_Handler,
 		},
 		{
-			MethodName: "ListVouchers",
-			Handler:    _VoucherService_ListVouchers_Handler,
+			MethodName: "ListVoucherPools",
+			Handler:    _VoucherService_ListVoucherPools_Handler,
+		},
+		{
+			MethodName: "GetVoucherPoolStock",
+			Handler:    _VoucherService_GetVoucherPoolStock_Handler,
+		},
+		{
+			MethodName: "ListVoucherPoolItems",
+			Handler:    _VoucherService_ListVoucherPoolItems_Handler,
 		},
 		{
 			MethodName: "EvaluateVouchers",
