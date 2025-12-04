@@ -167,7 +167,7 @@ func RegisterAuditServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/CreateAuditEvent", runtime.WithHTTPPathPattern("/v1/audit/events"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/CreateAuditEvent", runtime.WithHTTPPathPattern("/v1/audit-events"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -192,7 +192,7 @@ func RegisterAuditServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/ListAuditEvents", runtime.WithHTTPPathPattern("/v1/audit/events"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/ListAuditEvents", runtime.WithHTTPPathPattern("/v1/audit-events"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -217,7 +217,7 @@ func RegisterAuditServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/GetAuditEvent", runtime.WithHTTPPathPattern("/v1/audit/events/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/GetAuditEvent", runtime.WithHTTPPathPattern("/v1/audit-events/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -281,7 +281,7 @@ func RegisterAuditServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/CreateAuditEvent", runtime.WithHTTPPathPattern("/v1/audit/events"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/CreateAuditEvent", runtime.WithHTTPPathPattern("/v1/audit-events"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -303,7 +303,7 @@ func RegisterAuditServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/ListAuditEvents", runtime.WithHTTPPathPattern("/v1/audit/events"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/ListAuditEvents", runtime.WithHTTPPathPattern("/v1/audit-events"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -325,7 +325,7 @@ func RegisterAuditServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/GetAuditEvent", runtime.WithHTTPPathPattern("/v1/audit/events/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.audit.v1.AuditService/GetAuditEvent", runtime.WithHTTPPathPattern("/v1/audit-events/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -345,11 +345,11 @@ func RegisterAuditServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 }
 
 var (
-	pattern_AuditService_CreateAuditEvent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audit", "events"}, ""))
+	pattern_AuditService_CreateAuditEvent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "audit-events"}, ""))
 
-	pattern_AuditService_ListAuditEvents_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audit", "events"}, ""))
+	pattern_AuditService_ListAuditEvents_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "audit-events"}, ""))
 
-	pattern_AuditService_GetAuditEvent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "audit", "events", "id"}, ""))
+	pattern_AuditService_GetAuditEvent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "audit-events", "id"}, ""))
 )
 
 var (

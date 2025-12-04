@@ -43,23 +43,6 @@ func request_CreditService_CreateCreditNote_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["invoice_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "invoice_id")
-	}
-
-	protoReq.InvoiceId, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "invoice_id", err)
-	}
-
 	msg, err := client.CreateCreditNote(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
@@ -75,23 +58,6 @@ func local_request_CreditService_CreateCreditNote_0(ctx context.Context, marshal
 	}
 	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["invoice_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "invoice_id")
-	}
-
-	protoReq.InvoiceId, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "invoice_id", err)
 	}
 
 	msg, err := server.CreateCreditNote(ctx, &protoReq)
@@ -149,7 +115,7 @@ func RegisterCreditServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.credit.v1.CreditService/CreateCreditNote", runtime.WithHTTPPathPattern("/v1/billing/invoices/{invoice_id}/credits"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.credit.v1.CreditService/CreateCreditNote", runtime.WithHTTPPathPattern("/v1/credit-notes"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -174,7 +140,7 @@ func RegisterCreditServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.credit.v1.CreditService/ListCreditNotes", runtime.WithHTTPPathPattern("/v1/billing/credits"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.credit.v1.CreditService/ListCreditNotes", runtime.WithHTTPPathPattern("/v1/credit-notes"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -238,7 +204,7 @@ func RegisterCreditServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.credit.v1.CreditService/CreateCreditNote", runtime.WithHTTPPathPattern("/v1/billing/invoices/{invoice_id}/credits"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.credit.v1.CreditService/CreateCreditNote", runtime.WithHTTPPathPattern("/v1/credit-notes"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -260,7 +226,7 @@ func RegisterCreditServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.credit.v1.CreditService/ListCreditNotes", runtime.WithHTTPPathPattern("/v1/billing/credits"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.credit.v1.CreditService/ListCreditNotes", runtime.WithHTTPPathPattern("/v1/credit-notes"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -280,9 +246,9 @@ func RegisterCreditServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 }
 
 var (
-	pattern_CreditService_CreateCreditNote_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"v1", "billing", "invoices", "invoice_id", "credits"}, ""))
+	pattern_CreditService_CreateCreditNote_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "credit-notes"}, ""))
 
-	pattern_CreditService_ListCreditNotes_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "billing", "credits"}, ""))
+	pattern_CreditService_ListCreditNotes_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "credit-notes"}, ""))
 )
 
 var (

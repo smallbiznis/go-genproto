@@ -115,7 +115,7 @@ func RegisterTaxServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.tax.v1.TaxService/ListTaxRules", runtime.WithHTTPPathPattern("/v1/billing/tax/rules"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.tax.v1.TaxService/ListTaxRules", runtime.WithHTTPPathPattern("/v1/tax-rules"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -140,7 +140,7 @@ func RegisterTaxServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.tax.v1.TaxService/CalculateTax", runtime.WithHTTPPathPattern("/v1/billing/tax/calculate"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.tax.v1.TaxService/CalculateTax", runtime.WithHTTPPathPattern("/v1/taxes:calculate"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -204,7 +204,7 @@ func RegisterTaxServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.tax.v1.TaxService/ListTaxRules", runtime.WithHTTPPathPattern("/v1/billing/tax/rules"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.tax.v1.TaxService/ListTaxRules", runtime.WithHTTPPathPattern("/v1/tax-rules"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -226,7 +226,7 @@ func RegisterTaxServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.tax.v1.TaxService/CalculateTax", runtime.WithHTTPPathPattern("/v1/billing/tax/calculate"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.tax.v1.TaxService/CalculateTax", runtime.WithHTTPPathPattern("/v1/taxes:calculate"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -246,9 +246,9 @@ func RegisterTaxServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_TaxService_ListTaxRules_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "billing", "tax", "rules"}, ""))
+	pattern_TaxService_ListTaxRules_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "tax-rules"}, ""))
 
-	pattern_TaxService_CalculateTax_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "billing", "tax", "calculate"}, ""))
+	pattern_TaxService_CalculateTax_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "taxes"}, "calculate"))
 )
 
 var (
