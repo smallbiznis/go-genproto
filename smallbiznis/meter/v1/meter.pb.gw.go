@@ -235,7 +235,7 @@ func RegisterMeterServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/CreateMeter", runtime.WithHTTPPathPattern("/v2/meters"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/CreateMeter", runtime.WithHTTPPathPattern("/v1/meters"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -260,7 +260,7 @@ func RegisterMeterServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/GetMeter", runtime.WithHTTPPathPattern("/v2/meters/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/GetMeter", runtime.WithHTTPPathPattern("/v1/meters/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -285,7 +285,7 @@ func RegisterMeterServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/ListMeters", runtime.WithHTTPPathPattern("/v2/meters"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/ListMeters", runtime.WithHTTPPathPattern("/v1/meters"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -310,7 +310,7 @@ func RegisterMeterServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/UpdateMeter", runtime.WithHTTPPathPattern("/v2/meters/{meter.id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/UpdateMeter", runtime.WithHTTPPathPattern("/v1/meters/{meter.id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -374,7 +374,7 @@ func RegisterMeterServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/CreateMeter", runtime.WithHTTPPathPattern("/v2/meters"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/CreateMeter", runtime.WithHTTPPathPattern("/v1/meters"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -396,7 +396,7 @@ func RegisterMeterServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/GetMeter", runtime.WithHTTPPathPattern("/v2/meters/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/GetMeter", runtime.WithHTTPPathPattern("/v1/meters/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -418,7 +418,7 @@ func RegisterMeterServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/ListMeters", runtime.WithHTTPPathPattern("/v2/meters"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/ListMeters", runtime.WithHTTPPathPattern("/v1/meters"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -440,7 +440,7 @@ func RegisterMeterServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/UpdateMeter", runtime.WithHTTPPathPattern("/v2/meters/{meter.id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/smallbiznis.meter.v1.MeterService/UpdateMeter", runtime.WithHTTPPathPattern("/v1/meters/{meter.id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -460,13 +460,13 @@ func RegisterMeterServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 }
 
 var (
-	pattern_MeterService_CreateMeter_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v2", "meters"}, ""))
+	pattern_MeterService_CreateMeter_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "meters"}, ""))
 
-	pattern_MeterService_GetMeter_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v2", "meters", "id"}, ""))
+	pattern_MeterService_GetMeter_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "meters", "id"}, ""))
 
-	pattern_MeterService_ListMeters_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v2", "meters"}, ""))
+	pattern_MeterService_ListMeters_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "meters"}, ""))
 
-	pattern_MeterService_UpdateMeter_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v2", "meters", "meter.id"}, ""))
+	pattern_MeterService_UpdateMeter_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "meters", "meter.id"}, ""))
 )
 
 var (
