@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	TaxService_ListTaxRules_FullMethodName = "/smallbiznis.tax.v1.TaxService/ListTaxRules"
+	TaxService_ListTaxRates_FullMethodName = "/smallbiznis.tax.v1.TaxService/ListTaxRates"
+	TaxService_GetTaxRate_FullMethodName   = "/smallbiznis.tax.v1.TaxService/GetTaxRate"
 	TaxService_CalculateTax_FullMethodName = "/smallbiznis.tax.v1.TaxService/CalculateTax"
 )
 
@@ -27,7 +28,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TaxServiceClient interface {
-	ListTaxRules(ctx context.Context, in *ListTaxRulesRequest, opts ...grpc.CallOption) (*ListTaxRulesResponse, error)
+	ListTaxRates(ctx context.Context, in *ListTaxRatesRequest, opts ...grpc.CallOption) (*ListTaxRatesResponse, error)
+	GetTaxRate(ctx context.Context, in *GetTaxRateRequest, opts ...grpc.CallOption) (*TaxRate, error)
 	CalculateTax(ctx context.Context, in *TaxCalculationRequest, opts ...grpc.CallOption) (*TaxCalculationResponse, error)
 }
 
@@ -39,9 +41,18 @@ func NewTaxServiceClient(cc grpc.ClientConnInterface) TaxServiceClient {
 	return &taxServiceClient{cc}
 }
 
-func (c *taxServiceClient) ListTaxRules(ctx context.Context, in *ListTaxRulesRequest, opts ...grpc.CallOption) (*ListTaxRulesResponse, error) {
-	out := new(ListTaxRulesResponse)
-	err := c.cc.Invoke(ctx, TaxService_ListTaxRules_FullMethodName, in, out, opts...)
+func (c *taxServiceClient) ListTaxRates(ctx context.Context, in *ListTaxRatesRequest, opts ...grpc.CallOption) (*ListTaxRatesResponse, error) {
+	out := new(ListTaxRatesResponse)
+	err := c.cc.Invoke(ctx, TaxService_ListTaxRates_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *taxServiceClient) GetTaxRate(ctx context.Context, in *GetTaxRateRequest, opts ...grpc.CallOption) (*TaxRate, error) {
+	out := new(TaxRate)
+	err := c.cc.Invoke(ctx, TaxService_GetTaxRate_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +72,8 @@ func (c *taxServiceClient) CalculateTax(ctx context.Context, in *TaxCalculationR
 // All implementations must embed UnimplementedTaxServiceServer
 // for forward compatibility
 type TaxServiceServer interface {
-	ListTaxRules(context.Context, *ListTaxRulesRequest) (*ListTaxRulesResponse, error)
+	ListTaxRates(context.Context, *ListTaxRatesRequest) (*ListTaxRatesResponse, error)
+	GetTaxRate(context.Context, *GetTaxRateRequest) (*TaxRate, error)
 	CalculateTax(context.Context, *TaxCalculationRequest) (*TaxCalculationResponse, error)
 	mustEmbedUnimplementedTaxServiceServer()
 }
@@ -70,8 +82,11 @@ type TaxServiceServer interface {
 type UnimplementedTaxServiceServer struct {
 }
 
-func (UnimplementedTaxServiceServer) ListTaxRules(context.Context, *ListTaxRulesRequest) (*ListTaxRulesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListTaxRules not implemented")
+func (UnimplementedTaxServiceServer) ListTaxRates(context.Context, *ListTaxRatesRequest) (*ListTaxRatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTaxRates not implemented")
+}
+func (UnimplementedTaxServiceServer) GetTaxRate(context.Context, *GetTaxRateRequest) (*TaxRate, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTaxRate not implemented")
 }
 func (UnimplementedTaxServiceServer) CalculateTax(context.Context, *TaxCalculationRequest) (*TaxCalculationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CalculateTax not implemented")
@@ -89,20 +104,38 @@ func RegisterTaxServiceServer(s grpc.ServiceRegistrar, srv TaxServiceServer) {
 	s.RegisterService(&TaxService_ServiceDesc, srv)
 }
 
-func _TaxService_ListTaxRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListTaxRulesRequest)
+func _TaxService_ListTaxRates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTaxRatesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaxServiceServer).ListTaxRules(ctx, in)
+		return srv.(TaxServiceServer).ListTaxRates(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TaxService_ListTaxRules_FullMethodName,
+		FullMethod: TaxService_ListTaxRates_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaxServiceServer).ListTaxRules(ctx, req.(*ListTaxRulesRequest))
+		return srv.(TaxServiceServer).ListTaxRates(ctx, req.(*ListTaxRatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TaxService_GetTaxRate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTaxRateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaxServiceServer).GetTaxRate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaxService_GetTaxRate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaxServiceServer).GetTaxRate(ctx, req.(*GetTaxRateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -133,8 +166,12 @@ var TaxService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*TaxServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListTaxRules",
-			Handler:    _TaxService_ListTaxRules_Handler,
+			MethodName: "ListTaxRates",
+			Handler:    _TaxService_ListTaxRates_Handler,
+		},
+		{
+			MethodName: "GetTaxRate",
+			Handler:    _TaxService_GetTaxRate_Handler,
 		},
 		{
 			MethodName: "CalculateTax",
