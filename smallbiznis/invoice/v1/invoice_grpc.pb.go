@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	InvoiceService_GetInvoice_FullMethodName   = "/smallbiznis.invoice.v1.InvoiceService/GetInvoice"
-	InvoiceService_ListInvoices_FullMethodName = "/smallbiznis.invoice.v1.InvoiceService/ListInvoices"
+	InvoiceService_GetInvoice_FullMethodName       = "/smallbiznis.invoice.v1.InvoiceService/GetInvoice"
+	InvoiceService_ListInvoices_FullMethodName     = "/smallbiznis.invoice.v1.InvoiceService/ListInvoices"
+	InvoiceService_ListInvoiceItems_FullMethodName = "/smallbiznis.invoice.v1.InvoiceService/ListInvoiceItems"
 )
 
 // InvoiceServiceClient is the client API for InvoiceService service.
@@ -31,6 +32,8 @@ type InvoiceServiceClient interface {
 	GetInvoice(ctx context.Context, in *GetInvoiceRequest, opts ...grpc.CallOption) (*Invoice, error)
 	// List invoices for a tenant with optional customer or subscription filters.
 	ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*ListInvoicesResponse, error)
+	// List line items that were generated for the tenant's invoices.
+	ListInvoiceItems(ctx context.Context, in *ListInvoiceItemsRequest, opts ...grpc.CallOption) (*ListInvoiceItemsResponse, error)
 }
 
 type invoiceServiceClient struct {
@@ -59,6 +62,15 @@ func (c *invoiceServiceClient) ListInvoices(ctx context.Context, in *ListInvoice
 	return out, nil
 }
 
+func (c *invoiceServiceClient) ListInvoiceItems(ctx context.Context, in *ListInvoiceItemsRequest, opts ...grpc.CallOption) (*ListInvoiceItemsResponse, error) {
+	out := new(ListInvoiceItemsResponse)
+	err := c.cc.Invoke(ctx, InvoiceService_ListInvoiceItems_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InvoiceServiceServer is the server API for InvoiceService service.
 // All implementations must embed UnimplementedInvoiceServiceServer
 // for forward compatibility
@@ -67,6 +79,8 @@ type InvoiceServiceServer interface {
 	GetInvoice(context.Context, *GetInvoiceRequest) (*Invoice, error)
 	// List invoices for a tenant with optional customer or subscription filters.
 	ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error)
+	// List line items that were generated for the tenant's invoices.
+	ListInvoiceItems(context.Context, *ListInvoiceItemsRequest) (*ListInvoiceItemsResponse, error)
 	mustEmbedUnimplementedInvoiceServiceServer()
 }
 
@@ -79,6 +93,9 @@ func (UnimplementedInvoiceServiceServer) GetInvoice(context.Context, *GetInvoice
 }
 func (UnimplementedInvoiceServiceServer) ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListInvoices not implemented")
+}
+func (UnimplementedInvoiceServiceServer) ListInvoiceItems(context.Context, *ListInvoiceItemsRequest) (*ListInvoiceItemsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInvoiceItems not implemented")
 }
 func (UnimplementedInvoiceServiceServer) mustEmbedUnimplementedInvoiceServiceServer() {}
 
@@ -129,6 +146,24 @@ func _InvoiceService_ListInvoices_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InvoiceService_ListInvoiceItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListInvoiceItemsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoiceServiceServer).ListInvoiceItems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoiceService_ListInvoiceItems_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoiceServiceServer).ListInvoiceItems(ctx, req.(*ListInvoiceItemsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InvoiceService_ServiceDesc is the grpc.ServiceDesc for InvoiceService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -143,6 +178,10 @@ var InvoiceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListInvoices",
 			Handler:    _InvoiceService_ListInvoices_Handler,
+		},
+		{
+			MethodName: "ListInvoiceItems",
+			Handler:    _InvoiceService_ListInvoiceItems_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
