@@ -19,12 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PricingService_CreateProduct_FullMethodName = "/smallbiznis.pricing.v1.PricingService/CreateProduct"
-	PricingService_GetProduct_FullMethodName    = "/smallbiznis.pricing.v1.PricingService/GetProduct"
-	PricingService_ListProducts_FullMethodName  = "/smallbiznis.pricing.v1.PricingService/ListProducts"
-	PricingService_CreatePrice_FullMethodName   = "/smallbiznis.pricing.v1.PricingService/CreatePrice"
-	PricingService_GetPrice_FullMethodName      = "/smallbiznis.pricing.v1.PricingService/GetPrice"
-	PricingService_ListPrices_FullMethodName    = "/smallbiznis.pricing.v1.PricingService/ListPrices"
+	PricingService_CreateProduct_FullMethodName    = "/smallbiznis.pricing.v1.PricingService/CreateProduct"
+	PricingService_GetProduct_FullMethodName       = "/smallbiznis.pricing.v1.PricingService/GetProduct"
+	PricingService_ListProducts_FullMethodName     = "/smallbiznis.pricing.v1.PricingService/ListProducts"
+	PricingService_CreatePrice_FullMethodName      = "/smallbiznis.pricing.v1.PricingService/CreatePrice"
+	PricingService_GetPrice_FullMethodName         = "/smallbiznis.pricing.v1.PricingService/GetPrice"
+	PricingService_ListPrices_FullMethodName       = "/smallbiznis.pricing.v1.PricingService/ListPrices"
+	PricingService_ListPriceTiers_FullMethodName   = "/smallbiznis.pricing.v1.PricingService/ListPriceTiers"
+	PricingService_ListPriceAmounts_FullMethodName = "/smallbiznis.pricing.v1.PricingService/ListPriceAmounts"
 )
 
 // PricingServiceClient is the client API for PricingService service.
@@ -44,6 +46,10 @@ type PricingServiceClient interface {
 	// List prices filtered by tenant/product/code with pagination. Tiers are
 	// returned alongside their parent prices.
 	ListPrices(ctx context.Context, in *ListPricesRequest, opts ...grpc.CallOption) (*ListPricesResponse, error)
+	// List tiers for prices within a tenant context.
+	ListPriceTiers(ctx context.Context, in *ListPriceTiersRequest, opts ...grpc.CallOption) (*ListPriceTiersResponse, error)
+	// List currency-specific amounts for prices within a tenant context.
+	ListPriceAmounts(ctx context.Context, in *ListPriceAmountsRequest, opts ...grpc.CallOption) (*ListPriceAmountsResponse, error)
 }
 
 type pricingServiceClient struct {
@@ -108,6 +114,24 @@ func (c *pricingServiceClient) ListPrices(ctx context.Context, in *ListPricesReq
 	return out, nil
 }
 
+func (c *pricingServiceClient) ListPriceTiers(ctx context.Context, in *ListPriceTiersRequest, opts ...grpc.CallOption) (*ListPriceTiersResponse, error) {
+	out := new(ListPriceTiersResponse)
+	err := c.cc.Invoke(ctx, PricingService_ListPriceTiers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricingServiceClient) ListPriceAmounts(ctx context.Context, in *ListPriceAmountsRequest, opts ...grpc.CallOption) (*ListPriceAmountsResponse, error) {
+	out := new(ListPriceAmountsResponse)
+	err := c.cc.Invoke(ctx, PricingService_ListPriceAmounts_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricingServiceServer is the server API for PricingService service.
 // All implementations must embed UnimplementedPricingServiceServer
 // for forward compatibility
@@ -125,6 +149,10 @@ type PricingServiceServer interface {
 	// List prices filtered by tenant/product/code with pagination. Tiers are
 	// returned alongside their parent prices.
 	ListPrices(context.Context, *ListPricesRequest) (*ListPricesResponse, error)
+	// List tiers for prices within a tenant context.
+	ListPriceTiers(context.Context, *ListPriceTiersRequest) (*ListPriceTiersResponse, error)
+	// List currency-specific amounts for prices within a tenant context.
+	ListPriceAmounts(context.Context, *ListPriceAmountsRequest) (*ListPriceAmountsResponse, error)
 	mustEmbedUnimplementedPricingServiceServer()
 }
 
@@ -149,6 +177,12 @@ func (UnimplementedPricingServiceServer) GetPrice(context.Context, *GetPriceRequ
 }
 func (UnimplementedPricingServiceServer) ListPrices(context.Context, *ListPricesRequest) (*ListPricesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPrices not implemented")
+}
+func (UnimplementedPricingServiceServer) ListPriceTiers(context.Context, *ListPriceTiersRequest) (*ListPriceTiersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPriceTiers not implemented")
+}
+func (UnimplementedPricingServiceServer) ListPriceAmounts(context.Context, *ListPriceAmountsRequest) (*ListPriceAmountsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPriceAmounts not implemented")
 }
 func (UnimplementedPricingServiceServer) mustEmbedUnimplementedPricingServiceServer() {}
 
@@ -271,6 +305,42 @@ func _PricingService_ListPrices_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PricingService_ListPriceTiers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPriceTiersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricingServiceServer).ListPriceTiers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PricingService_ListPriceTiers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricingServiceServer).ListPriceTiers(ctx, req.(*ListPriceTiersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PricingService_ListPriceAmounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPriceAmountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricingServiceServer).ListPriceAmounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PricingService_ListPriceAmounts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricingServiceServer).ListPriceAmounts(ctx, req.(*ListPriceAmountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PricingService_ServiceDesc is the grpc.ServiceDesc for PricingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -301,6 +371,14 @@ var PricingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListPrices",
 			Handler:    _PricingService_ListPrices_Handler,
+		},
+		{
+			MethodName: "ListPriceTiers",
+			Handler:    _PricingService_ListPriceTiers_Handler,
+		},
+		{
+			MethodName: "ListPriceAmounts",
+			Handler:    _PricingService_ListPriceAmounts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
