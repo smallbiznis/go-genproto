@@ -19,16 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SubscriptionService_CreateSubscription_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/CreateSubscription"
-	SubscriptionService_GetSubscription_FullMethodName    = "/smallbiznis.subscription.v1.SubscriptionService/GetSubscription"
-	SubscriptionService_ListSubscriptions_FullMethodName  = "/smallbiznis.subscription.v1.SubscriptionService/ListSubscriptions"
-	SubscriptionService_CancelSubscription_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/CancelSubscription"
+	SubscriptionService_GetActiveSubscriptionByCustomer_FullMethodName = "/smallbiznis.subscription.v1.SubscriptionService/GetActiveSubscriptionByCustomer"
+	SubscriptionService_CreateSubscription_FullMethodName              = "/smallbiznis.subscription.v1.SubscriptionService/CreateSubscription"
+	SubscriptionService_GetSubscription_FullMethodName                 = "/smallbiznis.subscription.v1.SubscriptionService/GetSubscription"
+	SubscriptionService_ListSubscriptions_FullMethodName               = "/smallbiznis.subscription.v1.SubscriptionService/ListSubscriptions"
+	SubscriptionService_CancelSubscription_FullMethodName              = "/smallbiznis.subscription.v1.SubscriptionService/CancelSubscription"
 )
 
 // SubscriptionServiceClient is the client API for SubscriptionService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SubscriptionServiceClient interface {
+	GetActiveSubscriptionByCustomer(ctx context.Context, in *GetSubscriptionByCustomer, opts ...grpc.CallOption) (*Subscription, error)
 	CreateSubscription(ctx context.Context, in *CreateSubscriptionRequest, opts ...grpc.CallOption) (*Subscription, error)
 	GetSubscription(ctx context.Context, in *GetSubscriptionRequest, opts ...grpc.CallOption) (*Subscription, error)
 	ListSubscriptions(ctx context.Context, in *ListSubscriptionsRequest, opts ...grpc.CallOption) (*ListSubscriptionsResponse, error)
@@ -41,6 +43,15 @@ type subscriptionServiceClient struct {
 
 func NewSubscriptionServiceClient(cc grpc.ClientConnInterface) SubscriptionServiceClient {
 	return &subscriptionServiceClient{cc}
+}
+
+func (c *subscriptionServiceClient) GetActiveSubscriptionByCustomer(ctx context.Context, in *GetSubscriptionByCustomer, opts ...grpc.CallOption) (*Subscription, error) {
+	out := new(Subscription)
+	err := c.cc.Invoke(ctx, SubscriptionService_GetActiveSubscriptionByCustomer_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *subscriptionServiceClient) CreateSubscription(ctx context.Context, in *CreateSubscriptionRequest, opts ...grpc.CallOption) (*Subscription, error) {
@@ -83,6 +94,7 @@ func (c *subscriptionServiceClient) CancelSubscription(ctx context.Context, in *
 // All implementations must embed UnimplementedSubscriptionServiceServer
 // for forward compatibility
 type SubscriptionServiceServer interface {
+	GetActiveSubscriptionByCustomer(context.Context, *GetSubscriptionByCustomer) (*Subscription, error)
 	CreateSubscription(context.Context, *CreateSubscriptionRequest) (*Subscription, error)
 	GetSubscription(context.Context, *GetSubscriptionRequest) (*Subscription, error)
 	ListSubscriptions(context.Context, *ListSubscriptionsRequest) (*ListSubscriptionsResponse, error)
@@ -94,6 +106,9 @@ type SubscriptionServiceServer interface {
 type UnimplementedSubscriptionServiceServer struct {
 }
 
+func (UnimplementedSubscriptionServiceServer) GetActiveSubscriptionByCustomer(context.Context, *GetSubscriptionByCustomer) (*Subscription, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetActiveSubscriptionByCustomer not implemented")
+}
 func (UnimplementedSubscriptionServiceServer) CreateSubscription(context.Context, *CreateSubscriptionRequest) (*Subscription, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSubscription not implemented")
 }
@@ -117,6 +132,24 @@ type UnsafeSubscriptionServiceServer interface {
 
 func RegisterSubscriptionServiceServer(s grpc.ServiceRegistrar, srv SubscriptionServiceServer) {
 	s.RegisterService(&SubscriptionService_ServiceDesc, srv)
+}
+
+func _SubscriptionService_GetActiveSubscriptionByCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSubscriptionByCustomer)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).GetActiveSubscriptionByCustomer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionService_GetActiveSubscriptionByCustomer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).GetActiveSubscriptionByCustomer(ctx, req.(*GetSubscriptionByCustomer))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SubscriptionService_CreateSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -198,6 +231,10 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "smallbiznis.subscription.v1.SubscriptionService",
 	HandlerType: (*SubscriptionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetActiveSubscriptionByCustomer",
+			Handler:    _SubscriptionService_GetActiveSubscriptionByCustomer_Handler,
+		},
 		{
 			MethodName: "CreateSubscription",
 			Handler:    _SubscriptionService_CreateSubscription_Handler,
