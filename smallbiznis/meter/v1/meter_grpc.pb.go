@@ -34,7 +34,7 @@ const (
 type MeterServiceClient interface {
 	CreateMeter(ctx context.Context, in *CreateMeterRequest, opts ...grpc.CallOption) (*CreateMeterResponse, error)
 	GetMeter(ctx context.Context, in *GetMeterRequest, opts ...grpc.CallOption) (*Meter, error)
-	GetMeterByCode(ctx context.Context, in *GetMeterRequest, opts ...grpc.CallOption) (*Meter, error)
+	GetMeterByCode(ctx context.Context, in *GetMeterByCodeRequest, opts ...grpc.CallOption) (*Meter, error)
 	ListMeters(ctx context.Context, in *ListMetersRequest, opts ...grpc.CallOption) (*ListMetersResponse, error)
 	UpdateMeter(ctx context.Context, in *UpdateMeterRequest, opts ...grpc.CallOption) (*UpdateMeterResponse, error)
 }
@@ -65,7 +65,7 @@ func (c *meterServiceClient) GetMeter(ctx context.Context, in *GetMeterRequest, 
 	return out, nil
 }
 
-func (c *meterServiceClient) GetMeterByCode(ctx context.Context, in *GetMeterRequest, opts ...grpc.CallOption) (*Meter, error) {
+func (c *meterServiceClient) GetMeterByCode(ctx context.Context, in *GetMeterByCodeRequest, opts ...grpc.CallOption) (*Meter, error) {
 	out := new(Meter)
 	err := c.cc.Invoke(ctx, MeterService_GetMeterByCode_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -98,7 +98,7 @@ func (c *meterServiceClient) UpdateMeter(ctx context.Context, in *UpdateMeterReq
 type MeterServiceServer interface {
 	CreateMeter(context.Context, *CreateMeterRequest) (*CreateMeterResponse, error)
 	GetMeter(context.Context, *GetMeterRequest) (*Meter, error)
-	GetMeterByCode(context.Context, *GetMeterRequest) (*Meter, error)
+	GetMeterByCode(context.Context, *GetMeterByCodeRequest) (*Meter, error)
 	ListMeters(context.Context, *ListMetersRequest) (*ListMetersResponse, error)
 	UpdateMeter(context.Context, *UpdateMeterRequest) (*UpdateMeterResponse, error)
 	mustEmbedUnimplementedMeterServiceServer()
@@ -114,7 +114,7 @@ func (UnimplementedMeterServiceServer) CreateMeter(context.Context, *CreateMeter
 func (UnimplementedMeterServiceServer) GetMeter(context.Context, *GetMeterRequest) (*Meter, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMeter not implemented")
 }
-func (UnimplementedMeterServiceServer) GetMeterByCode(context.Context, *GetMeterRequest) (*Meter, error) {
+func (UnimplementedMeterServiceServer) GetMeterByCode(context.Context, *GetMeterByCodeRequest) (*Meter, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMeterByCode not implemented")
 }
 func (UnimplementedMeterServiceServer) ListMeters(context.Context, *ListMetersRequest) (*ListMetersResponse, error) {
@@ -173,7 +173,7 @@ func _MeterService_GetMeter_Handler(srv interface{}, ctx context.Context, dec fu
 }
 
 func _MeterService_GetMeterByCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMeterRequest)
+	in := new(GetMeterByCodeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -185,7 +185,7 @@ func _MeterService_GetMeterByCode_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: MeterService_GetMeterByCode_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MeterServiceServer).GetMeterByCode(ctx, req.(*GetMeterRequest))
+		return srv.(MeterServiceServer).GetMeterByCode(ctx, req.(*GetMeterByCodeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
